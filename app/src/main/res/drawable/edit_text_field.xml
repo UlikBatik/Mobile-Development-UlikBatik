@@ -6,7 +6,7 @@
         android:top="4dp">
         <shape>
             <solid android:color="#40000000" />
-            <corners android:radius="20dp" />
+            <corners android:radius="10dp" />
         </shape>
     </item>
     <!-- Main items -->
@@ -64,7 +64,7 @@
                 android:left="20dp"
                 android:right="20dp"
                 android:top="1dp" />
-            <corners android:radius="20dp" />
+            <corners android:radius="10dp" />
             <solid android:color="#FFFFFF" />
         </shape>
     </item>

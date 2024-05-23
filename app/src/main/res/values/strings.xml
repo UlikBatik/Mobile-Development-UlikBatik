@@ -7,6 +7,7 @@
     <string name="email">e-mail</string>
     <string name="batik_name">Batik Name</string>
     <string name="batik_loc">Batik Location</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam orci urna, molestie ut ullamcorper ac, tempor quis velit. Praesent ut purus quis neque varius vestibulum. Donec id imperdiet ante, gravida vehicula est. Donec aliquet varius congue. Sed hendrerit at quam vitae pulvinar. Vivamus varius, metus vel sagittis lacinia, nulla justo dictum magna, aliquet aliquam augue neque sit amet enim. Nam porttitor, sapien a tincidunt fringilla, mi ipsum ornare ex, interdum eleifend enim neque sed mauris. Vestibulum et laoreet libero.</string>
     <string name="lorem_short" tools:ignore="TypographyEllipsis">Lorem ipsum dolor sit amet ...</string>
 
@@ -56,4 +57,7 @@
     <string name="button_register">REGISTER</string>
     <string name="button_upload">UPLOAD</string>
     <string name="button_make_post">Make a Post</string>
+
+    <!--  CONTENT DESCRIPTION  -->
+    <string name="img_icon_description">IMG_ICON</string>
 </resources>

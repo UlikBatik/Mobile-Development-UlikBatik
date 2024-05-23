@@ -4,7 +4,7 @@
     <item android:right="5dp" android:top="5dp">
         <shape>
             <solid android:color="#40000000" />
-            <corners android:radius="200dp" />
+            <corners android:radius="20dp" />
         </shape>
     </item>
     <!-- Main items -->
@@ -61,7 +61,7 @@
                 android:left="20dp"
                 android:right="20dp"
                 android:top="1dp" />
-            <corners android:radius="200dp" />
+            <corners android:radius="20dp" />
             <gradient
                 android:angle="180"
                 android:endColor="#C07F00"
