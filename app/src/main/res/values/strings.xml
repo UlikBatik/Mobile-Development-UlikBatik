@@ -1,3 +1,51 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">UlikBatik</string>
+
+    <!--  CONSTANTA  -->
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="email">e-mail</string>
+    <string name="batik_name">Batik Name</string>
+    <string name="batik_loc">Batik Location</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam orci urna, molestie ut ullamcorper ac, tempor quis velit. Praesent ut purus quis neque varius vestibulum. Donec id imperdiet ante, gravida vehicula est. Donec aliquet varius congue. Sed hendrerit at quam vitae pulvinar. Vivamus varius, metus vel sagittis lacinia, nulla justo dictum magna, aliquet aliquam augue neque sit amet enim. Nam porttitor, sapien a tincidunt fringilla, mi ipsum ornare ex, interdum eleifend enim neque sed mauris. Vestibulum et laoreet libero.</string>
+    <string name="lorem_short" tools:ignore="TypographyEllipsis">Lorem ipsum dolor sit amet ...</string>
+
+    <!--  ONBOARDING STRING COMPONENT  -->
+    <string name="onboarding_welcome_title">Welcome to Ulik Batik</string>
+    <string name="onboarding_welcome_description">Explore the rich tapestry of Indonesian batik as you journey through various intricate patterns</string>
+    <string name="onboarding_share_title">Share your Batik Experience</string>
+    <string name="onboarding_share_description">Share your unique batik experience with the world by posting photos of yourself adorned in these exquisite fabrics</string>
+    <string name="onboarding_discover_title">Discover Batik Patterns</string>
+    <string name="onboarding_discover_description">Seamlessly identify intricate batik patterns around you with our innovative scanning feature, bringing the art of batik recognition to your fingertips</string>
+    <string name="onboarding_starting_title">Start Your Batik Adventure</string>
+    <string name="onboarding_starting_description">Begin your batik adventure here! Discover, share, and recognize the beauty of Indonesian batik like never before</string>
+
+    <!--  LOGIN & REGISTER  -->
+    <string name="login">Login</string>
+    <string name="login_page_title">Welcome Back</string>
+    <string name="login_page_description">Login to your account</string>
+    <string name="login_page_register">Don\'t have account?</string>
+    <string name="register">Register</string>
+    <string name="register_page_description">Create your new account</string>
+    <string name="register_page_login">Already have account?</string>
+
+    <!--  DASHBOARD  -->
+    <string name="dashboard_scan">SCAN</string>
+    <string name="dashboard_catalog">CATALOG</string>
+    <string name="dashboard_likes">LIKES</string>
+
+    <!--  DRAWER  -->
+    <string name="drawer_setting">Settings</string>
+    <string name="drawer_dark_mode">Dark Mode</string>
+    <string name="drawer_my_account">My Account</string>
+    <string name="drawer_language">Language</string>
+    <string name="drawer_logout">Log Out</string>
+
+    <!--  SCAN  -->
+    <string name="scan_title">Scan your Batik</string>
+
+    <!--  PROFILE  -->
+    <string name="profile_likes_sum">12K</string>
+    <string name="profile_likes">Likes</string>
+    <string name="profile_date">Date</string>
 </resources>
