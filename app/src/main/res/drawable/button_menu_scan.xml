@@ -1,0 +1,74 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Shadow item -->
+    <item
+        android:right="4dp"
+        android:top="4dp"> <!-- Adjust the offsets as needed -->
+        <shape>
+            <solid android:color="#40000000" /> <!-- Shadow color (semi-transparent black) -->
+            <corners android:radius="20dp" /> <!-- Match the radius with the main item -->
+        </shape>
+    </item>
+    <!-- Main items -->
+    <item>
+        <shape>
+            <padding
+                android:bottom="1dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:top="1dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="1dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:top="1dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="1dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:top="1dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="1dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:top="1dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="1dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:top="1dp" />
+        </shape>
+    </item>
+
+    <!--background-->
+    <item>
+        <shape android:shape="rectangle">
+            <padding
+                android:bottom="1dp"
+                android:left="20dp"
+                android:right="20dp"
+                android:top="1dp" />
+            <corners android:radius="20dp" />
+            <gradient
+                android:angle="180"
+                android:endColor="#FFD95A"
+                android:startColor="#C07F00"
+                android:type="linear" />
+        </shape>
+    </item>
+</layer-list>
