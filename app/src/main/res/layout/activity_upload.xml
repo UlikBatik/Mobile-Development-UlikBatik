@@ -22,7 +22,7 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageField"
         android:layout_width="250dp"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:layout_marginTop="60dp"
         android:src="@drawable/img_field"
         android:scaleType="center"
@@ -36,7 +36,7 @@
     <EditText
         android:id="@+id/descriptionEdit"
         android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="150dp"
         android:background="@drawable/edit_text_grey_field"
@@ -94,4 +94,12 @@
         app:layout_constraintStart_toStartOf="@id/descriptionEdit"
         app:layout_constraintBottom_toBottomOf="parent" />
 
+    <include
+        layout="@layout/item_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/descriptionEdit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
