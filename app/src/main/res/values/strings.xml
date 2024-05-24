@@ -5,6 +5,7 @@
     <string name="username">username</string>
     <string name="password">password</string>
     <string name="email">e-mail</string>
+    <string name="description">Description</string>
     <string name="batik_name">Batik Name</string>
     <string name="batik_loc">Batik Location</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -60,4 +61,5 @@
 
     <!--  CONTENT DESCRIPTION  -->
     <string name="img_icon_description">IMG_ICON</string>
+    <string name="img_field_description">IMG_FIELD</string>
 </resources>
