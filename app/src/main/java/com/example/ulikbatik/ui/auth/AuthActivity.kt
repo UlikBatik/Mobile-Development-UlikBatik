@@ -28,4 +28,5 @@ class AuthActivity : AppCompatActivity() {
             .add(R.id.authContainer, LoginFragment.newInstance())
             .commit()
     }
+
 }

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.FragmentLoginBinding
 
@@ -23,12 +24,25 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.registerBtn.setOnClickListener {
+        setupView()
+        onBack()
+    }
+
+    private fun setupView() {
+        binding.loginBtn.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.authContainer, RegisterFragment())
                 addToBackStack(null)
             }.commit()
         }
+    }
+
+    private fun onBack() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
+        })
     }
 
     companion object {
