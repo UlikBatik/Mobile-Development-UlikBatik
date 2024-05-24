@@ -48,6 +48,7 @@
     <string name="profile_likes_sum">12K</string>
     <string name="profile_likes">Likes</string>
     <string name="profile_date">Date</string>
+    <string name="profile_posts">Posts</string>
 
     <!--  BUTTON  -->
     <string name="button_next">NEXT</string>
@@ -56,4 +57,5 @@
     <string name="button_register">REGISTER</string>
     <string name="button_upload">UPLOAD</string>
     <string name="button_make_post">Make a Post</string>
+
 </resources>
