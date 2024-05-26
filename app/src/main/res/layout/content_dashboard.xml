@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+   <androidx.appcompat.widget.AppCompatImageButton
+       android:id="@+id/menuBtn"
+       android:layout_width="35dp"
+       android:layout_height="35dp"
+       android:background="@drawable/ic_menu"
+       android:layout_marginTop="30dp"
+       android:layout_marginStart="25dp"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintStart_toStartOf="parent"/>
+    
+    <TextView
+        android:id="@+id/helloTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/drawer_hello"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="20sp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintStart_toEndOf="@id/menuBtn"
+        app:layout_constraintTop_toTopOf="@id/menuBtn"
+        app:layout_constraintBottom_toTopOf="@id/usernameTv"/>
+
+    <TextView
+        android:id="@+id/usernameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/username"
+        android:fontFamily="@font/poppins"
+        android:textSize="15sp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintStart_toEndOf="@id/menuBtn"
+        app:layout_constraintTop_toBottomOf="@id/helloTv"
+        app:layout_constraintBottom_toBottomOf="@id/menuBtn"/>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/profileBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/ic_profile"
+        app:layout_constraintTop_toTopOf="@id/menuBtn"
+        app:layout_constraintBottom_toBottomOf="@id/menuBtn"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/scanBtn"
+        android:layout_width="120dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/button_menu_scan"
+        android:text="@string/dashboard_scan"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textAlignment="textEnd"
+        android:gravity="bottom"
+        android:drawableTop="@drawable/ic_scan"
+        android:paddingTop="30dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/usernameTv"
+        app:layout_constraintEnd_toStartOf="@id/catalogBtn"
+        app:layout_constraintStart_toStartOf="@id/menuBtn"
+        tools:ignore="RtlCompat" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/catalogBtn"
+        android:layout_width="120dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/dashboard_catalog"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/primaryBrown"
+        android:textSize="15sp"
+        android:textAlignment="textEnd"
+        android:gravity="bottom"
+        android:background="@drawable/button_menu_general"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/usernameTv"
+        app:layout_constraintEnd_toStartOf="@id/likesBtn"
+        app:layout_constraintStart_toEndOf="@id/scanBtn"
+        tools:ignore="RtlCompat" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/likesBtn"
+        android:layout_width="120dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/dashboard_likes"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/primaryBrown"
+        android:textSize="15sp"
+        android:textAlignment="textEnd"
+        android:gravity="bottom"
+        android:background="@drawable/button_menu_general"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/usernameTv"
+        app:layout_constraintStart_toEndOf="@id/catalogBtn"
+        app:layout_constraintEnd_toEndOf="@id/profileBtn"
+        tools:ignore="RtlCompat" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/grey"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/catalogBtn" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPost"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:contentDescription="@string/rv_post_description"
+        tools:listitem="@layout/item_post"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
+</androidx.constraintlayout.widget.ConstraintLayout>

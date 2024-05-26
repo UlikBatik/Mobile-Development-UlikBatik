@@ -6,4 +6,13 @@
     </style>
 
     <style name="Theme.UlikBatik" parent="Base.Theme.UlikBatik" />
+
+    <style name="Theme.UlikBatik.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.UlikBatik.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.UlikBatik.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

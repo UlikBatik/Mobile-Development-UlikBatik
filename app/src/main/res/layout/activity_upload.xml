@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/uploadContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.upload.UploadActivity">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/backButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/ic_back"
+        android:contentDescription="@string/back_button_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageField"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/img_field"
+        android:scaleType="center"
+        android:contentDescription="@string/img_field_description"
+        app:shapeAppearanceOverlay="@style/RoundedCorner10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backButton"
+        app:layout_constraintBottom_toTopOf="@id/descriptionEdit"/>
+
+    <EditText
+        android:id="@+id/descriptionEdit"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="150dp"
+        android:background="@drawable/edit_text_grey_field"
+        android:gravity="top|start"
+        android:hint="@string/description"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:padding="15dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/blackTransparent"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/uploadBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageField" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/uploadBtn"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/button_gradient"
+        android:layout_marginBottom="35dp"
+        android:text="@string/button_upload"
+        android:textColor="@color/white"
+        android:letterSpacing="0.3"
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintStart_toEndOf="@id/cameraBtn"
+        app:layout_constraintEnd_toEndOf="@id/descriptionEdit"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/cameraBtn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/button_cream"
+        android:src="@drawable/ic_camera"
+        android:layout_marginBottom="35dp"
+        android:contentDescription="@string/cam_description"
+        app:layout_constraintEnd_toStartOf="@id/uploadBtn"
+        app:layout_constraintStart_toEndOf="@id/galleryBtn"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/galleryBtn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/button_cream"
+        android:src="@drawable/ic_gallery"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="35dp"
+        android:contentDescription="@string/gallery_description"
+        app:layout_constraintEnd_toStartOf="@id/cameraBtn"
+        app:layout_constraintStart_toStartOf="@id/descriptionEdit"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <include
+        layout="@layout/item_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/descriptionEdit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
