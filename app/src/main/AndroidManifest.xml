@@ -13,6 +13,9 @@
         android:theme="@style/Theme.UlikBatik"
         tools:targetApi="31">
         <activity
+            android:name=".ui.detailCatalog.DetailCatalogActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.profile.ProfileActivity"
             android:exported="false" />
         <activity
@@ -21,8 +24,9 @@
         <activity
             android:name=".ui.likes.LikesActivity"
             android:exported="false" />
-        <activity android:name=".ui.catalog.CatalogActivity"
-            android:exported="true"/>
+        <activity
+            android:name=".ui.catalog.CatalogActivity"
+            android:exported="true" />
         <activity
             android:name=".ui.dashboard.ui.dashboard.DashboardActivity"
             android:exported="false"
