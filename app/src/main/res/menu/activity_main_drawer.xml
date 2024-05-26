@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/topMenu"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_darkmode"
+            android:icon="@drawable/ic_darkmode"
+            android:title="@string/drawer_dark_mode" />
+        <item
+            android:id="@+id/nav_my_account"
+            android:icon="@drawable/ic_account"
+            android:title="@string/drawer_my_account" />
+        <item
+            android:id="@+id/nav_language"
+            android:icon="@drawable/ic_language"
+            android:title="@string/drawer_language" />
+    </group >
+
+    <group
+        android:id="@+id/botMenu"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/drawer_logout" />
+    </group>
+
+</menu>
