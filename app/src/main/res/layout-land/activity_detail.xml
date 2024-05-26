@@ -1,100 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.DetailActivity">
+    android:orientation="horizontal"
+    tools:context=".ui.detailPost.DetailPostActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/detail_app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:backgroundTint="@color/transparent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:navigationIcon="@drawable/ic_back" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:keepScreenOn="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_ilustration3"
+        android:backgroundTint="@color/transparent" />
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_weight="1"
         android:padding="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_ilustration3"
-                app:layout_constraintEnd_toStartOf="@id/content_layout"
-                app:layout_constraintHeight_percent="1"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/detail_image_profile"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_profile"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.5" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/content_layout"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
+            <TextView
+                android:id="@+id/detail_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/poppins"
+                android:text="@string/username"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/detail_image_profile"
+                app:layout_constraintStart_toEndOf="@id/detail_image_profile"
+                app:layout_constraintTop_toTopOf="@id/detail_image_profile" />
+
+            <View
+                android:id="@+id/detail_divider_top"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/grey"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/image"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.5">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_image_profile" />
 
-                <ImageView
-                    android:id="@+id/detail_image_profile"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/ic_profile"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <include
+                android:id="@+id/tag_name"
+                layout="@layout/item_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_divider_top" />
 
-                <TextView
-                    android:id="@+id/detail_username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/poppins"
-                    android:text="@string/username"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@id/detail_image_profile"
-                    app:layout_constraintStart_toEndOf="@id/detail_image_profile"
-                    app:layout_constraintTop_toTopOf="@id/detail_image_profile" />
-
-                <View
-                    android:id="@+id/detail_divider_top"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@color/grey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/detail_image_profile" />
-
-                <TextView
-                    android:id="@+id/detail_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:fontFamily="@font/poppins"
-                    android:justificationMode="inter_word"
-                    android:text="@string/onboarding_discover_description"
-                    android:textSize="11sp"
-                    app:layout_constraintTop_toBottomOf="@id/detail_divider_top"
-                    tools:targetApi="o" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/detail_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/poppins"
+                android:justificationMode="inter_word"
+                android:text="@string/onboarding_discover_description"
+                android:textSize="11sp"
+                app:layout_constraintTop_toBottomOf="@id/tag_name"
+                tools:targetApi="o" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -109,4 +92,4 @@
         android:layout_marginBottom="30dp"
         android:backgroundTint="@color/primaryYellow"
         android:src="@drawable/ic_likes_unfill" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

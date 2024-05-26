@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.DetailActivity">
+    tools:context=".ui.detailPost.DetailPostActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/detail_app_bar"
@@ -38,7 +38,6 @@
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
-
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -81,6 +80,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/detail_image_profile" />
 
+            <include
+                android:id="@+id/tag_name"
+                layout="@layout/item_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_divider_top" />
 
             <TextView
                 android:id="@+id/detail_description"
@@ -91,7 +98,7 @@
                 android:justificationMode="inter_word"
                 android:text="@string/onboarding_discover_description"
                 android:textSize="11sp"
-                app:layout_constraintTop_toBottomOf="@id/detail_divider_top"
+               app:layout_constraintTop_toBottomOf="@id/tag_name"
                 tools:targetApi="o" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

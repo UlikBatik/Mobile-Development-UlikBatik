@@ -1,4 +1,4 @@
-package com.example.ulikbatik.ui
+package com.example.ulikbatik.ui.detailPost
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -7,7 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.ulikbatik.R
 
-class DetailActivity : AppCompatActivity() {
+class DetailPostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

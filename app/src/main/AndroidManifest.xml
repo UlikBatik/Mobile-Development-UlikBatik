@@ -21,7 +21,7 @@
         <activity
             android:name=".ui.likes.LikesActivity"
             android:exported="false" />
-        <activity android:name=".ui.DetailActivity"
+        <activity android:name=".ui.catalog.CatalogActivity"
             android:exported="true"/>
         <activity
             android:name=".ui.dashboard.ui.dashboard.DashboardActivity"
@@ -32,7 +32,7 @@
             android:name=".ui.auth.AuthActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.catalog.CatalogActivity"
+            android:name=".ui.detailPost.DetailPostActivity"
             android:exported="false" />
         <activity
             android:name=".ui.boarding.BoardingActivity"
