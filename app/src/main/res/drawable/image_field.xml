@@ -65,7 +65,7 @@
                 android:right="20dp"
                 android:top="1dp" />
             <corners android:radius="10dp" />
-            <solid android:color="#FFFFFF" />
+            <solid android:color="@color/primaryYellow" />
         </shape>
     </item>
 </layer-list>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="23dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/image_post"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_batik_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="14dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/batik_name"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_post" />
+
+    <TextView
+        android:id="@+id/tv_date_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:text="@string/profile_date"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@id/tv_batik_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_batik_name" />
+
+    <TextView
+        android:id="@+id/tv_total_likes_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:padding="6dp"
+        android:text="@string/profile_likes_sum"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/button_likes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_likes"
+        app:layout_constraintTop_toTopOf="@id/button_likes" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_likes"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/ic_likes_fill"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_batik_name"
+        app:layout_constraintBottom_toBottomOf="@id/tv_date_post"/>
+
+    <View
+        android:id="@+id/divider_postings"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_likes" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
