@@ -13,6 +13,9 @@
         android:theme="@style/Theme.UlikBatik"
         tools:targetApi="31">
         <activity
+            android:name=".ui.upload.UploadActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.likes.LikesActivity"
             android:exported="false" />
         <activity android:name=".ui.DetailActivity"
