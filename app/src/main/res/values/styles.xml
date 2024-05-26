@@ -10,4 +10,16 @@
         <item name="cornerSizeTopLeft">10dp</item>
         <item name="cornerSizeBottomLeft">10dp</item>
     </style>
+
+    <style name="RoundedTopCorner">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
+    </style>
+
+    <style name="CircleImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">100dp</item>
+        <item name="cornerSizeTopRight">100dp</item>
+    </style>
 </resources>
