@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UlikBatik"
         tools:targetApi="31">
+        <activity android:name=".ui.DetailActivity"
+            android:exported="true"/>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
