@@ -5,8 +5,12 @@
     <string name="username">username</string>
     <string name="password">password</string>
     <string name="email">e-mail</string>
+    <string name="description">Description</string>
     <string name="batik_name">Batik Name</string>
     <string name="batik_loc">Batik Location</string>
+    <string name="catalog">Catalog</string>
+    <string name="searchbar_hint">Search</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam orci urna, molestie ut ullamcorper ac, tempor quis velit. Praesent ut purus quis neque varius vestibulum. Donec id imperdiet ante, gravida vehicula est. Donec aliquet varius congue. Sed hendrerit at quam vitae pulvinar. Vivamus varius, metus vel sagittis lacinia, nulla justo dictum magna, aliquet aliquam augue neque sit amet enim. Nam porttitor, sapien a tincidunt fringilla, mi ipsum ornare ex, interdum eleifend enim neque sed mauris. Vestibulum et laoreet libero.</string>
     <string name="lorem_short" tools:ignore="TypographyEllipsis">Lorem ipsum dolor sit amet ...</string>
 
@@ -47,7 +51,8 @@
     <!--  PROFILE  -->
     <string name="profile_likes_sum">12K</string>
     <string name="profile_likes">Likes</string>
-    <string name="profile_date">Date</string>
+    <string name="profile_posts">Post</string>
+    <string name="profile_date">10 May</string>
 
     <!--  BUTTON  -->
     <string name="button_next">NEXT</string>
@@ -56,4 +61,14 @@
     <string name="button_register">REGISTER</string>
     <string name="button_upload">UPLOAD</string>
     <string name="button_make_post">Make a Post</string>
+
+    <!--  CONTENT DESCRIPTION  -->
+    <string name="img_icon_description">IMG_ICON</string>
+    <string name="img_field_description">IMG_FIELD</string>
+    <string name="cam_description">CAM_BTN</string>
+    <string name="back_button_description">BACK_BTN</string>
+    <string name="gallery_description">GALLERY_BTN</string>
+    <string name="grid_description">GRID_BTN</string>
+    <string name="list_description">LIST_BTN</string>
+    <string name="rv_post_description">RV_POST</string>
 </resources>
