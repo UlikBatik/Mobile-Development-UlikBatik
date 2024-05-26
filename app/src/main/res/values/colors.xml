@@ -5,10 +5,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#8F8F8F</color>
     <color name="whiteGrey">#EEEEEE</color>
-    <color name="transparent">#00FFFFFF</color>
     <color name="primaryBrown">#4C3D3D</color>
     <color name="primaryYellow">#FFD95A</color>
     <color name="primaryOrange">#C07F00</color>
     <color name="primaryCream">#FFF7D4</color>
     <color name="secondaryOrange">#33C07F00</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>
