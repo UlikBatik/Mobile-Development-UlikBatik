@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="14dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="@string/profile_batik_name"
+        android:text="@string/batik_name"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image_post" />
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
-        android:text="@string/date_posted"
+        android:text="@string/profile_date"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/tv_batik_name"
         app:layout_constraintTop_toBottomOf="@id/tv_batik_name" />
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
         android:padding="6dp"
-        android:text="@string/total_likes"
+        android:text="@string/profile_likes_sum"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/button_likes"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,5 +58,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_batik_name"
         app:layout_constraintBottom_toBottomOf="@id/tv_date_post"/>
+
+    <View
+        android:id="@+id/divider_postings"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_likes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

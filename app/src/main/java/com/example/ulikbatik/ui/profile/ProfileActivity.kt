@@ -1,4 +1,4 @@
-package com.example.ulikbatik.ui
+package com.example.ulikbatik.ui.profile
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
