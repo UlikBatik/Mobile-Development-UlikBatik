@@ -70,7 +70,8 @@ class BoardingActivity : AppCompatActivity() {
     }
 
     private fun finishOnboarding() {
-    startActivity(Intent(this, AuthActivity::class.java))
+        startActivity(Intent(this, AuthActivity::class.java))
+        finish()
     }
 
     private fun updateContent(position: Int) {

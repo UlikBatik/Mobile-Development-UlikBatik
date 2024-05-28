@@ -31,7 +31,7 @@
             android:name=".ui.catalog.CatalogActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.dashboard.ui.dashboard.DashboardActivity"
+            android:name=".ui.dashboard.DashboardActivity"
             android:exported="false"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/Theme.UlikBatik.NoActionBar" />

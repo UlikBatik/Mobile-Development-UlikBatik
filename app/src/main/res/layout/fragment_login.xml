@@ -52,15 +52,15 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <EditText
-        android:id="@+id/usernameEdit"
+        android:id="@+id/emailEdit"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:background="@drawable/edit_text_field"
         android:layout_marginTop="50dp"
         android:layout_marginHorizontal="55dp"
         android:importantForAutofill="no"
-        android:inputType="text"
-        android:hint="@string/username"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
         android:textColor="@color/black"
         android:drawableStart="@drawable/ic_user"
         android:drawablePadding="10dp"
@@ -83,7 +83,7 @@
         android:drawablePadding="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/usernameEdit"/>
+        app:layout_constraintTop_toBottomOf="@id/emailEdit"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginBtn"
