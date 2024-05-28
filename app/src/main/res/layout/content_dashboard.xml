@@ -5,124 +5,166 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <androidx.appcompat.widget.AppCompatImageButton
-       android:id="@+id/menuBtn"
-       android:layout_width="35dp"
-       android:layout_height="35dp"
-       android:background="@drawable/ic_menu"
-       android:layout_marginTop="30dp"
-       android:layout_marginStart="25dp"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintStart_toStartOf="parent"/>
-    
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/menuBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ic_menu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/helloTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/drawer_hello"
-        android:fontFamily="@font/poppins_bold"
-        android:textSize="20sp"
         android:layout_marginStart="15dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/drawer_hello"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/usernameTv"
         app:layout_constraintStart_toEndOf="@id/menuBtn"
-        app:layout_constraintTop_toTopOf="@id/menuBtn"
-        app:layout_constraintBottom_toTopOf="@id/usernameTv"/>
+        app:layout_constraintTop_toTopOf="@id/menuBtn" />
 
     <TextView
         android:id="@+id/usernameTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/username"
-        android:fontFamily="@font/poppins"
-        android:textSize="15sp"
         android:layout_marginStart="15dp"
+        android:fontFamily="@font/poppins"
+        android:text="@string/username"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/menuBtn"
         app:layout_constraintStart_toEndOf="@id/menuBtn"
-        app:layout_constraintTop_toBottomOf="@id/helloTv"
-        app:layout_constraintBottom_toBottomOf="@id/menuBtn"/>
+        app:layout_constraintTop_toBottomOf="@id/helloTv" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/profileBtn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/ic_profile"
-        app:layout_constraintTop_toTopOf="@id/menuBtn"
         app:layout_constraintBottom_toBottomOf="@id/menuBtn"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/menuBtn" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/scanBtn"
-        android:layout_width="120dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/button_menu_scan"
-        android:text="@string/dashboard_scan"
-        android:fontFamily="@font/poppins_bold"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:textAlignment="textEnd"
-        android:gravity="bottom"
-        android:drawableTop="@drawable/ic_scan"
-        android:paddingTop="30dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/usernameTv"
-        app:layout_constraintEnd_toStartOf="@id/catalogBtn"
-        app:layout_constraintStart_toStartOf="@id/menuBtn"
-        tools:ignore="RtlCompat" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/catalogBtn"
-        android:layout_width="120dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/dashboard_catalog"
-        android:fontFamily="@font/poppins_bold"
-        android:textColor="@color/primaryBrown"
-        android:textSize="15sp"
-        android:textAlignment="textEnd"
-        android:gravity="bottom"
-        android:background="@drawable/button_menu_general"
-        android:paddingBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/usernameTv"
-        app:layout_constraintEnd_toStartOf="@id/likesBtn"
-        app:layout_constraintStart_toEndOf="@id/scanBtn"
-        tools:ignore="RtlCompat" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/likesBtn"
-        android:layout_width="120dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/dashboard_likes"
-        android:fontFamily="@font/poppins_bold"
-        android:textColor="@color/primaryBrown"
-        android:textSize="15sp"
-        android:textAlignment="textEnd"
-        android:gravity="bottom"
-        android:background="@drawable/button_menu_general"
-        android:paddingBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/usernameTv"
-        app:layout_constraintStart_toEndOf="@id/catalogBtn"
-        app:layout_constraintEnd_toEndOf="@id/profileBtn"
-        tools:ignore="RtlCompat" />
-
-    <View
-        android:id="@+id/divider"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/grey"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/menuBtn"
+        app:layout_constraintTop_toBottomOf="@id/usernameTv">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/scanBtn"
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/button_menu_scan"
+                android:drawableTop="@drawable/ic_scan"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="bottom"
+                android:paddingTop="30dp"
+                android:paddingBottom="10dp"
+                android:text="@string/dashboard_scan"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/catalogBtn"
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+
+                android:background="@drawable/button_menu_general"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="bottom"
+                android:paddingBottom="10dp"
+                android:text="@string/dashboard_catalog"
+                android:textAlignment="textEnd"
+                android:textColor="@color/primaryBrown"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toStartOf="@id/likesBtn"
+                app:layout_constraintStart_toEndOf="@id/scanBtn"
+                app:layout_constraintTop_toTopOf="@id/scanBtn"
+                tools:ignore="RtlCompat" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/likesBtn"
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:background="@drawable/button_menu_general"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="bottom"
+                android:paddingBottom="10dp"
+                android:text="@string/dashboard_likes"
+                android:textAlignment="textEnd"
+                android:textColor="@color/primaryBrown"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/catalogBtn"
+                app:layout_constraintTop_toTopOf="@id/catalogBtn"
+                tools:ignore="RtlCompat" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="50dp"
+                android:background="@color/grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/catalogBtn" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPost"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="20dp"
+                android:contentDescription="@string/rv_post_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                tools:listitem="@layout/item_post" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/scrollUpFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/primaryYellow"
+        android:fontFamily="@font/poppins"
+        android:text="@string/scroll_up_button"
+        android:visibility="invisible"
+        app:icon="@drawable/ic_top"
+        app:iconSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/catalogBtn" />
+        app:layout_constraintTop_toTopOf="@+id/nestedScrollView"
+        tools:visibility="visible" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPost"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="20dp"
-        android:contentDescription="@string/rv_post_description"
-        tools:listitem="@layout/item_post"
-        app:layout_constraintTop_toBottomOf="@id/divider" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/dashboardFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp"
+        android:backgroundTint="@color/primaryYellow"
+        android:src="@drawable/ic_add_post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
