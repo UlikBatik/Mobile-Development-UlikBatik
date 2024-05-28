@@ -38,6 +38,7 @@
     <string name="dashboard_scan">SCAN</string>
     <string name="dashboard_catalog">CATALOG</string>
     <string name="dashboard_likes">LIKES</string>
+    <string name="scroll_up_button">Scroll Up</string>
 
     <!--  DRAWER  -->
     <string name="drawer_hello">Hello !</string>
@@ -86,4 +87,5 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+
 </resources>
