@@ -1,6 +1,7 @@
 package com.example.ulikbatik.data.repository
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.ulikbatik.data.remote.config.ApiService
@@ -13,9 +14,10 @@ import retrofit2.Response
 class AuthRepository(
     private val apiService: ApiService
 ) {
-    fun login(email: String, password: String) :LiveData<AuthResponse>{
+
+    fun login(email: String, password: String): LiveData<AuthResponse> {
         val resultLiveData = MutableLiveData<AuthResponse>()
-        val reqBody = LoginBodyRequest(email, password)
+        val reqBody = LoginBodyRequest(email= email, password = password)
         val client = apiService.login(reqBody)
         client.enqueue(
             object : Callback<AuthResponse> {
@@ -25,6 +27,7 @@ class AuthRepository(
                 ) {
                     if (response.isSuccessful) {
                         resultLiveData.value = response.body()
+                        Log.d("AuthRepository", response.body()?.token.toString())
                     }
                 }
 

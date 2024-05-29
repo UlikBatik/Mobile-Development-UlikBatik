@@ -10,7 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.FragmentLoginBinding
-import com.example.ulikbatik.ui.MainActivity
+import com.example.ulikbatik.ui.dashboard.DashboardActivity
 
 class LoginFragment : Fragment() {
 
@@ -41,10 +41,15 @@ class LoginFragment : Fragment() {
                 val email = emailEdit.text.toString()
                 val password = passwordEdit.text.toString()
 
-                authViewModel.login(email, password).observe(viewLifecycleOwner){
-                    if (it != null){
-                        val intent = Intent(requireContext(), MainActivity::class.java)
-                        startActivity(intent)
+
+
+                authViewModel.login(email, password).observe(requireActivity()) {
+                    if (it != null) {
+                        if (it.status) {
+                            val intent = Intent(requireActivity(), DashboardActivity::class.java)
+                            startActivity(intent)
+                            requireActivity().finish()
+                        }
                     }
                 }
             }

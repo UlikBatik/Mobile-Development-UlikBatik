@@ -10,7 +10,7 @@ class AuthViewModel(
 ) : ViewModel() {
 
     fun login(email: String, password: String): LiveData<AuthResponse> {
-       return authRepository.login(email, password)
+        return authRepository.login(email, password)
     }
 
 }
