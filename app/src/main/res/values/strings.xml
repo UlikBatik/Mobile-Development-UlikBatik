@@ -88,4 +88,9 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
 
+    <!--   Error Message -->
+    <string name="password_error_empty">Password should not empty</string>
+    <string name="email_error_empty">Email should not empty</string>
+    <string name="error_invalid_input">Invalid Input</string>
+
 </resources>
