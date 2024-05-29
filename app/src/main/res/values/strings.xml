@@ -5,6 +5,7 @@
     <!--  CONSTANTA  -->
     <string name="username">username</string>
     <string name="password">password</string>
+    <string name="confirm_password">confirm password</string>
     <string name="email">e-mail</string>
     <string name="description">Description</string>
     <string name="batik_name">Batik Name</string>
@@ -91,6 +92,9 @@
     <!--   Error Message -->
     <string name="password_error_empty">Password should not empty</string>
     <string name="email_error_empty">Email should not empty</string>
+    <string name="error_empty">This field should not empty</string>
     <string name="error_invalid_input">Invalid Input</string>
+    <string name="error_invalid_data">Invalid Email or Password</string>
+    <string name="error_match">Password not match</string>
 
 </resources>

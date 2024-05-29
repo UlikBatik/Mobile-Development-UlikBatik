@@ -8,10 +8,10 @@ data class RegisterResponse(
 	val data: Data? = null,
 
 	@field:SerializedName("message")
-	val message: String? = null,
+	val message: String,
 
 	@field:SerializedName("status")
-	val status: Boolean? = null,
+	val status: Boolean,
 
 	@field:SerializedName("token")
 	val token: String? = null
@@ -20,23 +20,23 @@ data class RegisterResponse(
 data class Data(
 
 	@field:SerializedName("PASSWORD")
-	val pASSWORD: String? = null,
+	val password: String? = null,
 
 	@field:SerializedName("UPDATEDAT")
-	val uPDATEDAT: String? = null,
+	val updateAt: String? = null,
 
 	@field:SerializedName("USERID")
-	val uSERID: String? = null,
+	val userId: String? = null,
 
 	@field:SerializedName("USERNAME")
-	val uSERNAME: String? = null,
+	val username: String? = null,
 
 	@field:SerializedName("CREATEDAT")
-	val cREATEDAT: String? = null,
+	val createdAt: String? = null,
 
 	@field:SerializedName("PROFILEIMG")
-	val pROFILEIMG: Any? = null,
+	val profileImage: Any? = null,
 
 	@field:SerializedName("EMAIL")
-	val eMAIL: String? = null
+	val email: String? = null
 )
