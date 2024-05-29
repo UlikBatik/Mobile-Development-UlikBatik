@@ -1,38 +1,40 @@
 package com.example.ulikbatik.data.repository
 
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.ulikbatik.data.remote.config.ApiService
 import com.example.ulikbatik.data.remote.request.LoginBodyRequest
-import com.example.ulikbatik.data.remote.response.AuthResponse
+import com.example.ulikbatik.data.remote.response.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AuthRepository(
-    private val apiService: ApiService
+    private val apiService: ApiService,
 ) {
 
-    fun login(email: String, password: String): LiveData<AuthResponse> {
-        val resultLiveData = MutableLiveData<AuthResponse>()
-        val reqBody = LoginBodyRequest(email= email, password = password)
+    fun login(email: String, password: String): LiveData<LoginResponse> {
+        val resultLiveData = MutableLiveData<LoginResponse>()
+        val reqBody = LoginBodyRequest(email = email, password = password)
         val client = apiService.login(reqBody)
         client.enqueue(
-            object : Callback<AuthResponse> {
+            object : Callback<LoginResponse> {
                 override fun onResponse(
-                    call: Call<AuthResponse>,
-                    response: Response<AuthResponse>
+                    call: Call<LoginResponse>,
+                    response: Response<LoginResponse>
                 ) {
                     if (response.isSuccessful) {
                         resultLiveData.value = response.body()
-                        Log.d("AuthRepository", response.body()?.token.toString())
+                    }else{
+                        resultLiveData.value =
+                            LoginResponse(message = response.code().toString(), status = false)
                     }
                 }
 
-                override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
-                    //logic failed
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    resultLiveData.value =
+                        LoginResponse(message = t.message.toString(), status = false)
                 }
             }
         )

@@ -1,7 +1,6 @@
 package com.example.ulikbatik.data.remote.config
 
 import com.google.gson.GsonBuilder
-import de.hdodenhof.circleimageview.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
