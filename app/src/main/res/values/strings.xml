@@ -101,5 +101,9 @@
 
     <!--    toast info-->
     <string name="no_media_selected">no media selected</string>
+    <string name="failed_to_use_camera">failed to use camera</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="failed_to_took_picture">failed to took picture</string>
+    <string name="permission_granted">permission granted</string>
 
 </resources>
