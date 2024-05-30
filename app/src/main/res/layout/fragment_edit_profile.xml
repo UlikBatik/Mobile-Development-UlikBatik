@@ -50,7 +50,7 @@
         android:id="@+id/imageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@tools:sample/avatars"
+        android:src="@drawable/ic_profile_fill"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         app:layout_constraintStart_toStartOf="parent"
