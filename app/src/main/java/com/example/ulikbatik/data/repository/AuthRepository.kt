@@ -5,7 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.ulikbatik.data.remote.config.ApiService
 import com.example.ulikbatik.data.remote.request.LoginBodyRequest
+import com.example.ulikbatik.data.remote.request.RegisterBodyRequest
 import com.example.ulikbatik.data.remote.response.LoginResponse
+import com.example.ulikbatik.data.remote.response.RegisterResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,8 +38,28 @@ class AuthRepository(
                     resultLiveData.value =
                         LoginResponse(message = t.message.toString(), status = false)
                 }
+            })
+        return resultLiveData
+    }
+
+    fun register(username: String, email: String, password: String, confirmPassword: String): LiveData<RegisterResponse> {
+        val resultLiveData = MutableLiveData<RegisterResponse>()
+        val reqBody = RegisterBodyRequest(username = username, email = email, password = password, confirmPassword = confirmPassword)
+        val client = apiService.register(reqBody)
+        client.enqueue(
+            object : Callback<RegisterResponse> {
+            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+                if (response.isSuccessful) {
+                    resultLiveData.value = response.body()
+                } else {
+                    resultLiveData.value = RegisterResponse(message = response.code().toString(), status = false)
+                }
             }
-        )
+
+            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                resultLiveData.value = RegisterResponse(message = t.message.toString(), status = false)
+            }
+        })
 
         return resultLiveData
     }

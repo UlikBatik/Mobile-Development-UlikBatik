@@ -11,4 +11,5 @@
     <color name="primaryCream">#FFF7D4</color>
     <color name="secondaryOrange">#33C07F00</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="red">#FF0000</color>
 </resources>

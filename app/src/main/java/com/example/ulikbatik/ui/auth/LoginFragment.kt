@@ -2,16 +2,17 @@ package com.example.ulikbatik.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.ThemedSpinnerAdapter
 import androidx.fragment.app.activityViewModels
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.FragmentLoginBinding
 import com.example.ulikbatik.ui.dashboard.DashboardActivity
+import com.example.ulikbatik.utils.Helper
 
 class LoginFragment : Fragment() {
 
@@ -31,43 +32,43 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val email = arguments?.getString("email")
+        val password = arguments?.getString("password")
+
+        binding.emailEdit.setText(email)
+        binding.passwordEdit.setText(password)
+
         setupView()
         onBack()
     }
 
     private fun setupView() {
+
+
         binding.apply {
             loginBtn.setOnClickListener {
                 val email = emailEdit.text.toString()
                 val password = passwordEdit.text.toString()
-                emailTextInputLayout.error = null
-                passwordTextInputLayout.error = null
-                if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    emailTextInputLayout.error = getString(R.string.email_error_empty)
-                }
-                if (password.isEmpty() || password.length < 8) {
-                    passwordTextInputLayout.error = getString(R.string.password_error_empty)
-                }
-                if (email.isNotEmpty() && password.isNotEmpty()) {
+
+                if (validateData(email, password)) {
                     authViewModel.login(email, password).observe(requireActivity()) {
                         if (it.status) {
-                            val intent =
-                                Intent(requireActivity(), DashboardActivity::class.java)
-                            startActivity(intent)
+                            Helper.showToast(requireContext(), it.message)
+
+                            startActivity(Intent(requireActivity(), DashboardActivity::class.java))
                             requireActivity().finish()
-                        } else {
-                            when (it.message) {
+                        } else  {
+                            when(it.message){
                                 "400" -> {
-                                    emailTextInputLayout.error =
-                                        getString(R.string.error_invalid_input)
-                                    passwordTextInputLayout.error =
-                                        getString(R.string.error_invalid_input)
+                                    Helper.showToast(requireContext(),
+                                        requireContext().getString(R.string.error_invalid_data))
                                 }
                             }
                         }
                     }
                 }
             }
+
             registerBtn.setOnClickListener {
                 parentFragmentManager.beginTransaction().apply {
                     replace(R.id.authContainer, RegisterFragment())
@@ -76,6 +77,42 @@ class LoginFragment : Fragment() {
             }
         }
     }
+
+    private fun validateData(email: String, password: String): Boolean {
+        var isValid = true
+
+        binding.apply {
+            when {
+                email.isEmpty() -> {
+                    emailTextInputLayout.error = getString(R.string.email_error_empty)
+                    isValid = false
+                }
+                !Helper.validateEmail(email) -> {
+                    emailTextInputLayout.error = getString(R.string.error_invalid_input)
+                    isValid = false
+                }
+                else -> {
+                    emailTextInputLayout.error = null
+                }
+            }
+
+            when {
+                password.isEmpty() -> {
+                    passwordTextInputLayout.error = getString(R.string.password_error_empty)
+                    isValid = false
+                }
+                !Helper.validatePassword(password) -> {
+                    passwordTextInputLayout.error = getString(R.string.error_invalid_input)
+                    isValid = false
+                }
+                else -> {
+                    passwordTextInputLayout.error = null
+                }
+            }
+        }
+        return isValid
+    }
+
 
     private fun onBack() {
         requireActivity().onBackPressedDispatcher.addCallback(
