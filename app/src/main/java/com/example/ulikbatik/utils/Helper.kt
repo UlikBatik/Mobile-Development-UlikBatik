@@ -18,7 +18,7 @@ object Helper {
     }
 
     fun validatePassword(password: String): Boolean{
-        return password.length > 8
+        return password.length >= 8
     }
 
     fun confirmPassword(password: String, confirmPassword: String): Boolean{

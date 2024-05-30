@@ -32,11 +32,19 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val email = arguments?.getString("email")
+        val password = arguments?.getString("password")
+
+        binding.emailEdit.setText(email)
+        binding.passwordEdit.setText(password)
+
         setupView()
         onBack()
     }
 
     private fun setupView() {
+
+
         binding.apply {
             loginBtn.setOnClickListener {
                 val email = emailEdit.text.toString()

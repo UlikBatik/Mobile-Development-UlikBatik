@@ -47,8 +47,14 @@ class RegisterFragment : Fragment() {
                     authViewModel.register(username,email, password, confirmPassword).observe(requireActivity()){
                         if (it.status) {
                             Helper.showToast(requireContext(), it.message)
+                            val loginFragment = LoginFragment().apply {
+                                arguments = Bundle().apply {
+                                    putString("email", email)
+                                    putString("password", password)
+                                }
+                            }
                             parentFragmentManager.beginTransaction().apply {
-                                replace(R.id.authContainer, LoginFragment())
+                                replace(R.id.authContainer, loginFragment)
                                 addToBackStack(null)
                             }.commit()
                         } else {
@@ -95,7 +101,7 @@ class RegisterFragment : Fragment() {
                     isValid = false
                 }
                 !Helper.validatePassword(password) -> {
-                    passwordTextInputLayout.error = getString(R.string.error_invalid_input)
+                    passwordTextInputLayout.error = getString(R.string.password_error_8)
                     isValid = false
                 }
                 else -> {
