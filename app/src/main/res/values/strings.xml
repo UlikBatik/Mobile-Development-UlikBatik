@@ -80,6 +80,7 @@
     <string name="grid_description">GRID_BTN</string>
     <string name="list_description">LIST_BTN</string>
     <string name="rv_post_description">RV_POST</string>
+    <string name="btn_dashboard">BTN_DASHBOARD</string>
 
 
     <!--  DRAWER BUILD IN  -->

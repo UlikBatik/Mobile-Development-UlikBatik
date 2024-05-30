@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/settingTitle"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="60dp"
         android:background="@drawable/button_gradient"
         android:fontFamily="@font/gfs_didot"
@@ -35,9 +35,9 @@
         android:layout_height="80dp"
         android:contentDescription="@string/img_icon_description"
         android:src="@drawable/ic_ulik_batik"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toTopOf="@id/settingTitle"
-        app:layout_constraintStart_toStartOf="@id/settingTitle"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

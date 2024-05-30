@@ -38,10 +38,8 @@
             android:name=".ui.catalog.CatalogActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.dashboard.DashboardActivity"
-            android:exported="false"
-            android:label="@string/title_activity_dashboard"
-            android:theme="@style/Theme.UlikBatik.NoActionBar" />
+            android:name=".ui.scan.ScanActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.auth.AuthActivity"
             android:exported="false" />
@@ -49,7 +47,9 @@
             android:name=".ui.detailPost.DetailPostActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.scan.ScanActivity"
+            android:name=".ui.dashboard.DashboardActivity"
+            android:label="@string/title_activity_dashboard"
+            android:theme="@style/Theme.UlikBatik.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

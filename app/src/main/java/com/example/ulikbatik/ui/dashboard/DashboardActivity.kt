@@ -9,7 +9,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ulikbatik.R
+import com.example.ulikbatik.data.PostDummy
 import com.example.ulikbatik.databinding.ActivityDashboardBinding
 
 class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -22,6 +25,20 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setDrawer()
+        setView()
+    }
+
+    private fun setView() {
+
+        val posts = PostDummy.getPosts()
+
+        val recyclerView: RecyclerView = findViewById(R.id.rvPost)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = DashboardAdapter(posts)
+    }
+
+    private fun setDrawer() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -41,6 +58,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
         }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.dashboard, menu)
