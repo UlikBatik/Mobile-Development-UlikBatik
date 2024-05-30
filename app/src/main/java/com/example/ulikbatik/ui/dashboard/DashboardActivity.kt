@@ -30,12 +30,9 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun setView() {
-
         val posts = PostDummy.getPosts()
-
-        val recyclerView: RecyclerView = findViewById(R.id.rvPost)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = DashboardAdapter(posts)
+        binding.contentDashboard.rvPost.layoutManager = LinearLayoutManager(this)
+        binding.contentDashboard.rvPost.adapter = DashboardAdapter(posts)
     }
 
     private fun setDrawer() {
@@ -58,7 +55,6 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
         }
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.dashboard, menu)

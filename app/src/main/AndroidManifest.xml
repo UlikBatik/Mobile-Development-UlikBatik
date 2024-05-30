@@ -23,33 +23,33 @@
             android:name=".ui.boarding.BoardingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.detailCatalog.DetailCatalogActivity"
+            android:name=".ui.upload.UploadActivity"
             android:exported="false" />
         <activity
             android:name=".ui.profile.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.upload.UploadActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.likes.LikesActivity"
+            android:name=".ui.scan.ScanActivity"
             android:exported="false" />
         <activity
             android:name=".ui.catalog.CatalogActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.detailPost.DetailPostActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.scan.ScanActivity"
+            android:name=".ui.detailCatalog.DetailCatalogActivity"
             android:exported="false" />
         <activity
             android:name=".ui.auth.AuthActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.detailPost.DetailPostActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.dashboard.DashboardActivity"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/Theme.UlikBatik.NoActionBar"
+            android:exported="false" />
+        <activity
+            android:name=".ui.likes.LikesActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

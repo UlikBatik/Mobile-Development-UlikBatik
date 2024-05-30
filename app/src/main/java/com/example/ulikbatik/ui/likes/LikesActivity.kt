@@ -5,7 +5,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ulikbatik.R
+import com.example.ulikbatik.data.LikesDummy
 import com.example.ulikbatik.databinding.ActivityLikesBinding
 
 class LikesActivity : AppCompatActivity() {
@@ -20,5 +22,13 @@ class LikesActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        setView()
+    }
+
+    private fun setView() {
+        val likes = LikesDummy.getLikes()
+        binding.rvLikes.layoutManager = LinearLayoutManager(this)
+        binding.rvLikes.adapter = LikesAdapter(likes)
     }
 }

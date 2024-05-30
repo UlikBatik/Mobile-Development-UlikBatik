@@ -35,7 +35,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cam_cardview"
         android:layout_width="300dp"
-        android:layout_height="500dp"
+        android:layout_height="400dp"
         android:layout_marginHorizontal="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="100dp"
