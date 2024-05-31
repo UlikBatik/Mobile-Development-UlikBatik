@@ -7,12 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.widget.ThemedSpinnerAdapter
 import androidx.fragment.app.activityViewModels
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.FragmentLoginBinding
 import com.example.ulikbatik.ui.dashboard.DashboardActivity
-import com.example.ulikbatik.utils.Helper
+import com.example.ulikbatik.utils.helper.Helper
 
 class LoginFragment : Fragment() {
 
