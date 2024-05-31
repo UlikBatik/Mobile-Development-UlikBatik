@@ -1,4 +1,4 @@
-package com.example.ulikbatik.utils
+package com.example.ulikbatik.utils.helper
 
 import android.content.Context
 import android.util.Patterns

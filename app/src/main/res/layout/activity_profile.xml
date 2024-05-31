@@ -26,9 +26,10 @@
         android:fontFamily="@font/scheherazade"
         android:text="@string/profile_likes_sum"
         android:textSize="28sp"
+        android:layout_marginStart="30dp"
         app:layout_constraintBottom_toBottomOf="@id/username_profile"
         app:layout_constraintStart_toEndOf="@id/backButton"
-        app:layout_constraintEnd_toEndOf="@id/tv_posts"
+        app:layout_constraintEnd_toStartOf="@id/tv_posts"
         app:layout_constraintTop_toTopOf="@id/username_profile" />
 
     <TextView

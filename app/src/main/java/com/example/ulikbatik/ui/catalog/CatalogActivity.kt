@@ -26,6 +26,15 @@ class CatalogActivity : AppCompatActivity() {
         }
 
         setView()
+        setAction()
+    }
+
+    private fun setAction() {
+        binding.apply{
+            backButton.setOnClickListener{
+                finish()
+            }
+        }
     }
 
     private fun setView() {

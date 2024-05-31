@@ -30,5 +30,9 @@ class LikesActivity : AppCompatActivity() {
         val likes = LikesDummy.getLikes()
         binding.rvLikes.layoutManager = LinearLayoutManager(this)
         binding.rvLikes.adapter = LikesAdapter(likes)
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
     }
 }

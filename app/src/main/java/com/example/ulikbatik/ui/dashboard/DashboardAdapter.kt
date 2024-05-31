@@ -1,11 +1,13 @@
 package com.example.ulikbatik.ui.dashboard
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ulikbatik.data.Post
 import com.example.ulikbatik.data.PostDummy
 import com.example.ulikbatik.databinding.ItemPostBinding
+import com.example.ulikbatik.ui.detailPost.DetailPostActivity
 
 class DashboardAdapter(private val posts: List<Post>) : RecyclerView.Adapter<DashboardAdapter.PostViewHolder>() {
 
@@ -25,8 +27,16 @@ class DashboardAdapter(private val posts: List<Post>) : RecyclerView.Adapter<Das
     class PostViewHolder(private val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(post: Post) {
-            binding.imagePost.setImageResource(post.imageRes)
-            binding.usernameTv.text = post.username
+            binding.apply{
+
+                imagePost.setImageResource(post.imageRes)
+                usernameTv.text = post.username
+
+                itemPost.setOnClickListener {
+                    val intent = Intent(binding.root.context, DetailPostActivity::class.java)
+                    binding.root.context.startActivity(intent)
+                }
+            }
         }
     }
 }
