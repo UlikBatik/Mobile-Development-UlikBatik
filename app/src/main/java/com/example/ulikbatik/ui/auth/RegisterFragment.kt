@@ -9,7 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.FragmentRegisterBinding
-import com.example.ulikbatik.utils.helper.Helper
+import com.example.ulikbatik.utils.helper.ValidatorAuthHelper
 
 class RegisterFragment : Fragment() {
     private lateinit var binding : FragmentRegisterBinding
@@ -44,7 +44,7 @@ class RegisterFragment : Fragment() {
                 if(validateData(username, email, password, confirmPassword)){
                     authViewModel.register(username,email, password, confirmPassword).observe(requireActivity()){
                         if (it.status) {
-                            Helper.showToast(requireContext(), it.message)
+                            ValidatorAuthHelper.showToast(requireContext(), it.message)
                             val loginFragment = LoginFragment().apply {
                                 arguments = Bundle().apply {
                                     putString("email", email)
@@ -58,7 +58,7 @@ class RegisterFragment : Fragment() {
                         } else {
                             when (it.message) {
                                 "400" -> {
-                                    Helper.showToast(requireContext(), requireContext().getString(R.string.error_invalid_input))
+                                    ValidatorAuthHelper.showToast(requireContext(), requireContext().getString(R.string.error_invalid_input))
                                 }
                             }
                         }
@@ -84,7 +84,7 @@ class RegisterFragment : Fragment() {
                     emailTextInputLayout.error = getString(R.string.error_empty)
                     isValid = false
                 }
-                !Helper.validateEmail(email) -> {
+                !ValidatorAuthHelper.validateEmail(email) -> {
                     emailTextInputLayout.error = getString(R.string.error_invalid_input)
                     isValid = false
                 }
@@ -98,7 +98,7 @@ class RegisterFragment : Fragment() {
                     passwordTextInputLayout.error = getString(R.string.error_empty)
                     isValid = false
                 }
-                !Helper.validatePassword(password) -> {
+                !ValidatorAuthHelper.validatePassword(password) -> {
                     passwordTextInputLayout.error = getString(R.string.password_error_8)
                     isValid = false
                 }
@@ -122,7 +122,7 @@ class RegisterFragment : Fragment() {
                     confirmPasswordTextInputLayout.error = getString(R.string.error_empty)
                     isValid = false
                 }
-                !Helper.confirmPassword(password, confirmPassword) -> {
+                !ValidatorAuthHelper.confirmPassword(password, confirmPassword) -> {
                     confirmPasswordTextInputLayout.error = getString(R.string.error_match)
                     isValid = false
                 }
