@@ -6,6 +6,7 @@ import com.example.ulikbatik.data.remote.response.CreatePostResponse
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.data.remote.response.LoginResponse
 import com.example.ulikbatik.data.remote.response.RegisterResponse
+import com.example.ulikbatik.data.remote.response.ScanResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -34,6 +35,13 @@ interface ApiService {
         @Part("USERID") userId: RequestBody,
         @Part("BATIKID") batikId: RequestBody
     ): Call<GeneralResponse<CreatePostResponse>>
+
+
+    @POST("predict")
+    @Multipart
+    fun predict(
+        @Part attachment: MultipartBody.Part
+    ): Call<ScanResponse>
 
 
 }

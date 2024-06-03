@@ -46,11 +46,11 @@
         <activity
             android:name=".ui.likes.LikesActivity"
             android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".ui.auth.AuthActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".ui.auth.AuthActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.boarding.BoardingActivity"
             android:exported="true"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/Theme.UlikBatik.NoActionBar">

@@ -39,15 +39,10 @@ class DetailPostActivity : AppCompatActivity() {
     private fun setToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
 
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
     }
 }

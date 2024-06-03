@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.FragmentLoginBinding
 import com.example.ulikbatik.ui.dashboard.DashboardActivity
-import com.example.ulikbatik.utils.helper.Helper
+import com.example.ulikbatik.utils.helper.ValidatorAuthHelper
 
 class LoginFragment : Fragment() {
 
@@ -52,14 +52,14 @@ class LoginFragment : Fragment() {
                 if (validateData(email, password)) {
                     authViewModel.login(email, password).observe(requireActivity()) {
                         if (it.status) {
-                            Helper.showToast(requireContext(), it.message)
+                            ValidatorAuthHelper.showToast(requireContext(), it.message)
 
                             startActivity(Intent(requireActivity(), DashboardActivity::class.java))
                             requireActivity().finish()
                         } else  {
                             when(it.message){
                                 "400" -> {
-                                    Helper.showToast(requireContext(),
+                                    ValidatorAuthHelper.showToast(requireContext(),
                                         requireContext().getString(R.string.error_invalid_data))
                                 }
                             }
@@ -86,7 +86,7 @@ class LoginFragment : Fragment() {
                     emailTextInputLayout.error = getString(R.string.email_error_empty)
                     isValid = false
                 }
-                !Helper.validateEmail(email) -> {
+                !ValidatorAuthHelper.validateEmail(email) -> {
                     emailTextInputLayout.error = getString(R.string.error_invalid_input)
                     isValid = false
                 }
@@ -100,7 +100,7 @@ class LoginFragment : Fragment() {
                     passwordTextInputLayout.error = getString(R.string.password_error_empty)
                     isValid = false
                 }
-                !Helper.validatePassword(password) -> {
+                !ValidatorAuthHelper.validatePassword(password) -> {
                     passwordTextInputLayout.error = getString(R.string.error_invalid_input)
                     isValid = false
                 }

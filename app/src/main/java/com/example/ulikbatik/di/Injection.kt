@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.ulikbatik.data.remote.config.ApiConfig
 import com.example.ulikbatik.data.repository.AuthRepository
 import com.example.ulikbatik.data.repository.PostRepository
+import com.example.ulikbatik.data.repository.ScanRepository
 
 object Injection {
     fun provideAuthRepository(context: Context): AuthRepository {
@@ -17,5 +18,12 @@ object Injection {
         val apiService =
             ApiConfig.getApiInstance("")
         return PostRepository.getInstance(apiService)
+    }
+
+    fun provideScanRepository(context: Context): ScanRepository {
+        //add datastore buat taro token di parameter token dibawah ini
+        val apiService =
+            ApiConfig.getApiInstance("")
+        return ScanRepository.getInstance(apiService)
     }
 }

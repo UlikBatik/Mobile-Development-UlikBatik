@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Patterns
 import android.widget.Toast
 
-object Helper {
+object ValidatorAuthHelper {
 
     fun showToast(context: Context, msg: String) {
         Toast.makeText(

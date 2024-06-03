@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -24,16 +25,22 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.ActivityScanBinding
 import com.example.ulikbatik.utils.helper.CameraHelper
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.yalantis.ucrop.UCrop
 import java.io.File
 
 class ScanActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityScanBinding
-    private var file: File? = null
     private var currentImageUri: Uri? = null
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private var imageCapture: ImageCapture? = null
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
+    private val scanViewModel: ScanViewModel by viewModels {
+        ScanViewModelFactory.getInstance(applicationContext)
+    }
+
+
     private val orientationEventListener by lazy {
         object : OrientationEventListener(this) {
             override fun onOrientationChanged(orientation: Int) {
@@ -54,14 +61,27 @@ class ScanActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         binding = ActivityScanBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
+        bottomSheetBehavior =
+            BottomSheetBehavior.from(binding.bottomSheetPersistent.standardBottomSheet)
+        bottomSheetBehavior.isHideable = true
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+        scanViewModel.apply {
+            isLoading.observe(this@ScanActivity) {
+                showLoading(it)
+            }
+        }
+
         setupAction()
         startCameraX()
     }
@@ -73,6 +93,12 @@ class ScanActivity : AppCompatActivity() {
             val resultUri = data?.let { UCrop.getOutput(it) }
             resultUri?.let {
                 currentImageUri = it
+                scanViewModel.scanImage(it, this).observe(this) { res ->
+                    bottomSheetBehavior.isHideable = false
+                    bottomSheetBehavior.peekHeight = 700
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    binding.bottomSheetPersistent.batikName.text = res.result
+                }
                 showImage(it)
             }
         } else if (resultCode == UCrop.RESULT_ERROR) {
@@ -210,6 +236,12 @@ class ScanActivity : AppCompatActivity() {
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility =
+            if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
 
     override fun onStart() {
         super.onStart()
