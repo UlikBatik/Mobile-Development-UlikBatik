@@ -8,7 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.ActivityDetailPostBinding
-import com.example.ulikbatik.ui.detailCatalog.DetailCatalogActivity
+import com.example.ulikbatik.ui.catalog.detailCatalog.DetailCatalogActivity
 
 class DetailPostActivity : AppCompatActivity() {
 

@@ -5,13 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.ulikbatik.data.Catalog
-import com.example.ulikbatik.data.Post
 import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.databinding.ItemCatalogBinding
-import com.example.ulikbatik.ui.dashboard.DashboardAdapter
-import com.example.ulikbatik.ui.detailCatalog.DetailCatalogActivity
-import com.example.ulikbatik.ui.detailPost.DetailPostActivity
+import com.example.ulikbatik.ui.catalog.detailCatalog.DetailCatalogActivity
 
 class CatalogAdapter(private val posts: List<BatikModel>) : RecyclerView.Adapter<CatalogAdapter.PostViewHolder>() {
 
@@ -38,6 +34,7 @@ class CatalogAdapter(private val posts: List<BatikModel>) : RecyclerView.Adapter
 
                 itemCatalog.setOnClickListener {
                     val intent = Intent(binding.root.context, DetailCatalogActivity::class.java)
+                    intent.putExtra(DetailCatalogActivity.EXTRA_IDBATIK, data.bATIKID)
                     binding.root.context.startActivity(intent)
                 }
             }
