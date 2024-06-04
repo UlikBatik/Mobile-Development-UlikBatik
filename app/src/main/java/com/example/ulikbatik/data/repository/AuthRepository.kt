@@ -33,6 +33,7 @@ class AuthRepository(
                         resultLiveData.value = response.body()
                         runBlocking {
                             pref.saveTokenUser(response.body()?.token.toString())
+                            pref.saveUserId(response.body()?.data.toString())
                         }
                     }else{
                         resultLiveData.value =
