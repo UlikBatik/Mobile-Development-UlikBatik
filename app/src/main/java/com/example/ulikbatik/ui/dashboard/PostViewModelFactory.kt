@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.ulikbatik.data.repository.PostRepository
 import com.example.ulikbatik.di.Injection
-import com.example.ulikbatik.ui.auth.AuthViewModelFactory
 
 class PostViewModelFactory (
     private val repository: PostRepository

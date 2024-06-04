@@ -1,7 +1,6 @@
 package com.example.ulikbatik.data.model
 
 import com.google.gson.annotations.SerializedName
-import retrofit2.http.Url
 
 data class PostModel(
     @SerializedName("USERID")
@@ -14,7 +13,7 @@ data class PostModel(
     val batikId: String,
 
     @SerializedName("POSTIMG")
-    val postImg: Url,
+    val postImg: String,
 
     @SerializedName("CAPTION")
     val caption: String,
