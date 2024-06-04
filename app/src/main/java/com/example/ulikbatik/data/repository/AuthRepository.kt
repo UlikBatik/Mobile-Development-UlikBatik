@@ -3,17 +3,20 @@ package com.example.ulikbatik.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.data.remote.config.ApiService
 import com.example.ulikbatik.data.remote.request.LoginBodyRequest
 import com.example.ulikbatik.data.remote.request.RegisterBodyRequest
 import com.example.ulikbatik.data.remote.response.LoginResponse
 import com.example.ulikbatik.data.remote.response.RegisterResponse
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AuthRepository(
     private val apiService: ApiService,
+    private val pref: UserPreferences
 ) {
 
     fun login(email: String, password: String): LiveData<LoginResponse> {
@@ -28,6 +31,9 @@ class AuthRepository(
                 ) {
                     if (response.isSuccessful) {
                         resultLiveData.value = response.body()
+                        runBlocking {
+                            pref.saveTokenUser(response.body()?.token.toString())
+                        }
                     }else{
                         resultLiveData.value =
                             LoginResponse(message = response.code().toString(), status = false)
@@ -69,10 +75,11 @@ class AuthRepository(
         @Volatile
         private var instance: AuthRepository? = null
         fun getInstance(
-            apiService: ApiService
+            apiService: ApiService,
+            pref: UserPreferences
         ): AuthRepository =
             instance ?: synchronized(this) {
-                instance ?: AuthRepository(apiService)
+                instance ?: AuthRepository(apiService, pref)
             }.also { instance = it }
     }
 }

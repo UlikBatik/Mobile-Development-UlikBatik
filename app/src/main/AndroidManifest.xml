@@ -46,13 +46,9 @@
         <activity
             android:name=".ui.likes.LikesActivity"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".ui.auth.AuthActivity"-->
-<!--            android:exported="false" />-->
         <activity
             android:name=".ui.auth.AuthActivity"
             android:exported="true"
-            android:label="@string/title_activity_dashboard"
             android:theme="@style/Theme.UlikBatik.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
