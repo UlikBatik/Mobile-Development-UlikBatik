@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.ulikbatik.R
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.databinding.ItemPostBinding
 import com.example.ulikbatik.ui.detailPost.DetailPostActivity
@@ -31,12 +32,14 @@ class DashboardAdapter(private val posts: List<PostModel>) :
             binding.apply {
                 Glide.with(binding.root)
                     .load(post.postImg)
+                    .placeholder(R.drawable.img_placeholder)
                     .into(imagePost)
 
                 usernameTv.text = post.userId
 
                 itemPost.setOnClickListener {
                     val intent = Intent(binding.root.context, DetailPostActivity::class.java)
+                    intent.putExtra(DetailPostActivity.EXTRA_ID_POST, post.postId)
                     binding.root.context.startActivity(intent)
                 }
             }

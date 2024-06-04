@@ -24,6 +24,11 @@ interface ApiService {
     @GET("posts")
     fun getAllPosts(): Call<GeneralResponse<List<PostModel>>>
 
+    @GET("post/{postID}")
+    fun getPost(
+        @Path("postID") postId: String
+    ): Call<GeneralResponse<PostModel>>
+
     @POST("login")
     fun login(
         @Body loginBodyRequest: LoginBodyRequest

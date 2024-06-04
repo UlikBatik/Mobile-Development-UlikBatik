@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.ulikbatik.data.repository.PostRepository
 import com.example.ulikbatik.di.Injection
+import com.example.ulikbatik.ui.detailPost.DetailPostActivity
+import com.example.ulikbatik.ui.detailPost.DetailPostViewModel
 
 class PostViewModelFactory (
     private val repository: PostRepository
@@ -14,6 +16,7 @@ class PostViewModelFactory (
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when (modelClass) {
             DashboardViewModel::class.java -> return DashboardViewModel(repository) as T
+            DetailPostViewModel::class.java -> return DetailPostViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

@@ -3,6 +3,7 @@ package com.example.ulikbatik.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.ulikbatik.data.Post
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.remote.config.ApiService
 import com.example.ulikbatik.data.remote.response.GeneralResponse
@@ -14,7 +15,7 @@ class PostRepository(
     private val apiService: ApiService
 ) {
 
-    fun getPost(): LiveData<GeneralResponse<List<PostModel>>>{
+    fun getAllPost(): LiveData<GeneralResponse<List<PostModel>>>{
         val resultLiveData = MutableLiveData<GeneralResponse<List<PostModel>>>()
         val client = apiService.getAllPosts()
         client.enqueue(
@@ -36,6 +37,34 @@ class PostRepository(
                         GeneralResponse(message = t.message.toString(), status = false)
                 }
             })
+        return resultLiveData
+    }
+
+    fun getPost(postId: String): LiveData<GeneralResponse<PostModel>> {
+        val resultLiveData = MutableLiveData<GeneralResponse<PostModel>>()
+        val client = apiService.getPost(postId)
+
+        client.enqueue(object : Callback<GeneralResponse<PostModel>> {
+            override fun onResponse(
+                call: Call<GeneralResponse<PostModel>>,
+                response: Response<GeneralResponse<PostModel>>
+            ) {
+                if (response.isSuccessful) {
+                    resultLiveData.value = response.body()
+                } else {
+                    resultLiveData.value = GeneralResponse(
+                        message = "Error: ${response.code()} ${response.message()}",
+                        status = false
+                    )
+                }
+            }
+            override fun onFailure(call: Call<GeneralResponse<PostModel>>, t: Throwable) {
+                resultLiveData.value = GeneralResponse(
+                    message = "Failure: ${t.message}",
+                    status = false
+                )
+            }
+        })
         return resultLiveData
     }
 
