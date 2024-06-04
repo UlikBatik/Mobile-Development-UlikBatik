@@ -1,20 +1,22 @@
 package com.example.ulikbatik.ui.dashboard
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import androidx.activity.addCallback
+import androidx.activity.viewModels
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ulikbatik.R
-import com.example.ulikbatik.data.PostDummy
+import com.example.ulikbatik.data.model.PostModel
+import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityDashboardBinding
 import com.example.ulikbatik.ui.catalog.CatalogActivity
 import com.example.ulikbatik.ui.likes.LikesActivity
@@ -25,6 +27,10 @@ import com.example.ulikbatik.ui.upload.UploadActivity
 class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDashboardBinding
+    private val dashboardViewModel: DashboardViewModel by viewModels {
+        PostViewModelFactory.getInstance(applicationContext)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +45,14 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         )
 
         setDrawer()
-        setView()
+
         setAction()
+
+        dashboardViewModel.getPost().observe(this){
+            if (it != null){
+                setView(it)
+            }
+        }
     }
 
     private fun setAction(){
@@ -72,11 +84,13 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
-    private fun setView() {
-        val posts = PostDummy.getPosts()
-        binding.apply {
-            contentDashboard.rvPost.layoutManager = LinearLayoutManager(this@DashboardActivity)
-            contentDashboard.rvPost.adapter = DashboardAdapter(posts)
+    private fun setView(res: GeneralResponse<List<PostModel>>) {
+        if(res.data != null) {
+            binding.apply {
+                contentDashboard.rvPost.layoutManager =
+                    LinearLayoutManager(this@DashboardActivity)
+                contentDashboard.rvPost.adapter = DashboardAdapter(res.data)
+            }
         }
     }
 

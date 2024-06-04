@@ -1,5 +1,6 @@
 package com.example.ulikbatik.data.remote.config
 
+import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.data.remote.request.LoginBodyRequest
 import com.example.ulikbatik.data.remote.request.RegisterBodyRequest
@@ -19,6 +20,14 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
+
+    @GET("posts")
+    fun getAllPosts(): Call<GeneralResponse<List<PostModel>>>
+
+    @GET("post/{postID}")
+    fun getPost(
+        @Path("postID") postId: String
+    ): Call<GeneralResponse<PostModel>>
 
     @POST("login")
     fun login(
