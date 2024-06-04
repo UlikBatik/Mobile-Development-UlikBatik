@@ -1,10 +1,11 @@
-package com.example.ulikbatik.ui.scan
+package com.example.ulikbatik.ui.factory
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.ulikbatik.data.repository.ScanRepository
 import com.example.ulikbatik.di.Injection
+import com.example.ulikbatik.ui.scan.ScanViewModel
 
 class ScanViewModelFactory(
     private val scanRepository: ScanRepository

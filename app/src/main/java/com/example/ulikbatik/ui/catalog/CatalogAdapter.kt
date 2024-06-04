@@ -4,14 +4,16 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.ulikbatik.data.Catalog
 import com.example.ulikbatik.data.Post
+import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.databinding.ItemCatalogBinding
 import com.example.ulikbatik.ui.dashboard.DashboardAdapter
 import com.example.ulikbatik.ui.detailCatalog.DetailCatalogActivity
 import com.example.ulikbatik.ui.detailPost.DetailPostActivity
 
-class CatalogAdapter(private val posts: List<Catalog>) : RecyclerView.Adapter<CatalogAdapter.PostViewHolder>() {
+class CatalogAdapter(private val posts: List<BatikModel>) : RecyclerView.Adapter<CatalogAdapter.PostViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = ItemCatalogBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,12 +30,16 @@ class CatalogAdapter(private val posts: List<Catalog>) : RecyclerView.Adapter<Ca
 
     class PostViewHolder(private val binding: ItemCatalogBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(post: Catalog) {
-            binding.imgBatik.setImageResource(post.imageRes)
+        fun bind(data: BatikModel) {
+            binding.apply {
+                Glide.with(binding.root)
+                    .load(data.bATIKIMG)
+                    .into(imgBatik)
 
-            binding.itemCatalog.setOnClickListener {
-                val intent = Intent(binding.root.context, DetailCatalogActivity::class.java)
-                binding.root.context.startActivity(intent)
+                itemCatalog.setOnClickListener {
+                    val intent = Intent(binding.root.context, DetailCatalogActivity::class.java)
+                    binding.root.context.startActivity(intent)
+                }
             }
         }
     }

@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.FragmentRegisterBinding
+import com.example.ulikbatik.ui.factory.AuthViewModelFactory
 import com.example.ulikbatik.utils.helper.ValidatorAuthHelper
 
 class RegisterFragment : Fragment() {
