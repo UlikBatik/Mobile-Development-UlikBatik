@@ -1,10 +1,11 @@
-package com.example.ulikbatik.ui.scan
+package com.example.ulikbatik.ui.factory
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.ulikbatik.data.repository.ScanRepository
 import com.example.ulikbatik.di.Injection
+import com.example.ulikbatik.ui.scan.ScanViewModel
 
 class ScanViewModelFactory(
     private val scanRepository: ScanRepository
@@ -26,9 +27,7 @@ class ScanViewModelFactory(
 
         @JvmStatic
         fun getInstance(context: Context): ScanViewModelFactory {
-            instance ?: synchronized(ScanViewModelFactory::class.java) {
-                instance = ScanViewModelFactory(Injection.provideScanRepository(context))
-            }
+            instance = ScanViewModelFactory(Injection.provideScanRepository(context))
             return instance as ScanViewModelFactory
         }
     }

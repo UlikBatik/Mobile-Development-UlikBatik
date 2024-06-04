@@ -24,6 +24,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.ActivityScanBinding
+import com.example.ulikbatik.ui.factory.ScanViewModelFactory
 import com.example.ulikbatik.utils.helper.CameraHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.yalantis.ucrop.UCrop
@@ -76,10 +77,8 @@ class ScanActivity : AppCompatActivity() {
         bottomSheetBehavior.isHideable = true
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
-        scanViewModel.apply {
-            isLoading.observe(this@ScanActivity) {
-                showLoading(it)
-            }
+        scanViewModel.isLoading.observe(this) {
+            showLoading(it)
         }
 
         setupAction()
@@ -94,10 +93,33 @@ class ScanActivity : AppCompatActivity() {
             resultUri?.let {
                 currentImageUri = it
                 scanViewModel.scanImage(it, this).observe(this) { res ->
-                    bottomSheetBehavior.isHideable = false
-                    bottomSheetBehavior.peekHeight = 700
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                    binding.bottomSheetPersistent.batikName.text = res.result
+                    if (res.status) {
+                        bottomSheetBehavior.isHideable = false
+                        bottomSheetBehavior.peekHeight = 257
+                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+
+                        binding.apply {
+                            bottomSheetPersistent.apply {
+                                batikName.text = res.result?.bATIKNAME
+                                batikDesc.text = res.result?.bATIKDESC
+                                batikLoc.text = res.result?.bATIKLOCT
+                            }
+                        }
+                    } else {
+                        when (res.message.toInt()) {
+                            400 -> {
+                                showToast(getString(R.string.error_invalid_input))
+                            }
+
+                            401 -> {
+                                showToast(getString(R.string.error_unauthorized_401))
+                            }
+
+                            500 -> {
+                                showToast(getString(R.string.error_server_500))
+                            }
+                        }
+                    }
                 }
                 showImage(it)
             }

@@ -1,6 +1,7 @@
 package com.example.ulikbatik.data.remote.config
 
 import com.example.ulikbatik.data.model.PostModel
+import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.data.remote.request.LoginBodyRequest
 import com.example.ulikbatik.data.remote.request.RegisterBodyRequest
 import com.example.ulikbatik.data.remote.response.CreatePostResponse
@@ -16,6 +17,7 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Path
 
 interface ApiService {
 
@@ -48,5 +50,11 @@ interface ApiService {
         @Part attachment: MultipartBody.Part
     ): Call<ScanResponse>
 
+    @GET("batiks")
+    fun getBatik(): Call<GeneralResponse<List<BatikModel>>>
 
+    @GET("batik/{batikId}")
+    fun getDetailBatik(
+        @Path("batikId") batikId: String
+    ): Call<GeneralResponse<BatikModel>>
 }
