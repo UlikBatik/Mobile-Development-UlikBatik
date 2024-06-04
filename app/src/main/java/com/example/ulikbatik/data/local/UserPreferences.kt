@@ -19,8 +19,6 @@ class UserPreferences private constructor(
     private val USER_ID = stringPreferencesKey("user_id")
     private val SESSION_BOARDING = booleanPreferencesKey("session_boarding")
 
-
-
     fun getUserToken(): Flow<String?> {
         return dataStore.data.map { preferences ->
             preferences[TOKEN_KEY]

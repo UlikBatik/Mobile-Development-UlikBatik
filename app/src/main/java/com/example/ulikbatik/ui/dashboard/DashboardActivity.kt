@@ -1,30 +1,44 @@
 package com.example.ulikbatik.ui.dashboard
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.activity.viewModels
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.GravityCompat
 import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.PostDummy
+import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.databinding.ActivityDashboardBinding
+import com.example.ulikbatik.ui.auth.AuthViewModel
+import com.example.ulikbatik.ui.auth.AuthViewModelFactory
 import com.example.ulikbatik.ui.catalog.CatalogActivity
 import com.example.ulikbatik.ui.likes.LikesActivity
 import com.example.ulikbatik.ui.profile.ProfileActivity
 import com.example.ulikbatik.ui.scan.ScanActivity
+import com.example.ulikbatik.ui.scan.ScanViewModel
+import com.example.ulikbatik.ui.scan.ScanViewModelFactory
 import com.example.ulikbatik.ui.upload.UploadActivity
 
 class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDashboardBinding
+    private val dashboardViewModel: DashboardViewModel by viewModels {
+        PostViewModelFactory.getInstance(applicationContext)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,10 +87,12 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun setView() {
-        val posts = PostDummy.getPosts()
-        binding.apply {
-            contentDashboard.rvPost.layoutManager = LinearLayoutManager(this@DashboardActivity)
-            contentDashboard.rvPost.adapter = DashboardAdapter(posts)
+
+        dashboardViewModel.getPost().observe(this){ posts ->
+            binding.apply {
+                contentDashboard.rvPost.layoutManager = LinearLayoutManager(this@DashboardActivity)
+                contentDashboard.rvPost.adapter = DashboardAdapter(posts.data!!)
+            }
         }
     }
 
