@@ -1,11 +1,12 @@
 package com.example.ulikbatik.data.remote.response
 
+import com.example.ulikbatik.data.model.BatikModel
 import com.google.gson.annotations.SerializedName
 
 data class ScanResponse(
 
     @field:SerializedName("result")
-    val result: String,
+    val result: BatikModel? = null,
 
     @field:SerializedName("message")
     val message: String,
@@ -13,3 +14,4 @@ data class ScanResponse(
     @field:SerializedName("status")
     val status: Boolean
 )
+

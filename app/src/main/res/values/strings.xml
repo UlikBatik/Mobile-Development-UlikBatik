@@ -103,7 +103,8 @@
     <string name="error_invalid_data">Invalid Email or Password</string>
     <string name="error_match">Password not match</string>
     <string name="password_error_8">Password must be at least 8 characters</string>
-
+    <string name="error_unauthorized_401">Unauthorized</string>
+    <string name="error_server_500">Something went wrong. try again.</string>
 
     <!--    toast info-->
     <string name="no_media_selected">no media selected</string>

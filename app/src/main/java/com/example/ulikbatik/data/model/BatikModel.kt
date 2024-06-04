@@ -5,14 +5,20 @@ import com.google.gson.annotations.SerializedName
 data class BatikModel(
 
 	@field:SerializedName("BATIKNAME")
-	val bATIKNAME: String? = null,
+	val bATIKNAME: String,
 
 	@field:SerializedName("BATIKDESC")
-	val bATIKDESC: String? = null,
+	val bATIKDESC: String,
+
+	@field:SerializedName("BATIKLOCT")
+	val bATIKLOCT: String,
+
+	@field:SerializedName("BATIKHIST")
+	val bATIKHIST: String,
 
 	@field:SerializedName("BATIKID")
-	val bATIKID: String? = null,
+	val bATIKID: String,
 
 	@field:SerializedName("BATIKIMG")
-	val bATIKIMG: String? = null
+	val bATIKIMG: String
 )

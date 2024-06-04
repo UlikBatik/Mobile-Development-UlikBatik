@@ -23,6 +23,7 @@ class ScanViewModel(
         val imageBodyPart = fileImage.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val imageMultipart: MultipartBody.Part =
             MultipartBody.Part.createFormData("attachment", fileImage.name, imageBodyPart)
+
         return scanRepository.scanImage(imageMultipart)
     }
 
