@@ -16,7 +16,6 @@ class ScanRepository(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-
     fun scanImage(attachment: MultipartBody.Part): LiveData<ScanResponse> {
         _isLoading.value = true
         val responseJson = MutableLiveData<ScanResponse>()
@@ -30,17 +29,24 @@ class ScanRepository(
                     _isLoading.value = false
                     if (response.isSuccessful) {
                         responseJson.value = response.body()
+                    } else {
+                        responseJson.value = ScanResponse(
+                            message = response.code().toString(),
+                            status = false
+                        )
                     }
                 }
 
                 override fun onFailure(call: Call<ScanResponse>, t: Throwable) {
-                    TODO("Not yet implemented")
+                    responseJson.value = ScanResponse(
+                        message = "500",
+                        status = false
+                    )
                 }
             }
         )
         return responseJson
     }
-
 
 
     companion object {

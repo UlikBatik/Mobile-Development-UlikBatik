@@ -26,9 +26,7 @@ class ScanViewModelFactory(
 
         @JvmStatic
         fun getInstance(context: Context): ScanViewModelFactory {
-            instance ?: synchronized(ScanViewModelFactory::class.java) {
-                instance = ScanViewModelFactory(Injection.provideScanRepository(context))
-            }
+            instance = ScanViewModelFactory(Injection.provideScanRepository(context))
             return instance as ScanViewModelFactory
         }
     }
