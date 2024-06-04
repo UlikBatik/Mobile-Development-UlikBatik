@@ -33,8 +33,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
                 android:layout_marginTop="10dp"
+                app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/ic_back" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -78,7 +78,7 @@
                 android:text="@string/batik_loc"
                 android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@id/icon_location"
-                app:layout_constraintTop_toBottomOf="@id/tv_batik_name"/>
+                app:layout_constraintTop_toBottomOf="@id/tv_batik_name" />
 
             <View
                 android:id="@+id/detail_divider_top"
@@ -101,6 +101,18 @@
                 android:textSize="11sp"
                 app:layout_constraintTop_toBottomOf="@id/detail_divider_top"
                 tools:targetApi="o" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
