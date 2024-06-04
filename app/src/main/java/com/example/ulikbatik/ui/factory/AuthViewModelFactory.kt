@@ -1,10 +1,11 @@
-package com.example.ulikbatik.ui.auth
+package com.example.ulikbatik.ui.factory
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.ulikbatik.data.repository.AuthRepository
 import com.example.ulikbatik.di.Injection
+import com.example.ulikbatik.ui.auth.AuthViewModel
 
 class AuthViewModelFactory(
     private val repository: AuthRepository

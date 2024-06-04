@@ -24,6 +24,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.ActivityScanBinding
+import com.example.ulikbatik.ui.factory.ScanViewModelFactory
 import com.example.ulikbatik.utils.helper.CameraHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.yalantis.ucrop.UCrop

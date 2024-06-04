@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.FragmentLoginBinding
 import com.example.ulikbatik.ui.dashboard.DashboardActivity
+import com.example.ulikbatik.ui.factory.AuthViewModelFactory
 import com.example.ulikbatik.utils.helper.ValidatorAuthHelper
 
 class LoginFragment : Fragment() {
