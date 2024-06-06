@@ -35,7 +35,7 @@ class DashboardAdapter(private val posts: List<PostModel>) :
                     .placeholder(R.drawable.img_placeholder)
                     .into(imagePost)
 
-                usernameTv.text = post.userId
+                usernameTv.text = post.user.uSERNAME
 
                 itemPost.setOnClickListener {
                     val intent = Intent(binding.root.context, DetailPostActivity::class.java)

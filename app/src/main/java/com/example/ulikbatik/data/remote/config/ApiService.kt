@@ -2,10 +2,13 @@ package com.example.ulikbatik.data.remote.config
 
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.model.BatikModel
+import com.example.ulikbatik.data.model.LikesModel
 import com.example.ulikbatik.data.remote.request.LoginBodyRequest
 import com.example.ulikbatik.data.remote.request.RegisterBodyRequest
 import com.example.ulikbatik.data.remote.response.CreatePostResponse
 import com.example.ulikbatik.data.remote.response.GeneralResponse
+import com.example.ulikbatik.data.remote.response.LikesBodyRequest
+import com.example.ulikbatik.data.remote.response.LikesResponse
 import com.example.ulikbatik.data.remote.response.LoginResponse
 import com.example.ulikbatik.data.remote.response.RegisterResponse
 import com.example.ulikbatik.data.remote.response.ScanResponse
@@ -48,7 +51,6 @@ interface ApiService {
         @Part("BATIKID") batikId: RequestBody
     ): Call<GeneralResponse<CreatePostResponse>>
 
-
     @POST("predict")
     @Multipart
     fun predict(
@@ -62,4 +64,15 @@ interface ApiService {
     fun getDetailBatik(
         @Path("batikId") batikId: String
     ): Call<GeneralResponse<BatikModel>>
+
+    @GET("likes/{userId}")
+    fun getLikes(
+        @Path("userId") userid: String
+    ): Call<GeneralResponse<List<LikesModel>>>
+
+    @POST("like/{userId}")
+    fun likePost(
+        @Path("userId") userid: String,
+        @Body postId: LikesBodyRequest
+    ): Call<LikesResponse>
 }

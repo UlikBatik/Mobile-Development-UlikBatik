@@ -69,4 +69,5 @@ class CatalogActivity : AppCompatActivity() {
         binding.progressBar.visibility =
             if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
     }
+
 }

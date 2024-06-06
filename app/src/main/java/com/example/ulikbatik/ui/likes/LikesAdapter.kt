@@ -4,11 +4,15 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.ulikbatik.R
 import com.example.ulikbatik.data.Likes
+import com.example.ulikbatik.data.model.LikesModel
+import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.databinding.ItemLikesBinding
 import com.example.ulikbatik.ui.detailPost.DetailPostActivity
 
-class LikesAdapter(private val posts: List<Likes>) : RecyclerView.Adapter<LikesAdapter.PostViewHolder>() {
+class LikesAdapter(private val posts: List<LikesModel>) : RecyclerView.Adapter<LikesAdapter.PostViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = ItemLikesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -25,14 +29,19 @@ class LikesAdapter(private val posts: List<Likes>) : RecyclerView.Adapter<LikesA
 
     class PostViewHolder(private val binding: ItemLikesBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(post: Likes) {
+        fun bind(post: LikesModel) {
             binding.apply{
-                imagePost.setImageResource(post.imageRes)
-                usernameTv.text = post.username
-                descriptionTv.text = post.description
+                Glide.with(binding.root)
+                    .load(post.post.postImg)
+                    .placeholder(R.drawable.img_placeholder)
+                    .into(imagePost)
+
+                usernameTv.text = post.user.uSERNAME
+                descriptionTv.text = post.post.caption
 
                 itemLikes.setOnClickListener{
                     val intent = Intent(binding.root.context, DetailPostActivity::class.java)
+                    intent.putExtra(DetailPostActivity.EXTRA_ID_POST, post.postId)
                     binding.root.context.startActivity(intent)
                 }
             }

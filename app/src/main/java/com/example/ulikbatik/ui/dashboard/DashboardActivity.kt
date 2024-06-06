@@ -13,8 +13,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ulikbatik.R
+import com.example.ulikbatik.data.local.UserPreferences
+import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityDashboardBinding
@@ -23,6 +26,7 @@ import com.example.ulikbatik.ui.likes.LikesActivity
 import com.example.ulikbatik.ui.profile.ProfileActivity
 import com.example.ulikbatik.ui.scan.ScanActivity
 import com.example.ulikbatik.ui.upload.UploadActivity
+import kotlinx.coroutines.launch
 
 class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -90,6 +94,14 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 contentDashboard.rvPost.layoutManager =
                     LinearLayoutManager(this@DashboardActivity)
                 contentDashboard.rvPost.adapter = DashboardAdapter(res.data)
+            }
+        }
+
+        var pref = UserPreferences.getInstance(this.dataStore)
+
+        lifecycleScope.launch {
+            pref.getUsername().collect{ username ->
+                binding.contentDashboard.usernameTv.text = username
             }
         }
     }
