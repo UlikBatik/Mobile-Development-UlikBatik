@@ -41,68 +41,57 @@ class DetailPostActivity : AppCompatActivity() {
     }
 
     private fun setView() {
-        val postId = intent.getStringExtra(EXTRA_ID_POST)
+        val postId = intent.getStringExtra(EXTRA_ID_POST) ?: return
+        val pref = UserPreferences.getInstance(this.dataStore)
 
-        if (postId != null) {
-            val pref = UserPreferences.getInstance(this.dataStore)
-            detailPostViewModel.getPost(postId).observe(this) { res ->
+        detailPostViewModel.getPost(postId).observe(this) { res ->
+            res.data?.let { data ->
                 binding.apply {
                     Glide.with(this@DetailPostActivity)
-                        .load(res.data?.postImg)
+                        .load(data.postImg)
                         .placeholder(R.drawable.img_placeholder)
                         .into(image)
 
-                    detailUsername.text = res.data?.user?.uSERNAME
-                    detailDescription.text = res.data?.caption
+                    detailUsername.text = data.user.uSERNAME
+                    detailDescription.text = data.caption
 
                     Glide.with(this@DetailPostActivity)
-                        .load(res.data?.batik?.bATIKIMG)
+                        .load(data.batik.bATIKIMG)
                         .placeholder(R.drawable.img_placeholder)
                         .into(tagName.imgBatik)
 
-                    tagName.batikName.text = res.data?.batik?.bATIKNAME
-                    tagName.batikLoc.text = res.data?.batik?.bATIKLOCT
+                    tagName.batikName.text = data.batik.bATIKNAME
+                    tagName.batikLoc.text = data.batik.bATIKLOCT
 
                     tagName.itemTag.setOnClickListener {
-                        val intent =
-                            Intent(this@DetailPostActivity, DetailCatalogActivity::class.java)
-                        startActivity(intent)
+                        startActivity(Intent(this@DetailPostActivity, DetailCatalogActivity::class.java))
                     }
 
-                    if (res.data != null) {
-                        var isLiked: Boolean? = false
-
-                        detailPostViewModel.getLikes(res.data.userId).observe(this@DetailPostActivity) { likes ->
-                            isLiked = likes.data?.find { like ->
-                              like.postId == res.data.postId
-                            } != null
-
-                            detailLikesFab.setImageResource(if (isLiked == true) R.drawable.ic_likes_fill else R.drawable.ic_likes_unfill)
-                        }
-
-                        detailLikesFab.setOnClickListener {
-                           lifecycleScope.launch {
-                                pref.getUserId().collect{ userId ->
-                                    val postID = res.data.postId
-                                    userId?.let { it1 ->
-                                        detailPostViewModel.likePost(it1, postID).observe(this@DetailPostActivity) { response ->
-                                            Toast.makeText(
-                                                this@DetailPostActivity,
-                                                response.message,
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-
-                                            detailLikesFab.setImageResource(if (isLiked == true) R.drawable.ic_likes_unfill else R.drawable.ic_likes_fill)
-                                        }
+                    lifecycleScope.launch {
+                        pref.getUserId().collect { userId ->
+                            if (userId != null) {
+                                detailPostViewModel.getLikes(userId, data.postId).observe(this@DetailPostActivity) { likes ->
+                                    detailPostViewModel.isLiked.observe(this@DetailPostActivity) { isLiked ->
+                                        detailLikesFab.setImageResource(if (isLiked) R.drawable.ic_likes_fill else R.drawable.ic_likes_unfill)
                                     }
                                 }
-                           }
+                            }
+
+                            detailLikesFab.setOnClickListener {
+                                userId?.let { userIdNotNull ->
+                                    detailPostViewModel.likePost(userIdNotNull, data.postId).observe(this@DetailPostActivity) { response ->
+                                        Toast.makeText(this@DetailPostActivity, response.message, Toast.LENGTH_SHORT).show()
+                                        detailPostViewModel.toggleLikeStatus()
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
         }
     }
+
 
 
     private fun setToolbar() {
