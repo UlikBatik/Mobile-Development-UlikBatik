@@ -13,8 +13,10 @@ import retrofit2.Response
 class LikesRepository(
     private val apiService: ApiService
 ) {
-
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
     fun getLikes(userid: String): LiveData<GeneralResponse<List<LikesModel>>> {
+        _isLoading.value = true
         val resultLiveData = MutableLiveData<GeneralResponse<List<LikesModel>>>()
         val client = apiService.getLikes(userid)
 
@@ -23,6 +25,7 @@ class LikesRepository(
                 call: Call<GeneralResponse<List<LikesModel>>>,
                 response: Response<GeneralResponse<List<LikesModel>>>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     resultLiveData.value = response.body()
                 } else {
@@ -33,6 +36,7 @@ class LikesRepository(
                 }
             }
             override fun onFailure(call: Call<GeneralResponse<List<LikesModel>>>, t: Throwable) {
+                _isLoading.value = false
                 resultLiveData.value = GeneralResponse(
                     message = "Failure: ${t.message}",
                     status = false

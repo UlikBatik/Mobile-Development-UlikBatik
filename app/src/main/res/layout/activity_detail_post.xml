@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:keepScreenOn="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/img_ilustration3"
+                android:src="@drawable/img_placeholder"
                 app:layout_collapseMode="parallax" />
 
             <androidx.appcompat.widget.Toolbar
@@ -115,4 +115,20 @@
         android:layout_marginBottom="30dp"
         android:backgroundTint="@color/primaryYellow"
         android:src="@drawable/ic_likes_unfill" />
+
+    <View
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/white"/>
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_gravity="center"
+        tools:visibility="gone" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

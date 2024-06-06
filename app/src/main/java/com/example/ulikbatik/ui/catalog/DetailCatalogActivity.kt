@@ -1,4 +1,4 @@
-package com.example.ulikbatik.ui.catalog.detailCatalog
+package com.example.ulikbatik.ui.catalog
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -9,7 +9,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.ActivityDetailCatalogBinding
-import com.example.ulikbatik.ui.catalog.CatalogViewModel
 import com.example.ulikbatik.ui.factory.CatalogViewModelFactory
 
 class DetailCatalogActivity : AppCompatActivity() {
@@ -54,6 +53,7 @@ class DetailCatalogActivity : AppCompatActivity() {
                         tvBatikName.text = it.data.bATIKNAME
                         tvBatikLocation.text = it.data.bATIKLOCT
                         tvDetailBatik.text = it.data.bATIKDESC
+                        tvHistoryBatik.text = it.data.bATIKHIST
                     }
                 }
             }
@@ -65,6 +65,8 @@ class DetailCatalogActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility =
+            if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
+        binding.loadingView.visibility =
             if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
     }
 

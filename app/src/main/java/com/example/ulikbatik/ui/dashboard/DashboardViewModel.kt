@@ -10,8 +10,7 @@ class DashboardViewModel (
     private val postRepository: PostRepository
 ) : ViewModel() {
 
-    fun getPost(): LiveData<GeneralResponse<List<PostModel>>> {
-        return postRepository.getAllPost()
-    }
+    val isLoading = postRepository.isLoading
+    val allPost = postRepository.getAllPost()
 
 }

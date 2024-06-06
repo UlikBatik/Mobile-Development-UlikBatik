@@ -16,8 +16,11 @@ import retrofit2.Response
 class PostRepository(
     private val apiService: ApiService
 ) {
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
     fun getAllPost(): LiveData<GeneralResponse<List<PostModel>>>{
+        _isLoading.value = true
         val resultLiveData = MutableLiveData<GeneralResponse<List<PostModel>>>()
         val client = apiService.getAllPosts()
         client.enqueue(
@@ -26,6 +29,7 @@ class PostRepository(
                     call: Call<GeneralResponse<List<PostModel>>>,
                     response: Response<GeneralResponse<List<PostModel>>>
                 ) {
+                    _isLoading.value = false
                     if (response.isSuccessful) {
                         resultLiveData.value = response.body()
                     } else {
@@ -35,6 +39,7 @@ class PostRepository(
                 }
 
                 override fun onFailure(call: Call<GeneralResponse<List<PostModel>>>, t: Throwable) {
+                    _isLoading.value = false
                     resultLiveData.value =
                         GeneralResponse(message = t.message.toString(), status = false)
                 }
@@ -43,6 +48,7 @@ class PostRepository(
     }
 
     fun getPost(postId: String): LiveData<GeneralResponse<PostModel>> {
+        _isLoading.value = true
         val resultLiveData = MutableLiveData<GeneralResponse<PostModel>>()
         val client = apiService.getPost(postId)
 
@@ -51,6 +57,7 @@ class PostRepository(
                 call: Call<GeneralResponse<PostModel>>,
                 response: Response<GeneralResponse<PostModel>>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     resultLiveData.value = response.body()
                 } else {
@@ -61,6 +68,7 @@ class PostRepository(
                 }
             }
             override fun onFailure(call: Call<GeneralResponse<PostModel>>, t: Throwable) {
+                _isLoading.value = false
                 resultLiveData.value = GeneralResponse(
                     message = "Failure: ${t.message}",
                     status = false

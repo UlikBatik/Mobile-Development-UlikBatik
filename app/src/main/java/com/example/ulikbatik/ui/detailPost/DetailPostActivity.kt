@@ -2,15 +2,20 @@ package com.example.ulikbatik.ui.detailPost
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.local.UserPreferences
+import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.databinding.ActivityDetailPostBinding
+import com.example.ulikbatik.ui.catalog.DetailCatalogActivity
 import com.example.ulikbatik.ui.dashboard.PostViewModelFactory
-import com.example.ulikbatik.ui.detailCatalog.DetailCatalogActivity
 import kotlinx.coroutines.launch
 
 class DetailPostActivity : AppCompatActivity() {
@@ -39,44 +44,53 @@ class DetailPostActivity : AppCompatActivity() {
         val postId = intent.getStringExtra(EXTRA_ID_POST) ?: return
         val pref = UserPreferences.getInstance(this.dataStore)
 
-        detailPostViewModel.getPost(postId).observe(this) { res ->
-            res.data?.let { data ->
-                binding.apply {
-                    Glide.with(this@DetailPostActivity)
-                        .load(data.postImg)
-                        .placeholder(R.drawable.img_placeholder)
-                        .into(image)
+        detailPostViewModel.apply {
 
-                    detailUsername.text = data.user.uSERNAME
-                    detailDescription.text = data.caption
+            isLoading.observe(this@DetailPostActivity) {
+                showLoading(it)
+            }
 
-                    Glide.with(this@DetailPostActivity)
-                        .load(data.batik.bATIKIMG)
-                        .placeholder(R.drawable.img_placeholder)
-                        .into(tagName.imgBatik)
+            getPost(postId).observe(this@DetailPostActivity) { res ->
+                res.data?.let { data ->
+                    binding.apply {
+                        Glide.with(this@DetailPostActivity)
+                            .load(data.postImg)
+                            .placeholder(R.drawable.img_placeholder)
+                            .into(image)
 
-                    tagName.batikName.text = data.batik.bATIKNAME
-                    tagName.batikLoc.text = data.batik.bATIKLOCT
+                        detailUsername.text = data.user.uSERNAME
+                        detailDescription.text = data.caption
 
-                    tagName.itemTag.setOnClickListener {
-                        startActivity(Intent(this@DetailPostActivity, DetailCatalogActivity::class.java))
-                    }
+                        Glide.with(this@DetailPostActivity)
+                            .load(data.batik.bATIKIMG)
+                            .placeholder(R.drawable.img_placeholder)
+                            .into(tagName.imgBatik)
 
-                    lifecycleScope.launch {
-                        pref.getUserId().collect { userId ->
-                            if (userId != null) {
-                                detailPostViewModel.getLikes(userId, data.postId).observe(this@DetailPostActivity) { likes ->
-                                    detailPostViewModel.isLiked.observe(this@DetailPostActivity) { isLiked ->
-                                        detailLikesFab.setImageResource(if (isLiked) R.drawable.ic_likes_fill else R.drawable.ic_likes_unfill)
+                        tagName.batikName.text = data.batik.bATIKNAME
+                        tagName.batikLoc.text = data.batik.bATIKLOCT
+
+                        tagName.itemTag.setOnClickListener {
+                            val intent = Intent(this@DetailPostActivity, DetailCatalogActivity::class.java)
+                            intent.putExtra(DetailCatalogActivity.EXTRA_IDBATIK, res.data.batikId)
+                            startActivity(intent)
+                        }
+
+                        lifecycleScope.launch {
+                            pref.getUserId().collect { userId ->
+                                if (userId != null) {
+                                    detailPostViewModel.getLikes(userId, data.postId).observe(this@DetailPostActivity) { likes ->
+                                        detailPostViewModel.isLiked.observe(this@DetailPostActivity) { isLiked ->
+                                            detailLikesFab.setImageResource(if (isLiked) R.drawable.ic_likes_fill else R.drawable.ic_likes_unfill)
+                                        }
                                     }
                                 }
-                            }
 
-                            detailLikesFab.setOnClickListener {
-                                userId?.let { userIdNotNull ->
-                                    detailPostViewModel.likePost(userIdNotNull, data.postId).observe(this@DetailPostActivity) { response ->
-                                        Toast.makeText(this@DetailPostActivity, response.message, Toast.LENGTH_SHORT).show()
-                                        detailPostViewModel.toggleLikeStatus()
+                                detailLikesFab.setOnClickListener {
+                                    userId?.let { userIdNotNull ->
+                                        detailPostViewModel.likePost(userIdNotNull, data.postId).observe(this@DetailPostActivity) { response ->
+                                            Toast.makeText(this@DetailPostActivity, response.message, Toast.LENGTH_SHORT).show()
+                                            detailPostViewModel.toggleLikeStatus()
+                                        }
                                     }
                                 }
                             }
@@ -97,6 +111,13 @@ class DetailPostActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility =
+            if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
+        binding.loadingView.visibility =
+            if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
     }
 
     companion object{

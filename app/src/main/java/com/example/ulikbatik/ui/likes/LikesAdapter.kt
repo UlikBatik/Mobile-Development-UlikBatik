@@ -6,9 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
-import com.example.ulikbatik.data.Likes
 import com.example.ulikbatik.data.model.LikesModel
-import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.databinding.ItemLikesBinding
 import com.example.ulikbatik.ui.detailPost.DetailPostActivity
 
@@ -36,7 +34,7 @@ class LikesAdapter(private val posts: List<LikesModel>) : RecyclerView.Adapter<L
                     .placeholder(R.drawable.img_placeholder)
                     .into(imagePost)
 
-                usernameTv.text = post.user.uSERNAME
+                usernameTv.text = post.post.userId
                 descriptionTv.text = post.post.caption
 
                 itemLikes.setOnClickListener{

@@ -41,7 +41,7 @@
             android:name=".ui.detailPost.DetailPostActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.catalog.detailCatalog.DetailCatalogActivity"
+            android:name=".ui.catalog.DetailCatalogActivity"
             android:exported="false" />
         <activity
             android:name=".ui.likes.LikesActivity"

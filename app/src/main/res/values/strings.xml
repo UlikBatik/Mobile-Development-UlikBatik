@@ -112,5 +112,8 @@
     <string name="permission_denied">Permission denied</string>
     <string name="failed_to_took_picture">failed to took picture</string>
     <string name="permission_granted">permission granted</string>
+    <string name="nothing">Nothing to show</string>
+    <string name="no_likes">You haven\'t liked any posts</string>
+    <string name="history">History</string>
 
 </resources>

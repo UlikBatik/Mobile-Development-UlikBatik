@@ -37,14 +37,19 @@ class LikesActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        likesViewModel.isLoading.observe(this){
+            showLoading(it)
+        }
+
         val pref = UserPreferences.getInstance(this.dataStore)
         lifecycleScope.launch{
             pref.getUserId().collect{userId ->
                 if (userId != null) {
-
                     likesViewModel.getLikes(userId).observe(this@LikesActivity){
                         if (it != null){
                             setView(it)
+                            binding.noLikesTv.visibility = if (it.data.isNullOrEmpty()) android.view.View.VISIBLE else android.view.View.GONE
                         }
                     }
                 }
@@ -81,5 +86,10 @@ class LikesActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener {
             finish()
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility =
+            if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
     }
 }

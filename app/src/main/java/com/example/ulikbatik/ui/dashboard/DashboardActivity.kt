@@ -49,12 +49,21 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         )
 
         setDrawer()
-
+        setViewModel()
         setAction()
 
-        dashboardViewModel.getPost().observe(this){
-            if (it != null){
-                setView(it)
+    }
+
+    private fun setViewModel() {
+        dashboardViewModel.apply{
+            isLoading.observe(this@DashboardActivity) {
+                showLoading(it)
+            }
+
+            allPost.observe(this@DashboardActivity){
+                if (it != null){
+                    setView(it)
+                }
             }
         }
     }
@@ -89,6 +98,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun setView(res: GeneralResponse<List<PostModel>>) {
+
         if(res.data != null) {
             binding.apply {
                 contentDashboard.rvPost.layoutManager =
@@ -140,4 +150,10 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
         return true
     }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.contentDashboard.progressBar.visibility =
+            if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
 }

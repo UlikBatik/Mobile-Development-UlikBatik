@@ -14,6 +14,8 @@ class DetailPostViewModel(
     private val postRepository: PostRepository
 ) : ViewModel() {
 
+    val isLoading = postRepository.isLoading
+
     private val _isLiked = MutableLiveData<Boolean>()
     val isLiked: LiveData<Boolean> get() = _isLiked
 

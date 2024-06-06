@@ -8,7 +8,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ulikbatik.R
-import com.example.ulikbatik.data.CatalogDummy
 import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityCatalogBinding

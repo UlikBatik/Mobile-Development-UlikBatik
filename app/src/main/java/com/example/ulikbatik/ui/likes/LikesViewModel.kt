@@ -11,6 +11,8 @@ class LikesViewModel(
     private val likesRepository: LikesRepository
 ) : ViewModel() {
 
+    val isLoading = likesRepository.isLoading
+
     fun getLikes(userid: String): LiveData<GeneralResponse<List<LikesModel>>> {
         return likesRepository.getLikes(userid)
     }
