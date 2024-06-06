@@ -14,4 +14,8 @@ class CatalogViewModel(
 
     val dataCatalogs = catalogRepository.getCatalog()
 
+    fun getDetailCatalog(idBatik:String): LiveData<GeneralResponse<BatikModel>> {
+        return catalogRepository.detailCatalog(idBatik)
+    }
+
 }

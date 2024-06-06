@@ -2,17 +2,12 @@ package com.example.ulikbatik.ui.detailPost
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.local.UserPreferences
-import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.databinding.ActivityDetailPostBinding
 import com.example.ulikbatik.ui.dashboard.PostViewModelFactory
 import com.example.ulikbatik.ui.detailCatalog.DetailCatalogActivity
