@@ -24,14 +24,14 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_marginTop="60dp"
-        android:src="@drawable/img_field"
-        android:scaleType="center"
         android:contentDescription="@string/img_field_description"
-        app:shapeAppearanceOverlay="@style/RoundedCorner10dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:scaleType="center"
+        android:src="@drawable/img_field"
+        app:layout_constraintBottom_toTopOf="@id/descriptionEdit"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/backButton"
-        app:layout_constraintBottom_toTopOf="@id/descriptionEdit"/>
+        app:shapeAppearanceOverlay="@style/RoundedCorner10dp" />
 
     <EditText
         android:id="@+id/descriptionEdit"
@@ -58,48 +58,72 @@
         android:layout_width="180dp"
         android:layout_height="60dp"
         android:layout_marginEnd="10dp"
-        android:background="@drawable/button_gradient"
         android:layout_marginBottom="35dp"
+        android:background="@drawable/button_gradient"
+        android:fontFamily="@font/poppins_bold"
+        android:letterSpacing="0.3"
         android:text="@string/button_upload"
         android:textColor="@color/white"
-        android:letterSpacing="0.3"
-        android:fontFamily="@font/poppins_bold"
-        app:layout_constraintStart_toEndOf="@id/cameraBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/descriptionEdit"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/cameraBtn" />
 
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/cameraBtn"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@drawable/button_cream"
-        android:src="@drawable/ic_camera"
         android:layout_marginBottom="35dp"
+        android:background="@drawable/button_cream"
         android:contentDescription="@string/cam_description"
+        android:src="@drawable/ic_camera"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/uploadBtn"
-        app:layout_constraintStart_toEndOf="@id/galleryBtn"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/galleryBtn" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/galleryBtn"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@drawable/button_cream"
-        android:src="@drawable/ic_gallery"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="35dp"
+        android:background="@drawable/button_cream"
         android:contentDescription="@string/gallery_description"
+        android:src="@drawable/ic_gallery"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/cameraBtn"
-        app:layout_constraintStart_toStartOf="@id/descriptionEdit"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/descriptionEdit" />
 
     <include
+        android:id="@+id/batik_tag"
         layout="@layout/item_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/descriptionEdit"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionEdit" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBarScan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/uploadBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/batik_tag"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

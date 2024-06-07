@@ -19,6 +19,7 @@ import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityDashboardBinding
 import com.example.ulikbatik.ui.catalog.CatalogActivity
+import com.example.ulikbatik.ui.factory.PostViewModelFactory
 import com.example.ulikbatik.ui.likes.LikesActivity
 import com.example.ulikbatik.ui.profile.ProfileActivity
 import com.example.ulikbatik.ui.scan.ScanActivity

@@ -38,4 +38,10 @@ object Injection {
         val apiService = ApiConfig.getApiInstance(user)
         return CatalogRepository.getInstance(apiService)
     }
+
+    fun provideUserId(context: Context): String? {
+        val pref = UserPreferences.getInstance(context.dataStore)
+        val userId = runBlocking { pref.getUserId().first() }
+        return userId
+    }
 }

@@ -3,10 +3,12 @@ package com.example.ulikbatik.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.ulikbatik.data.Post
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.remote.config.ApiService
 import com.example.ulikbatik.data.remote.response.GeneralResponse
+import com.example.ulikbatik.data.remote.response.PostResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,7 +17,11 @@ class PostRepository(
     private val apiService: ApiService
 ) {
 
-    fun getAllPost(): LiveData<GeneralResponse<List<PostModel>>>{
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    fun getAllPost(): LiveData<GeneralResponse<List<PostModel>>> {
+        _isLoading.value = true
         val resultLiveData = MutableLiveData<GeneralResponse<List<PostModel>>>()
         val client = apiService.getAllPosts()
         client.enqueue(
@@ -24,6 +30,7 @@ class PostRepository(
                     call: Call<GeneralResponse<List<PostModel>>>,
                     response: Response<GeneralResponse<List<PostModel>>>
                 ) {
+                    _isLoading.value = false
                     if (response.isSuccessful) {
                         resultLiveData.value = response.body()
                     } else {
@@ -33,6 +40,7 @@ class PostRepository(
                 }
 
                 override fun onFailure(call: Call<GeneralResponse<List<PostModel>>>, t: Throwable) {
+                    _isLoading.value = false
                     resultLiveData.value =
                         GeneralResponse(message = t.message.toString(), status = false)
                 }
@@ -41,6 +49,7 @@ class PostRepository(
     }
 
     fun getPost(postId: String): LiveData<GeneralResponse<PostModel>> {
+        _isLoading.value = true
         val resultLiveData = MutableLiveData<GeneralResponse<PostModel>>()
         val client = apiService.getPost(postId)
 
@@ -49,24 +58,68 @@ class PostRepository(
                 call: Call<GeneralResponse<PostModel>>,
                 response: Response<GeneralResponse<PostModel>>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     resultLiveData.value = response.body()
                 } else {
                     resultLiveData.value = GeneralResponse(
-                        message = "Error: ${response.code()} ${response.message()}",
+                        message = response.code().toString(),
                         status = false
                     )
                 }
             }
+
             override fun onFailure(call: Call<GeneralResponse<PostModel>>, t: Throwable) {
+                _isLoading.value = false
                 resultLiveData.value = GeneralResponse(
-                    message = "Failure: ${t.message}",
+                    message = "500",
                     status = false
                 )
             }
         })
         return resultLiveData
     }
+
+    fun createPost(
+        image: MultipartBody.Part,
+        caption: RequestBody,
+        userId: RequestBody,
+        batikId: RequestBody
+    ): LiveData<GeneralResponse<PostResponse>> {
+        _isLoading.value = true
+        val resultLiveData = MutableLiveData<GeneralResponse<PostResponse>>()
+        val client = apiService.createPost(image, caption, userId, batikId)
+        client.enqueue(
+            object : Callback<GeneralResponse<PostResponse>> {
+                override fun onResponse(
+                    call: Call<GeneralResponse<PostResponse>>,
+                    response: Response<GeneralResponse<PostResponse>>
+                ) {
+                    _isLoading.value = false
+                    if (response.isSuccessful) {
+                        resultLiveData.value = response.body()
+                    } else {
+                        resultLiveData.value = GeneralResponse(
+                            message = response.code().toString(),
+                            status = false
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<GeneralResponse<PostResponse>>, t: Throwable) {
+                    _isLoading.value = false
+                    resultLiveData.value = GeneralResponse(
+                        message = "500",
+                        status = false
+                    )
+                }
+            }
+        )
+
+        return resultLiveData
+    }
+
+
 
     companion object {
         fun getInstance(

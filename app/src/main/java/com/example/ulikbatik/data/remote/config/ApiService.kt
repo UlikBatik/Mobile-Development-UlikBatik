@@ -4,9 +4,9 @@ import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.data.remote.request.LoginBodyRequest
 import com.example.ulikbatik.data.remote.request.RegisterBodyRequest
-import com.example.ulikbatik.data.remote.response.CreatePostResponse
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.data.remote.response.LoginResponse
+import com.example.ulikbatik.data.remote.response.PostResponse
 import com.example.ulikbatik.data.remote.response.RegisterResponse
 import com.example.ulikbatik.data.remote.response.ScanResponse
 import okhttp3.MultipartBody
@@ -20,6 +20,13 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
+    @GET("batiks")
+    fun getBatik(): Call<GeneralResponse<List<BatikModel>>>
+
+    @GET("batik/{batikId}")
+    fun getDetailBatik(
+        @Path("batikId") batikId: String
+    ): Call<GeneralResponse<BatikModel>>
 
     @GET("posts")
     fun getAllPosts(): Call<GeneralResponse<List<PostModel>>>
@@ -42,12 +49,11 @@ interface ApiService {
     @POST("posts")
     @Multipart
     fun createPost(
-        @Part image: MultipartBody.Part,
+        @Part IMAGE: MultipartBody.Part,
         @Part("CAPTION") caption: RequestBody,
         @Part("USERID") userId: RequestBody,
         @Part("BATIKID") batikId: RequestBody
-    ): Call<GeneralResponse<CreatePostResponse>>
-
+    ): Call<GeneralResponse<PostResponse>>
 
     @POST("predict")
     @Multipart
@@ -55,11 +61,4 @@ interface ApiService {
         @Part attachment: MultipartBody.Part
     ): Call<ScanResponse>
 
-    @GET("batiks")
-    fun getBatik(): Call<GeneralResponse<List<BatikModel>>>
-
-    @GET("batik/{batikId}")
-    fun getDetailBatik(
-        @Path("batikId") batikId: String
-    ): Call<GeneralResponse<BatikModel>>
 }

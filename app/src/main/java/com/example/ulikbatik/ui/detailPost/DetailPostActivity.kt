@@ -7,14 +7,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.LifecycleOwner
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.ActivityDetailPostBinding
 import com.example.ulikbatik.ui.catalog.detailCatalog.DetailCatalogActivity
-import com.example.ulikbatik.ui.dashboard.DashboardViewModel
-import com.example.ulikbatik.ui.dashboard.PostViewModelFactory
-import com.example.ulikbatik.ui.detailCatalog.DetailCatalogActivity
+import com.example.ulikbatik.ui.factory.PostViewModelFactory
 
 class DetailPostActivity : AppCompatActivity() {
 
@@ -40,7 +37,7 @@ class DetailPostActivity : AppCompatActivity() {
 
     private fun setView() {
 
-        var postId = intent.getStringExtra(EXTRA_ID_POST)
+        val postId = intent.getStringExtra(EXTRA_ID_POST)
 
         if (postId != null){
             detailPostViewModel.getPost(postId).observe(this){ res ->

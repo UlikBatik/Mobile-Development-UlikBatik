@@ -23,8 +23,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.ulikbatik.R
+import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.databinding.ActivityScanBinding
 import com.example.ulikbatik.ui.factory.ScanViewModelFactory
+import com.example.ulikbatik.ui.upload.UploadActivity
 import com.example.ulikbatik.utils.helper.CameraHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.yalantis.ucrop.UCrop
@@ -36,6 +38,7 @@ class ScanActivity : AppCompatActivity() {
     private var currentImageUri: Uri? = null
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private var imageCapture: ImageCapture? = null
+    private lateinit var resultScan: BatikModel
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
     private val scanViewModel: ScanViewModel by viewModels {
         ScanViewModelFactory.getInstance(applicationContext)
@@ -93,20 +96,27 @@ class ScanActivity : AppCompatActivity() {
             resultUri?.let {
                 currentImageUri = it
                 scanViewModel.scanImage(it, this).observe(this) { res ->
-                    if (res.status) {
-                        bottomSheetBehavior.isHideable = false
-                        bottomSheetBehavior.peekHeight = 257
-                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    if (res.status && res.result != null) {
+                        resultScan = res.result
 
+
+                        val height = 700
+                        bottomSheetBehavior.peekHeight = height
+                        bottomSheetBehavior.isHideable = false
+                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                         binding.apply {
                             bottomSheetPersistent.apply {
-                                batikName.text = res.result?.bATIKNAME
-                                batikDesc.text = res.result?.bATIKDESC
-                                batikLoc.text = res.result?.bATIKLOCT
+                                batikName.text = res.result.bATIKNAME
+                                batikDesc.text = res.result.bATIKDESC
+                                batikLoc.text = res.result.bATIKLOCT
                             }
                         }
                     } else {
                         when (res.message.toInt()) {
+                            200 -> {
+                                showToast("image failed to detected")
+                            }
+
                             400 -> {
                                 showToast(getString(R.string.error_invalid_input))
                             }
@@ -142,15 +152,30 @@ class ScanActivity : AppCompatActivity() {
             camBtn.setOnClickListener {
                 tookPhoto()
             }
-            resetBtn.setOnClickListener {
+            bottomSheetPersistent.resetBtn.setOnClickListener {
                 camPreview.visibility = android.view.View.VISIBLE
                 camBtn.visibility = android.view.View.VISIBLE
                 galleryBtn.visibility = android.view.View.VISIBLE
 
-                resetBtn.visibility = android.view.View.INVISIBLE
+                bottomSheetPersistent.resetBtn.visibility = android.view.View.INVISIBLE
                 imageIv.visibility = android.view.View.INVISIBLE
                 currentImageUri = null
                 imageIv.setImageURI(null)
+                bottomSheetBehavior =
+                    BottomSheetBehavior.from(binding.bottomSheetPersistent.standardBottomSheet)
+                bottomSheetBehavior.isHideable = true
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            }
+
+            bottomSheetPersistent.makePostBtn.setOnClickListener {
+                val intent = Intent(this@ScanActivity, UploadActivity::class.java)
+                intent.putExtra(UploadActivity.EXTRA_SCAN_IMAGE, currentImageUri.toString())
+                intent.putExtra(UploadActivity.EXTRA_BATIK_NAME, resultScan.bATIKNAME)
+                intent.putExtra(UploadActivity.EXTRA_BATIK_ID, resultScan.bATIKID)
+                intent.putExtra(UploadActivity.EXTRA_BATIK_IMAGE, resultScan.bATIKIMG)
+                intent.putExtra(UploadActivity.EXTRA_BATIK_LOCT, resultScan.bATIKLOCT)
+                startActivity(intent)
+                finish()
             }
         }
     }
@@ -159,7 +184,6 @@ class ScanActivity : AppCompatActivity() {
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         if (uri != null) {
-            currentImageUri = uri
             startUCropActivity(uri)
         } else {
             showToast(getString(R.string.no_media_selected))
@@ -232,8 +256,9 @@ class ScanActivity : AppCompatActivity() {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    currentImageUri = output.savedUri
-                    output.savedUri?.let { startUCropActivity(it) }
+                    output.savedUri?.let {
+                        startUCropActivity(it)
+                    }
                 }
 
                 override fun onError(exc: ImageCaptureException) {
@@ -249,7 +274,7 @@ class ScanActivity : AppCompatActivity() {
             camBtn.visibility = android.view.View.INVISIBLE
             galleryBtn.visibility = android.view.View.INVISIBLE
 
-            resetBtn.visibility = android.view.View.VISIBLE
+            bottomSheetPersistent.resetBtn.visibility = android.view.View.VISIBLE
             imageIv.visibility = android.view.View.VISIBLE
             imageIv.setImageURI(uri)
         }

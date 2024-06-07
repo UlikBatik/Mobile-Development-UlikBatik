@@ -112,5 +112,6 @@
     <string name="permission_denied">Permission denied</string>
     <string name="failed_to_took_picture">failed to took picture</string>
     <string name="permission_granted">permission granted</string>
+    <string name="image_failed_to_detected">image failed to detected</string>
 
 </resources>

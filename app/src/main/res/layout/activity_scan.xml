@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -87,19 +88,6 @@
             app:layout_constraintEnd_toStartOf="@id/camBtn"
             app:layout_constraintStart_toStartOf="@id/cam_cardview" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/resetBtn"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@drawable/button_gradient"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_restart"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/cam_cardview"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="@id/cam_cardview"
-            app:layout_constraintTop_toBottomOf="@id/cam_cardview" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progressBar"

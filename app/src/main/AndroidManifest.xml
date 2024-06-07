@@ -48,6 +48,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.auth.AuthActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.boarding.BoardingActivity"
             android:exported="true"
             android:theme="@style/Theme.UlikBatik.NoActionBar">
             <intent-filter>
