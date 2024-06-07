@@ -17,6 +17,7 @@ class UserPreferences private constructor(
 ) {
     private val TOKEN_KEY = stringPreferencesKey("token_key")
     private val USER_ID = stringPreferencesKey("user_id")
+    private val USERNAME = stringPreferencesKey("username")
     private val SESSION_BOARDING = booleanPreferencesKey("session_boarding")
 
     fun getUserToken(): Flow<String?> {
@@ -25,9 +26,20 @@ class UserPreferences private constructor(
         }
     }
 
+    fun getUsername(): Flow<String?> {
+        return dataStore.data.map { preferences ->
+            preferences[USERNAME]
+        }
+    }
+
     suspend fun saveTokenUser(token: String) {
         dataStore.edit { preferences ->
             preferences[TOKEN_KEY] = token
+        }
+    }
+    suspend fun saveUsername(username: String) {
+        dataStore.edit { preferences ->
+            preferences[USERNAME] = username
         }
     }
 
@@ -55,9 +67,9 @@ class UserPreferences private constructor(
         }
     }
 
-    suspend fun saveSession(loginSession: Boolean) {
+    suspend fun setSession() {
         dataStore.edit { preferences ->
-            preferences[SESSION_BOARDING] = loginSession
+            preferences[SESSION_BOARDING] = true
         }
     }
 

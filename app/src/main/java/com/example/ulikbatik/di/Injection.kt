@@ -6,6 +6,7 @@ import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.data.remote.config.ApiConfig
 import com.example.ulikbatik.data.repository.AuthRepository
 import com.example.ulikbatik.data.repository.CatalogRepository
+import com.example.ulikbatik.data.repository.LikesRepository
 import com.example.ulikbatik.data.repository.PostRepository
 import com.example.ulikbatik.data.repository.ScanRepository
 import kotlinx.coroutines.flow.first
@@ -24,6 +25,13 @@ object Injection {
         val apiService = ApiConfig.getApiInstance(user)
         return PostRepository.getInstance(apiService)
     }
+
+    fun provideLikesRepository(context: Context): LikesRepository {
+            val pref = UserPreferences.getInstance(context.dataStore)
+            val user = runBlocking { pref.getUserToken().first() }
+            val apiService = ApiConfig.getApiInstance(user)
+            return LikesRepository.getInstance(apiService)
+        }
 
     fun provideScanRepository(context: Context): ScanRepository {
         val pref = UserPreferences.getInstance(context.dataStore)

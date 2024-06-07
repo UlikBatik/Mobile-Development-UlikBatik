@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.databinding.ItemCatalogBinding
-import com.example.ulikbatik.ui.catalog.detailCatalog.DetailCatalogActivity
 
 class CatalogAdapter(private val posts: List<BatikModel>) : RecyclerView.Adapter<CatalogAdapter.PostViewHolder>() {
 

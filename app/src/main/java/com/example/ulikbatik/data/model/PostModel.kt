@@ -25,5 +25,11 @@ data class PostModel(
     val createdAt: String,
 
     @SerializedName("UPDATEDAT")
-    val updatedAt: String
+    val updatedAt: String,
+    
+    @SerializedName("user")
+    val user: UserModel,
+
+    @SerializedName("batik")
+    val batik: BatikModel
 )

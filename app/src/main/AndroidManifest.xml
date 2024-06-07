@@ -3,8 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,6 +20,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.auth.AuthActivity"
+            android:exported="false" />
+        <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
@@ -24,6 +30,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.dashboard.DashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.boarding.BoardingActivity"
             android:exported="false" />
         <activity
             android:name=".ui.upload.UploadActivity"
@@ -41,16 +50,13 @@
             android:name=".ui.detailPost.DetailPostActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.catalog.detailCatalog.DetailCatalogActivity"
+            android:name=".ui.catalog.DetailCatalogActivity"
             android:exported="false" />
         <activity
             android:name=".ui.likes.LikesActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.AuthActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.boarding.BoardingActivity"
+            android:name=".ui.splashscreen.SplashscreenActivity"
             android:exported="true"
             android:theme="@style/Theme.UlikBatik.NoActionBar">
             <intent-filter>

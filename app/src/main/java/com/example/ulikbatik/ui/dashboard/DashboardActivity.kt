@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import com.google.android.material.navigation.NavigationView
@@ -13,8 +14,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ulikbatik.R
+import com.example.ulikbatik.data.local.UserPreferences
+import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityDashboardBinding
@@ -24,6 +28,7 @@ import com.example.ulikbatik.ui.likes.LikesActivity
 import com.example.ulikbatik.ui.profile.ProfileActivity
 import com.example.ulikbatik.ui.scan.ScanActivity
 import com.example.ulikbatik.ui.upload.UploadActivity
+import kotlinx.coroutines.launch
 
 class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -46,12 +51,21 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         )
 
         setDrawer()
-
+        setViewModel()
         setAction()
 
-        dashboardViewModel.getPost().observe(this){
-            if (it != null){
-                setView(it)
+    }
+
+    private fun setViewModel() {
+        dashboardViewModel.apply{
+            isLoading.observe(this@DashboardActivity) {
+                showLoading(it)
+            }
+
+            allPost.observe(this@DashboardActivity){
+                if (it != null){
+                    setView(it)
+                }
             }
         }
     }
@@ -86,11 +100,20 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun setView(res: GeneralResponse<List<PostModel>>) {
+
         if(res.data != null) {
             binding.apply {
                 contentDashboard.rvPost.layoutManager =
                     LinearLayoutManager(this@DashboardActivity)
                 contentDashboard.rvPost.adapter = DashboardAdapter(res.data)
+            }
+        }
+
+        var pref = UserPreferences.getInstance(this.dataStore)
+
+        lifecycleScope.launch {
+            pref.getUsername().collect{ username ->
+                binding.contentDashboard.usernameTv.text = username
             }
         }
     }
@@ -129,4 +152,11 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
         return true
     }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.contentDashboard.progressBar.visibility =
+            if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
+
 }

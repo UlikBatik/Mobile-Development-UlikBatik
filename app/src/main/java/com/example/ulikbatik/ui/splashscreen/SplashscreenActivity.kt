@@ -1,4 +1,4 @@
-package com.example.ulikbatik.ui.auth
+package com.example.ulikbatik.ui.splashscreen
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,22 +11,21 @@ import androidx.lifecycle.lifecycleScope
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.data.local.dataStore
-import com.example.ulikbatik.databinding.ActivityAuthBinding
+import com.example.ulikbatik.ui.auth.AuthActivity
+import com.example.ulikbatik.ui.boarding.BoardingActivity
 import com.example.ulikbatik.ui.dashboard.DashboardActivity
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 
-class AuthActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityAuthBinding
+class SplashscreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityAuthBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_splashscreen)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.authContainer) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -39,19 +38,20 @@ class AuthActivity : AppCompatActivity() {
         )
 
         val pref = UserPreferences.getInstance(this.dataStore)
-        val token = runBlocking {
-            pref.getUserToken().first()
-        }
+        lifecycleScope.launch {
+            delay(5000)
 
-        if (token != null) {
-            val intent = Intent(this@AuthActivity, DashboardActivity::class.java)
-            startActivity(intent)
+            val isSession = pref.getSession().first()
+
+            when {
+                !isSession -> {
+                    startActivity(Intent(this@SplashscreenActivity, BoardingActivity::class.java))
+                }
+                else -> {
+                    startActivity(Intent(this@SplashscreenActivity, AuthActivity::class.java))
+                }
+            }
             finish()
-        } else {
-            supportFragmentManager
-                .beginTransaction()
-                .add(R.id.authContainer, LoginFragment.newInstance())
-                .commit()
         }
     }
 }

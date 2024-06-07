@@ -2,9 +2,12 @@ package com.example.ulikbatik.data.remote.config
 
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.model.BatikModel
+import com.example.ulikbatik.data.model.LikesModel
 import com.example.ulikbatik.data.remote.request.LoginBodyRequest
 import com.example.ulikbatik.data.remote.request.RegisterBodyRequest
 import com.example.ulikbatik.data.remote.response.GeneralResponse
+import com.example.ulikbatik.data.remote.response.LikesBodyRequest
+import com.example.ulikbatik.data.remote.response.LikesResponse
 import com.example.ulikbatik.data.remote.response.LoginResponse
 import com.example.ulikbatik.data.remote.response.PostResponse
 import com.example.ulikbatik.data.remote.response.RegisterResponse
@@ -20,13 +23,6 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
-    @GET("batiks")
-    fun getBatik(): Call<GeneralResponse<List<BatikModel>>>
-
-    @GET("batik/{batikId}")
-    fun getDetailBatik(
-        @Path("batikId") batikId: String
-    ): Call<GeneralResponse<BatikModel>>
 
     @GET("posts")
     fun getAllPosts(): Call<GeneralResponse<List<PostModel>>>
@@ -61,4 +57,22 @@ interface ApiService {
         @Part attachment: MultipartBody.Part
     ): Call<ScanResponse>
 
+    @GET("batiks")
+    fun getBatik(): Call<GeneralResponse<List<BatikModel>>>
+
+    @GET("batik/{batikId}")
+    fun getDetailBatik(
+        @Path("batikId") batikId: String
+    ): Call<GeneralResponse<BatikModel>>
+
+    @GET("likes/{userId}")
+    fun getLikes(
+        @Path("userId") userid: String
+    ): Call<GeneralResponse<List<LikesModel>>>
+
+    @POST("like/{userId}")
+    fun likePost(
+        @Path("userId") userid: String,
+        @Body postId: LikesBodyRequest
+    ): Call<LikesResponse>
 }

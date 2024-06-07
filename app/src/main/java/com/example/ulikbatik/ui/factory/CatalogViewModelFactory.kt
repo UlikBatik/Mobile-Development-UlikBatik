@@ -3,11 +3,9 @@ package com.example.ulikbatik.ui.factory
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.ulikbatik.data.Catalog
 import com.example.ulikbatik.data.repository.CatalogRepository
 import com.example.ulikbatik.di.Injection
 import com.example.ulikbatik.ui.catalog.CatalogViewModel
-import com.example.ulikbatik.ui.scan.ScanViewModel
 
 class CatalogViewModelFactory(
     private val catalogRepository: CatalogRepository
