@@ -4,11 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.ulikbatik.data.repository.LikesRepository
-import com.example.ulikbatik.data.repository.PostRepository
 import com.example.ulikbatik.di.Injection
-import com.example.ulikbatik.ui.dashboard.DashboardViewModel
-import com.example.ulikbatik.ui.dashboard.PostViewModelFactory
-import com.example.ulikbatik.ui.detailPost.DetailPostViewModel
 
 class LikesViewModelFactory  (
     private val repository: LikesRepository

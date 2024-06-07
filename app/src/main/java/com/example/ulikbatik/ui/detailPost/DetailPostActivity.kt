@@ -15,7 +15,7 @@ import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.databinding.ActivityDetailPostBinding
 import com.example.ulikbatik.ui.catalog.DetailCatalogActivity
-import com.example.ulikbatik.ui.dashboard.PostViewModelFactory
+import com.example.ulikbatik.ui.factory.PostViewModelFactory
 import kotlinx.coroutines.launch
 
 class DetailPostActivity : AppCompatActivity() {
