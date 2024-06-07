@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,12 +14,19 @@ import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.databinding.ActivityAuthBinding
 import com.example.ulikbatik.ui.dashboard.DashboardActivity
+import com.example.ulikbatik.ui.factory.AuthViewModelFactory
+import com.example.ulikbatik.ui.likes.LikesViewModel
+import com.example.ulikbatik.ui.likes.LikesViewModelFactory
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
 class AuthActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthBinding
+    private lateinit var preferences: UserPreferences
+    private val authViewModel: AuthViewModel by viewModels {
+        AuthViewModelFactory.getInstance(applicationContext)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +46,14 @@ class AuthActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        val pref = UserPreferences.getInstance(this.dataStore)
+        setViewModel()
+        setView()
+
+    }
+
+    private fun setView() {
         val token = runBlocking {
-            pref.getUserToken().first()
+            preferences.getUserToken().first()
         }
 
         if (token != null) {
@@ -53,5 +66,9 @@ class AuthActivity : AppCompatActivity() {
                 .add(R.id.authContainer, LoginFragment.newInstance())
                 .commit()
         }
+    }
+
+    private fun setViewModel() {
+        preferences = authViewModel.pref
     }
 }

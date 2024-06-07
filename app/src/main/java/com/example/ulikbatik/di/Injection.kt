@@ -52,4 +52,9 @@ object Injection {
         val userId = runBlocking { pref.getUserId().first() }
         return userId
     }
+
+    fun providePreferences(context: Context): UserPreferences {
+        val pref = UserPreferences.getInstance(context.dataStore)
+        return pref
+    }
 }

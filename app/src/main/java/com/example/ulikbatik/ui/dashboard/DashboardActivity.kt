@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDashboardBinding
+    private lateinit var preferences: UserPreferences
     private val dashboardViewModel: DashboardViewModel by viewModels {
         PostViewModelFactory.getInstance(applicationContext)
     }
@@ -67,6 +68,8 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     setView(it)
                 }
             }
+
+            preferences = pref
         }
     }
 
@@ -109,10 +112,8 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
         }
 
-        var pref = UserPreferences.getInstance(this.dataStore)
-
         lifecycleScope.launch {
-            pref.getUsername().collect{ username ->
+            preferences.getUsername().collect{ username ->
                 binding.contentDashboard.usernameTv.text = username
             }
         }

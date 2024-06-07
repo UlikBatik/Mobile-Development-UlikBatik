@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 class LikesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLikesBinding
-
+    private lateinit var preferences: UserPreferences
     private val likesViewModel: LikesViewModel by viewModels {
         LikesViewModelFactory.getInstance(applicationContext)
     }
@@ -38,36 +38,33 @@ class LikesActivity : AppCompatActivity() {
             insets
         }
 
-        likesViewModel.isLoading.observe(this){
-            showLoading(it)
-        }
+        setViewModel()
+        setLikes()
+    }
 
-        val pref = UserPreferences.getInstance(this.dataStore)
+    private fun setViewModel() {
+       likesViewModel.apply {
+            isLoading.observe(this@LikesActivity){
+                showLoading(it)
+            }
+
+           preferences = pref
+       }
+    }
+
+    override fun onResume() {
+        super.onResume()
+         setLikes()
+    }
+
+    private fun setLikes(){
         lifecycleScope.launch{
-            pref.getUserId().collect{userId ->
+            preferences.getUserId().collect{userId ->
                 if (userId != null) {
                     likesViewModel.getLikes(userId).observe(this@LikesActivity){
                         if (it != null){
                             setView(it)
                             binding.noLikesTv.visibility = if (it.data.isNullOrEmpty()) android.view.View.VISIBLE else android.view.View.GONE
-                        }
-                    }
-                }
-            }
-        }
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val pref = UserPreferences.getInstance(this.dataStore)
-        lifecycleScope.launch{
-            pref.getUserId().collect{userId ->
-                if (userId != null) {
-
-                    likesViewModel.getLikes(userId).observe(this@LikesActivity){
-                        if (it != null){
-                            setView(it)
                         }
                     }
                 }

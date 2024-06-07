@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 class DetailPostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailPostBinding
+    private lateinit var preferences: UserPreferences
     private val detailPostViewModel: DetailPostViewModel by viewModels {
         PostViewModelFactory.getInstance(applicationContext)
     }
@@ -37,12 +38,16 @@ class DetailPostActivity : AppCompatActivity() {
         }
 
         setToolbar()
+        setViewModel()
         setView()
+    }
+
+    private fun setViewModel() {
+        preferences = detailPostViewModel.pref
     }
 
     private fun setView() {
         val postId = intent.getStringExtra(EXTRA_ID_POST) ?: return
-        val pref = UserPreferences.getInstance(this.dataStore)
 
         detailPostViewModel.apply {
 
@@ -76,7 +81,7 @@ class DetailPostActivity : AppCompatActivity() {
                         }
 
                         lifecycleScope.launch {
-                            pref.getUserId().collect { userId ->
+                            preferences.getUserId().collect { userId ->
                                 if (userId != null) {
                                     detailPostViewModel.getLikes(userId, data.postId).observe(this@DetailPostActivity) { likes ->
                                         detailPostViewModel.isLiked.observe(this@DetailPostActivity) { isLiked ->
@@ -100,8 +105,6 @@ class DetailPostActivity : AppCompatActivity() {
             }
         }
     }
-
-
 
     private fun setToolbar() {
         setSupportActionBar(binding.toolbar)
