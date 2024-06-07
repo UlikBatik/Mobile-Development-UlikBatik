@@ -34,7 +34,7 @@ class LikesAdapter(private val posts: List<LikesModel>) : RecyclerView.Adapter<L
                     .placeholder(R.drawable.img_placeholder)
                     .into(imagePost)
 
-                usernameTv.text = post.post.userId
+                usernameTv.text = post.post.user.uSERNAME
                 descriptionTv.text = post.post.caption
 
                 itemLikes.setOnClickListener{

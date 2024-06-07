@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import com.google.android.material.navigation.NavigationView
@@ -155,5 +156,6 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         binding.contentDashboard.progressBar.visibility =
             if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
     }
+
 
 }

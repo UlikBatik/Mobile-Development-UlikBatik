@@ -67,9 +67,9 @@ class UserPreferences private constructor(
         }
     }
 
-    suspend fun saveSession(loginSession: Boolean) {
+    suspend fun setSession() {
         dataStore.edit { preferences ->
-            preferences[SESSION_BOARDING] = loginSession
+            preferences[SESSION_BOARDING] = true
         }
     }
 
