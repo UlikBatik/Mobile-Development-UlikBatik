@@ -55,11 +55,6 @@ class UserPreferences private constructor(
         }
     }
 
-    suspend fun deleteSession() {
-        dataStore.edit { preferences ->
-            preferences.clear()
-        }
-    }
 
     fun getSession(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
@@ -69,6 +64,13 @@ class UserPreferences private constructor(
 
     suspend fun setSession() {
         dataStore.edit { preferences ->
+            preferences[SESSION_BOARDING] = true
+        }
+    }
+
+    suspend fun logOut() {
+        dataStore.edit { preferences ->
+            preferences.clear()
             preferences[SESSION_BOARDING] = true
         }
     }

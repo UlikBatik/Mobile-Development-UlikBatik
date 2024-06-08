@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.activity.viewModels
@@ -22,15 +23,17 @@ import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityDashboardBinding
+import com.example.ulikbatik.ui.auth.AuthActivity
 import com.example.ulikbatik.ui.catalog.CatalogActivity
 import com.example.ulikbatik.ui.factory.PostViewModelFactory
 import com.example.ulikbatik.ui.likes.LikesActivity
 import com.example.ulikbatik.ui.profile.ProfileActivity
 import com.example.ulikbatik.ui.scan.ScanActivity
 import com.example.ulikbatik.ui.upload.UploadActivity
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class DashboardActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDashboardBinding
     private lateinit var preferences: UserPreferences
@@ -121,6 +124,8 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     private fun setDrawer() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
+        val navigationView: NavigationView = binding.navView
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_darkmode, R.id.nav_my_account, R.id.nav_language, R.id.nav_logout
@@ -129,6 +134,16 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         binding.contentDashboard.menuBtn.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_logout -> {
+                    logout()
+                    true
+                }
+                else -> false
+            }
         }
 
         onBackPressedDispatcher.addCallback(this) {
@@ -145,19 +160,19 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         return true
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_language -> {
-                return true
-            }
+    private fun logout(){
+        lifecycleScope.launch {
+            delay(3000) 
+            preferences.logOut()
+
+            val intent = Intent(this@DashboardActivity, AuthActivity::class.java)
+            startActivity(intent)
+            finish()
         }
-        return true
     }
 
     private fun showLoading(isLoading: Boolean) {
         binding.contentDashboard.progressBar.visibility =
             if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
     }
-
-
 }
