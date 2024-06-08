@@ -9,6 +9,7 @@ import com.example.ulikbatik.data.repository.CatalogRepository
 import com.example.ulikbatik.data.repository.LikesRepository
 import com.example.ulikbatik.data.repository.PostRepository
 import com.example.ulikbatik.data.repository.ScanRepository
+import com.example.ulikbatik.data.repository.UserRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
@@ -46,6 +47,14 @@ object Injection {
         val apiService = ApiConfig.getApiInstance(user)
         return CatalogRepository.getInstance(apiService)
     }
+
+    fun provideUserRepository(context: Context): UserRepository {
+        val pref = UserPreferences.getInstance(context.dataStore)
+        val user = runBlocking { pref.getUserToken().first() }
+        val apiService = ApiConfig.getApiInstance(user)
+        return UserRepository.getInstance(apiService)
+    }
+
 
     fun provideUserId(context: Context): String? {
         val pref = UserPreferences.getInstance(context.dataStore)

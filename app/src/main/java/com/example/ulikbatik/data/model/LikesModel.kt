@@ -9,9 +9,6 @@ class LikesModel (
     @SerializedName("POSTID")
     val postId: String,
 
-    @SerializedName("user")
-    val user: UserModel,
-
     @SerializedName("post")
     val post: PostModel
 

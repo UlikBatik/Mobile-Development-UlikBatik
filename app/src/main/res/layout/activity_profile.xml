@@ -1,177 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileActivity">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/backButton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="14dp"
-        android:background="@drawable/ic_back"
-        android:contentDescription="@string/back_button_description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <TextView
-        android:id="@+id/tv_likes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/scheherazade"
-        android:text="@string/profile_likes_sum"
-        android:textSize="28sp"
-        android:layout_marginStart="30dp"
-        app:layout_constraintBottom_toBottomOf="@id/username_profile"
-        app:layout_constraintStart_toEndOf="@id/backButton"
-        app:layout_constraintEnd_toStartOf="@id/tv_posts"
-        app:layout_constraintTop_toTopOf="@id/username_profile" />
-
-    <TextView
-        android:id="@+id/tv_label_likes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
-        android:text="@string/profile_likes"
-        app:layout_constraintEnd_toEndOf="@id/tv_likes"
-        app:layout_constraintStart_toStartOf="@id/tv_likes"
-        app:layout_constraintTop_toBottomOf="@id/tv_likes" />
-
-    <TextView
-        android:id="@+id/tv_posts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="50dp"
-        android:fontFamily="@font/scheherazade"
-        android:text="@string/profile_likes_sum"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="@id/username_profile"
-        app:layout_constraintStart_toEndOf="@id/tv_likes"
-        app:layout_constraintEnd_toStartOf="@id/username_profile"
-        app:layout_constraintTop_toTopOf="@id/username_profile" />
-
-    <TextView
-        android:id="@+id/tv_label_post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
-        android:text="@string/profile_posts"
-        app:layout_constraintEnd_toEndOf="@id/tv_posts"
-        app:layout_constraintStart_toStartOf="@id/tv_posts"
-        app:layout_constraintTop_toBottomOf="@+id/tv_posts" />
-
-    <TextView
-        android:id="@+id/username_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/username"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/email_profile"
-        app:layout_constraintEnd_toEndOf="@id/email_profile" />
-
-    <TextView
-        android:id="@+id/email_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="10dp"
-        android:fontFamily="@font/poppins"
-        android:text="@string/email"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/image_profile"
-        app:layout_constraintEnd_toStartOf="@id/image_profile"
-        app:layout_constraintTop_toBottomOf="@id/username_profile"
-        app:layout_constraintTop_toTopOf="@id/image_profile" />
-
-    <ImageView
-        android:id="@+id/image_profile"
-        android:layout_width="74dp"
-        android:layout_height="74dp"
-        android:layout_marginTop="73dp"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/ic_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view_divider_profile"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/divider_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_profile" />
-
-    <TextView
-        android:id="@+id/tv_label_postings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/poppins_bold"
-        android:padding="10dp"
-        android:text="@string/profile_posts"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_divider_profile" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_grid"
-        style="?attr/materialIconButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/grid_description"
-        app:icon="@drawable/ic_grid"
-        app:layout_constraintEnd_toStartOf="@+id/button_list"
-        app:layout_constraintTop_toTopOf="@id/tv_label_postings" />
-
-    <Button
-        android:id="@+id/button_list"
-        style="?attr/materialIconButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/list_description"
-        app:icon="@drawable/ic_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_label_postings" />
-
-    <View
-        android:id="@+id/divider_postings"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:background="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_grid" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rc_post_profile_list"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:visibility="gone"
-        android:contentDescription="@string/rv_post_description"
-        tools:listitem="@layout/item_post_profile"
-        app:layout_constraintTop_toBottomOf="@id/divider_postings" />
+        tools:context=".ui.profile.ProfileActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rc_post_profile_grid"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
-        tools:itemCount="20"
-        android:contentDescription="@string/rv_post_description"
-        tools:listitem="@layout/item_post_profile_grid"
-        app:layout_constraintTop_toBottomOf="@id/divider_postings" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/backButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/ic_back"
+            android:contentDescription="@string/back_button_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/tv_likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:fontFamily="@font/scheherazade"
+            android:text="@string/profile_likes_sum"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toBottomOf="@id/image_profile"
+            app:layout_constraintEnd_toStartOf="@id/image_profile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/image_profile" />
+
+        <TextView
+            android:id="@+id/tv_label_likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="@string/profile_likes"
+            app:layout_constraintEnd_toEndOf="@id/tv_likes"
+            app:layout_constraintStart_toStartOf="@id/tv_likes"
+            app:layout_constraintTop_toBottomOf="@id/tv_likes" />
+
+        <TextView
+            android:id="@+id/tv_posts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:fontFamily="@font/scheherazade"
+            android:text="@string/profile_likes_sum"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toBottomOf="@id/image_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_profile"
+            app:layout_constraintTop_toTopOf="@id/image_profile" />
+
+        <TextView
+            android:id="@+id/tv_label_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="@string/profile_posts"
+            app:layout_constraintEnd_toEndOf="@id/tv_posts"
+            app:layout_constraintStart_toStartOf="@id/tv_posts"
+            app:layout_constraintTop_toBottomOf="@+id/tv_posts" />
+
+        <TextView
+            android:id="@+id/username_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/username"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/image_profile"
+            app:layout_constraintStart_toStartOf="@id/image_profile"
+            app:layout_constraintTop_toBottomOf="@id/image_profile" />
+
+        <TextView
+            android:id="@+id/email_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="@string/email"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/username_profile"
+            app:layout_constraintStart_toStartOf="@id/username_profile"
+            app:layout_constraintTop_toBottomOf="@id/username_profile" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_gradient"
+            android:text="@string/profile_edit"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@id/email_profile"
+            app:layout_constraintStart_toStartOf="@id/email_profile"
+            app:layout_constraintTop_toBottomOf="@id/email_profile"
+            tools:visibility="visible" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_profile"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="76dp"
+            android:src="@drawable/ic_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_divider_profile"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/divider_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_edit_profile" />
+
+        <TextView
+            android:id="@+id/tv_label_postings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_bold"
+            android:padding="10dp"
+            android:text="@string/profile_posts"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_divider_profile" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_grid"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/grid_description"
+            app:icon="@drawable/ic_grid"
+            app:layout_constraintEnd_toStartOf="@+id/button_list"
+            app:layout_constraintTop_toTopOf="@id/tv_label_postings" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_list"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/list_description"
+            app:icon="@drawable/ic_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_label_postings" />
+
+        <View
+            android:id="@+id/divider_postings"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_grid" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rc_post_profile"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:contentDescription="@string/rv_post_description"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/divider_postings"
+            app:spanCount="2"
+            android:isScrollContainer="false"
+            tools:itemCount="20"
+            tools:listitem="@layout/item_post_profile_grid" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

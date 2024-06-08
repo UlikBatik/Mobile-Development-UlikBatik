@@ -2,21 +2,19 @@ package com.example.ulikbatik.ui.detailPost
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
-import com.example.ulikbatik.data.local.UserPreferences
-import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.databinding.ActivityDetailPostBinding
 import com.example.ulikbatik.ui.catalog.DetailCatalogActivity
 import com.example.ulikbatik.ui.factory.PostViewModelFactory
-import kotlinx.coroutines.launch
+import com.example.ulikbatik.ui.profile.ProfileActivity
 
 class DetailPostActivity : AppCompatActivity() {
 
@@ -42,7 +40,7 @@ class DetailPostActivity : AppCompatActivity() {
 
     private fun setView() {
         val postId = intent.getStringExtra(EXTRA_ID_POST) ?: return
-        val pref = UserPreferences.getInstance(this.dataStore)
+        val userId = detailPostViewModel.idUserData
 
         detailPostViewModel.apply {
 
@@ -66,33 +64,71 @@ class DetailPostActivity : AppCompatActivity() {
                             .placeholder(R.drawable.img_placeholder)
                             .into(tagName.imgBatik)
 
+                        Glide.with(this@DetailPostActivity)
+                            .load(data.user.pROFILEIMG)
+                            .placeholder(R.drawable.ic_profile)
+                            .into(detailImageProfile)
+
                         tagName.batikName.text = data.batik.bATIKNAME
                         tagName.batikLoc.text = data.batik.bATIKLOCT
 
                         tagName.itemTag.setOnClickListener {
-                            val intent = Intent(this@DetailPostActivity, DetailCatalogActivity::class.java)
+                            val intent =
+                                Intent(this@DetailPostActivity, DetailCatalogActivity::class.java)
                             intent.putExtra(DetailCatalogActivity.EXTRA_IDBATIK, res.data.batikId)
                             startActivity(intent)
                         }
 
-                        lifecycleScope.launch {
-                            pref.getUserId().collect { userId ->
-                                if (userId != null) {
-                                    detailPostViewModel.getLikes(userId, data.postId).observe(this@DetailPostActivity) { likes ->
-                                        detailPostViewModel.isLiked.observe(this@DetailPostActivity) { isLiked ->
-                                            detailLikesFab.setImageResource(if (isLiked) R.drawable.ic_likes_fill else R.drawable.ic_likes_unfill)
-                                        }
-                                    }
-                                }
+                        detailImageProfile.setOnClickListener {
+                            val intent =
+                                Intent(this@DetailPostActivity, ProfileActivity::class.java)
+                            intent.putExtra(ProfileActivity.EXTRA_ID_GUEST, data.userId)
+                            startActivity(intent)
+                        }
 
-                                detailLikesFab.setOnClickListener {
-                                    userId?.let { userIdNotNull ->
-                                        detailPostViewModel.likePost(userIdNotNull, data.postId).observe(this@DetailPostActivity) { response ->
-                                            Toast.makeText(this@DetailPostActivity, response.message, Toast.LENGTH_SHORT).show()
-                                            detailPostViewModel.toggleLikeStatus()
-                                        }
+                        detailUsername.setOnClickListener {
+                            val intent =
+                                Intent(this@DetailPostActivity, ProfileActivity::class.java)
+                            intent.putExtra(ProfileActivity.EXTRA_ID_GUEST, data.userId)
+                            startActivity(intent)
+                        }
+
+                        if (userId != null) {
+                            showDeleteButton(userId, data.user.uSERID)
+                            detailPostViewModel.getLikes(userId, data.postId)
+                                .observe(this@DetailPostActivity) { _ ->
+                                    detailPostViewModel.isLiked.observe(this@DetailPostActivity) { isLiked ->
+                                        detailLikesFab.setImageResource(if (isLiked) R.drawable.ic_likes_fill else R.drawable.ic_likes_unfill)
                                     }
                                 }
+                            detailLikesFab.setOnClickListener {
+                                detailPostViewModel.likePost(userId, data.postId)
+                                    .observe(this@DetailPostActivity) { res ->
+                                        Toast.makeText(
+                                            this@DetailPostActivity,
+                                            res.message,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        detailPostViewModel.toggleLikeStatus()
+                                    }
+                            }
+                            detailDeleteFab.setOnClickListener {
+                                detailPostViewModel.deletePost(data.postId)
+                                    .observe(this@DetailPostActivity) { res ->
+                                        if (res.status) {
+                                            showToast(res.message)
+                                            finish()
+                                        } else {
+                                            when (res.message.toInt()) {
+                                                500 -> {
+                                                    showToast(getString(R.string.error_server_500))
+                                                }
+                                                503 ->{
+                                                    showToast(getString(R.string.error_server_500))
+                                                }
+                                            }
+                                        }
+                                    }
                             }
                         }
                     }
@@ -101,6 +137,9 @@ class DetailPostActivity : AppCompatActivity() {
         }
     }
 
+    private fun showDeleteButton(userId: String, userIdPost: String) {
+        binding.detailDeleteFab.visibility = if (userId == userIdPost) View.VISIBLE else View.GONE
+    }
 
 
     private fun setToolbar() {
@@ -113,14 +152,18 @@ class DetailPostActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility =
-            if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
-        binding.loadingView.visibility =
-            if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    companion object{
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility =
+            if (isLoading) View.VISIBLE else View.GONE
+        binding.loadingView.visibility =
+            if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    companion object {
         const val EXTRA_ID_POST = "extra_id_post"
     }
 }

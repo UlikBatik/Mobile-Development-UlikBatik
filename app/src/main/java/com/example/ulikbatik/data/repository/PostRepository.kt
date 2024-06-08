@@ -22,7 +22,7 @@ class PostRepository(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun getAllPost(): LiveData<GeneralResponse<List<PostModel>>>{
+    fun getAllPost(): LiveData<GeneralResponse<List<PostModel>>> {
         _isLoading.value = true
         val resultLiveData = MutableLiveData<GeneralResponse<List<PostModel>>>()
         val client = apiService.getAllPosts()
@@ -94,7 +94,7 @@ class PostRepository(
                 ) {
                     if (response.isSuccessful) {
                         resultLiveData.value = response.body()
-                    }else{
+                    } else {
                         resultLiveData.value =
                             LikesResponse(message = response.code().toString(), status = false)
                     }
@@ -126,6 +126,7 @@ class PostRepository(
                     )
                 }
             }
+
             override fun onFailure(call: Call<GeneralResponse<List<LikesModel>>>, t: Throwable) {
                 resultLiveData.value = GeneralResponse(
                     message = "500",
@@ -175,6 +176,38 @@ class PostRepository(
         return resultLiveData
     }
 
+    fun deletePost(idPost: String): LiveData<GeneralResponse<PostModel>> {
+        _isLoading.value = true
+        val resultLiveData = MutableLiveData<GeneralResponse<PostModel>>()
+        val client = apiService.deletePost(idPost)
+        client.enqueue(
+            object : Callback<GeneralResponse<PostModel>> {
+                override fun onResponse(
+                    call: Call<GeneralResponse<PostModel>>,
+                    response: Response<GeneralResponse<PostModel>>
+                ) {
+                    _isLoading.value = false
+                    if (response.isSuccessful) {
+                        resultLiveData.value = response.body()
+                    } else {
+                        resultLiveData.value = GeneralResponse(
+                            message = response.code().toString(),
+                            status = false
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<GeneralResponse<PostModel>>, t: Throwable) {
+                    _isLoading.value = false
+                    resultLiveData.value = GeneralResponse(
+                        message = "500",
+                        status = false
+                    )
+                }
+            }
+        )
+        return resultLiveData
+    }
 
 
     companion object {

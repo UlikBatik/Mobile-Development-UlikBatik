@@ -11,10 +11,12 @@ import com.example.ulikbatik.data.remote.response.LikesResponse
 import com.example.ulikbatik.data.repository.PostRepository
 
 class DetailPostViewModel(
-    private val postRepository: PostRepository
+    private val postRepository: PostRepository,
+    idUser: String?
 ) : ViewModel() {
 
     val isLoading = postRepository.isLoading
+    val idUserData = idUser
 
     private val _isLiked = MutableLiveData<Boolean>()
     val isLiked: LiveData<Boolean> get() = _isLiked
@@ -37,5 +39,9 @@ class DetailPostViewModel(
 
     fun toggleLikeStatus() {
         _isLiked.value = _isLiked.value != true
+    }
+
+    fun deletePost(idPost: String): LiveData<GeneralResponse<PostModel>> {
+        return postRepository.deletePost(idPost)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.ulikbatik.ui.dashboard
+package com.example.ulikbatik.ui.profile.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -6,15 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
-import com.example.ulikbatik.data.model.PostModel
-import com.example.ulikbatik.databinding.ItemPostBinding
+import com.example.ulikbatik.data.remote.response.PostItem
+import com.example.ulikbatik.databinding.ItemPostProfileBinding
 import com.example.ulikbatik.ui.detailPost.DetailPostActivity
+import com.example.ulikbatik.utils.helper.DateLocaleHelper
 
-class DashboardAdapter(private val posts: List<PostModel>) :
-    RecyclerView.Adapter<DashboardAdapter.PostViewHolder>() {
+class ListAdapter(private val posts: List<PostItem>) :
+    RecyclerView.Adapter<ListAdapter.PostViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val binding = ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemPostProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PostViewHolder(binding)
     }
 
@@ -26,25 +28,21 @@ class DashboardAdapter(private val posts: List<PostModel>) :
         return posts.size
     }
 
-    class PostViewHolder(private val binding: ItemPostBinding) :
+    class PostViewHolder(private val binding: ItemPostProfileBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(post: PostModel) {
+        fun bind(post: PostItem) {
             binding.apply {
-                Glide.with(root)
-                    .load(post.postImg)
+                Glide.with(binding.root)
+                    .load(post.pOSTIMG)
                     .placeholder(R.drawable.img_placeholder)
                     .into(imagePost)
-
-                Glide.with(root)
-                    .load(post.user.pROFILEIMG)
-                    .placeholder(R.drawable.ic_profile)
-                    .into(imageIcon)
-
-                usernameTv.text = post.user.uSERNAME
-
+                tvBatikName.text = post.bATIKID
+                tvTotalLikesPost.text = post.lIKES.toString()
+                val dateFormatted = DateLocaleHelper.formatDateString(post.cREATEDAT)
+                tvDatePost.text = dateFormatted ?: post.cREATEDAT
                 itemPost.setOnClickListener {
                     val intent = Intent(binding.root.context, DetailPostActivity::class.java)
-                    intent.putExtra(DetailPostActivity.EXTRA_ID_POST, post.postId)
+                    intent.putExtra(DetailPostActivity.EXTRA_ID_POST, post.pOSTID)
                     binding.root.context.startActivity(intent)
                 }
             }
