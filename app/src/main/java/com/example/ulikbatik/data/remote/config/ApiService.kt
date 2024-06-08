@@ -21,6 +21,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -75,4 +76,9 @@ interface ApiService {
         @Path("userId") userid: String,
         @Body postId: LikesBodyRequest
     ): Call<LikesResponse>
+
+    @GET("batiks/search")
+    fun searchBatik(
+        @Query("q") query: String
+    ): Call<GeneralResponse<List<BatikModel>>>
 }
