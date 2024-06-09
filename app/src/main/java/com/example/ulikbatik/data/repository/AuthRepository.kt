@@ -32,9 +32,9 @@ class AuthRepository(
                     if (response.isSuccessful) {
                         resultLiveData.value = response.body()
                         runBlocking {
+                            response.body()?.data?.let { pref.saveUser(it) }
                             pref.saveTokenUser(response.body()?.token.toString())
                             pref.saveUserId(response.body()?.data?.uSERID.toString())
-                            pref.saveUsername(response.body()?.data?.uSERNAME.toString())
                         }
                     }else{
                         resultLiveData.value =
@@ -44,7 +44,8 @@ class AuthRepository(
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     resultLiveData.value =
-                        LoginResponse(message = t.message.toString(), status = false)
+                        LoginResponse(message = "500",
+                            status = false)
                 }
             })
         return resultLiveData
@@ -65,7 +66,8 @@ class AuthRepository(
             }
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                resultLiveData.value = RegisterResponse(message = t.message.toString(), status = false)
+                resultLiveData.value = RegisterResponse(message = "500",
+                    status = false)
             }
         })
 

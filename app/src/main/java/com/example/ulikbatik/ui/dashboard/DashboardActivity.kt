@@ -47,27 +47,38 @@ class DashboardActivity : AppCompatActivity() {
 
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         setDrawer()
         setViewModel()
         setAction()
-
     }
 
     private fun setViewModel() {
-        dashboardViewModel.apply{
+
+        dashboardViewModel.apply {
+
+            preferences = pref
+
             isLoading.observe(this@DashboardActivity) {
                 showLoading(it)
             }
 
-            allPost.observe(this@DashboardActivity){
-                if (it != null){
-                    setView(it)
+            allPost.observe(this@DashboardActivity) {
+                if (it != null) {
+                    if(it.status){
+                        setView(it)
+                    } else {
+                        handlePostError(it.message.toInt())
+                    }
                 }
             }
+        }
+    }
 
-            preferences = pref
+    private fun handlePostError(error: Int){
+        when (error) {
+            400 -> showToast(getString(R.string.error_invalid_input))
+            401 -> showToast(getString(R.string.error_unauthorized_401))
+            500 -> showToast(getString(R.string.error_server_500))
         }
     }
 
@@ -111,8 +122,10 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
-            preferences.getUsername().collect{ username ->
-                binding.contentDashboard.usernameTv.text = username
+            preferences.getUser().collect{
+                if (it != null) {
+                    binding.contentDashboard.usernameTv.text = it.uSERNAME
+                }
             }
         }
     }
@@ -169,5 +182,9 @@ class DashboardActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         binding.contentDashboard.progressBar.visibility =
             if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

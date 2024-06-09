@@ -44,11 +44,12 @@ class LikesActivity : AppCompatActivity() {
 
     private fun setViewModel() {
        likesViewModel.apply {
+           preferences = pref
+
             isLoading.observe(this@LikesActivity){
                 showLoading(it)
             }
 
-           preferences = pref
        }
     }
 
@@ -59,12 +60,16 @@ class LikesActivity : AppCompatActivity() {
 
     private fun setLikes(){
         lifecycleScope.launch{
-            preferences.getUserId().collect{userId ->
-                if (userId != null) {
-                    likesViewModel.getLikes(userId).observe(this@LikesActivity){
-                        if (it != null){
-                            setView(it)
-                            binding.noLikesTv.visibility = if (it.data.isNullOrEmpty()) android.view.View.VISIBLE else android.view.View.GONE
+            preferences.getUser().collect{user ->
+                if (user != null) {
+                    if (user.uSERID != null) {
+                        likesViewModel.getLikes(user.uSERID).observe(this@LikesActivity){
+                            if (it.status){
+                                setView(it)
+                                binding.noLikesTv.visibility = if (it.data.isNullOrEmpty()) android.view.View.VISIBLE else android.view.View.GONE
+                            } else {
+                                handlePostError(it.message.toInt())
+                            }
                         }
                     }
                 }
@@ -83,6 +88,18 @@ class LikesActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener {
             finish()
         }
+    }
+
+    private fun handlePostError(error: Int){
+        when (error) {
+            400 -> showToast(getString(R.string.error_invalid_input))
+            401 -> showToast(getString(R.string.error_unauthorized_401))
+            500 -> showToast(getString(R.string.error_server_500))
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading(isLoading: Boolean) {

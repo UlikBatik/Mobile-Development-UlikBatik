@@ -30,7 +30,7 @@ class LikesRepository(
                     resultLiveData.value = response.body()
                 } else {
                     resultLiveData.value = GeneralResponse(
-                        message = "Error: ${response.code()} ${response.message()}",
+                        message = response.code().toString(),
                         status = false
                     )
                 }
@@ -38,7 +38,7 @@ class LikesRepository(
             override fun onFailure(call: Call<GeneralResponse<List<LikesModel>>>, t: Throwable) {
                 _isLoading.value = false
                 resultLiveData.value = GeneralResponse(
-                    message = "Failure: ${t.message}",
+                    message = "500",
                     status = false
                 )
             }

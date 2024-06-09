@@ -1,6 +1,7 @@
 package com.example.ulikbatik.ui.catalog
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -44,7 +45,7 @@ class DetailCatalogActivity : AppCompatActivity() {
         val idBatik = intent.getStringExtra(EXTRA_IDBATIK)
         if (idBatik != null) {
             catalogViewModel.getDetailCatalog(idBatik).observe(this) {
-                if (it.data != null) {
+                if (it.status && it.data != null) {
                     binding.apply {
                         Glide.with(root)
                             .load(it.data.bATIKIMG)
@@ -55,6 +56,8 @@ class DetailCatalogActivity : AppCompatActivity() {
                         tvDetailBatik.text = it.data.bATIKDESC
                         tvHistoryBatik.text = it.data.bATIKHIST
                     }
+                } else {
+                    handlePostError(it.message.toInt())
                 }
             }
         }
@@ -68,6 +71,18 @@ class DetailCatalogActivity : AppCompatActivity() {
             if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
         binding.loadingView.visibility =
             if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
+    private fun handlePostError(error: Int){
+        when (error) {
+            400 -> showToast(getString(R.string.error_invalid_input))
+            401 -> showToast(getString(R.string.error_unauthorized_401))
+            500 -> showToast(getString(R.string.error_server_500))
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

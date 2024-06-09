@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.example.ulikbatik.R
@@ -58,12 +59,7 @@ class LoginFragment : Fragment() {
                             startActivity(Intent(requireActivity(), DashboardActivity::class.java))
                             requireActivity().finish()
                         } else  {
-                            when(it.message){
-                                "400" -> {
-                                    ValidatorAuthHelper.showToast(requireContext(),
-                                        requireContext().getString(R.string.error_invalid_data))
-                                }
-                            }
+                            handlePostError(it.message.toInt())
                         }
                     }
                 }
@@ -122,6 +118,14 @@ class LoginFragment : Fragment() {
                     requireActivity().finish()
                 }
             })
+    }
+
+    private fun handlePostError(error: Int){
+        when (error) {
+            400 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_invalid_input))
+            401 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_unauthorized_401))
+            500 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_server_500))
+        }
     }
 
     companion object {

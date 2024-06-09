@@ -96,7 +96,23 @@ class CatalogActivity : AppCompatActivity() {
 
     private fun searchBatik(query: String) {
         catalogViewModel.searchCatalog(query).observe(this) { res ->
-            setData(res)
+            if (res.status){
+                setData(res)
+            } else {
+                handlePostError(res.message.toInt())
+            }
         }
+    }
+
+    private fun handlePostError(error: Int){
+        when (error) {
+            400 -> showToast(getString(R.string.error_invalid_input))
+            401 -> showToast(getString(R.string.error_unauthorized_401))
+            500 -> showToast(getString(R.string.error_server_500))
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

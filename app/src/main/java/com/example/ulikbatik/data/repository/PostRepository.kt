@@ -44,7 +44,8 @@ class PostRepository(
                 override fun onFailure(call: Call<GeneralResponse<List<PostModel>>>, t: Throwable) {
                     _isLoading.value = false
                     resultLiveData.value =
-                        GeneralResponse(message = t.message.toString(), status = false)
+                        GeneralResponse(message = "500",
+                            status = false)
                 }
             })
         return resultLiveData
@@ -74,7 +75,7 @@ class PostRepository(
             override fun onFailure(call: Call<GeneralResponse<PostModel>>, t: Throwable) {
                 _isLoading.value = false
                 resultLiveData.value = GeneralResponse(
-                    message = "Failure: ${t.message}",
+                    message = "500",
                     status = false
                 )
             }
@@ -96,13 +97,15 @@ class PostRepository(
                         resultLiveData.value = response.body()
                     }else{
                         resultLiveData.value =
-                            LikesResponse(message = response.code().toString(), status = false)
+                            LikesResponse( message = response.code().toString(),
+                                status = false)
                     }
                 }
 
                 override fun onFailure(call: Call<LikesResponse>, t: Throwable) {
                     resultLiveData.value =
-                        LikesResponse(message = t.message.toString(), status = false)
+                        LikesResponse(message = "500",
+                            status = false)
                 }
             })
         return resultLiveData
@@ -121,7 +124,7 @@ class PostRepository(
                     resultLiveData.value = response.body()
                 } else {
                     resultLiveData.value = GeneralResponse(
-                        message = "Error: ${response.code()} ${response.message()}",
+                        message = response.code().toString(),
                         status = false
                     )
                 }

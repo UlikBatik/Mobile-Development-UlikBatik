@@ -56,53 +56,66 @@ class DetailPostActivity : AppCompatActivity() {
             }
 
             getPost(postId).observe(this@DetailPostActivity) { res ->
-                res.data?.let { data ->
-                    binding.apply {
-                        Glide.with(this@DetailPostActivity)
-                            .load(data.postImg)
-                            .placeholder(R.drawable.img_placeholder)
-                            .into(image)
+                if (res.status){
+                    res.data?.let { data ->
+                        binding.apply {
+                            Glide.with(this@DetailPostActivity)
+                                .load(data.postImg)
+                                .placeholder(R.drawable.img_placeholder)
+                                .into(image)
 
-                        detailUsername.text = data.user.uSERNAME
-                        detailDescription.text = data.caption
+                            detailUsername.text = data.user.uSERNAME
+                            detailDescription.text = data.caption
 
-                        Glide.with(this@DetailPostActivity)
-                            .load(data.batik.bATIKIMG)
-                            .placeholder(R.drawable.img_placeholder)
-                            .into(tagName.imgBatik)
+                            Glide.with(this@DetailPostActivity)
+                                .load(data.batik.bATIKIMG)
+                                .placeholder(R.drawable.img_placeholder)
+                                .into(tagName.imgBatik)
 
-                        tagName.batikName.text = data.batik.bATIKNAME
-                        tagName.batikLoc.text = data.batik.bATIKLOCT
+                            tagName.batikName.text = data.batik.bATIKNAME
+                            tagName.batikLoc.text = data.batik.bATIKLOCT
 
-                        tagName.itemTag.setOnClickListener {
-                            val intent = Intent(this@DetailPostActivity, DetailCatalogActivity::class.java)
-                            intent.putExtra(DetailCatalogActivity.EXTRA_IDBATIK, res.data.batikId)
-                            startActivity(intent)
-                        }
+                            tagName.itemTag.setOnClickListener {
+                                val intent = Intent(this@DetailPostActivity, DetailCatalogActivity::class.java)
+                                intent.putExtra(DetailCatalogActivity.EXTRA_IDBATIK, res.data.batikId)
+                                startActivity(intent)
+                            }
 
-                        lifecycleScope.launch {
-                            preferences.getUserId().collect { userId ->
-                                if (userId != null) {
-                                    detailPostViewModel.getLikes(userId, data.postId).observe(this@DetailPostActivity) { likes ->
-                                        detailPostViewModel.isLiked.observe(this@DetailPostActivity) { isLiked ->
-                                            detailLikesFab.setImageResource(if (isLiked) R.drawable.ic_likes_fill else R.drawable.ic_likes_unfill)
+                            lifecycleScope.launch {
+                                preferences.getUser().collect { user ->
+                                    user?.let { safeUser ->
+                                        safeUser.uSERID?.let { userIdNotNull ->
+                                            detailPostViewModel.getLikes(userIdNotNull, data.postId).observe(this@DetailPostActivity) { likes ->
+                                                detailPostViewModel.isLiked.observe(this@DetailPostActivity) { isLiked ->
+                                                    detailLikesFab.setImageResource(if (isLiked) R.drawable.ic_likes_fill else R.drawable.ic_likes_unfill)
+                                                }
+                                            }
                                         }
                                     }
-                                }
 
-                                detailLikesFab.setOnClickListener {
-                                    userId?.let { userIdNotNull ->
-                                        detailPostViewModel.likePost(userIdNotNull, data.postId).observe(this@DetailPostActivity) { response ->
-                                            Toast.makeText(this@DetailPostActivity, response.message, Toast.LENGTH_SHORT).show()
-                                            detailPostViewModel.toggleLikeStatus()
+                                    detailLikesFab.setOnClickListener {
+                                        user?.uSERID?.let { userIdNotNull ->
+                                            detailPostViewModel.likePost(userIdNotNull, data.postId).observe(this@DetailPostActivity) { response ->
+                                                Toast.makeText(this@DetailPostActivity, response.message, Toast.LENGTH_SHORT).show()
+                                                detailPostViewModel.toggleLikeStatus()
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
                     }
+                } else {
+                    handlePostError(res.message.toInt())
                 }
             }
+        }
+    }
+    private fun handlePostError(error: Int){
+        when (error) {
+            400 -> showToast(getString(R.string.error_invalid_input))
+            401 -> showToast(getString(R.string.error_unauthorized_401))
+            500 -> showToast(getString(R.string.error_server_500))
         }
     }
 
@@ -121,6 +134,10 @@ class DetailPostActivity : AppCompatActivity() {
             if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
         binding.loadingView.visibility =
             if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     companion object{
