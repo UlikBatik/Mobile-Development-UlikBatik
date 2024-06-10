@@ -3,8 +3,8 @@
     <string name="app_name2">Ulik Batik</string>
 
     <!--  CONSTANTA  -->
-    <string name="username">username</string>
-    <string name="username2">Username</string>
+    <string name="username" translatable="false">username</string>
+    <string name="username2" translatable="false">Username</string>
     <string name="password">password</string>
     <string name="confirm_password">confirm password</string>
     <string name="email">e-mail</string>
@@ -38,14 +38,14 @@
     <string name="register_page_login">Already have account?</string>
 
     <!--  DASHBOARD  -->
-    <string name="dashboard_scan">SCAN</string>
-    <string name="dashboard_catalog">CATALOG</string>
-    <string name="dashboard_likes">LIKES</string>
+    <string name="dashboard_scan" translatable="false">SCAN</string>
+    <string name="dashboard_catalog" translatable="false">CATALOG</string>
+    <string name="dashboard_likes" translatable="false">LIKES</string>
     <string name="scroll_up_button">Scroll Up</string>
 
     <!--  DRAWER  -->
     <string name="drawer_hello">Hello !</string>
-    <string name="drawer_setting">SETTINGS</string>
+    <string name="drawer_setting" translatable="false">SETTINGS</string>
     <string name="drawer_dark_mode">Dark Mode</string>
     <string name="drawer_my_account">My Account</string>
     <string name="drawer_language">Language</string>
@@ -56,16 +56,16 @@
 
     <!--  PROFILE  -->
     <string name="profile_likes_sum">12K</string>
-    <string name="profile_likes">Likes</string>
-    <string name="profile_posts">Post</string>
+    <string name="profile_likes" translatable="false">Likes</string>
+    <string name="profile_posts" translatable="false">Post</string>
     <string name="profile_date">10 May</string>
     <string name="profile_edit">Edit Profile</string>
     <string name="profile_image">Profile Picture</string>
     <string name="profile_edit_image">Change Image</string>
 
     <!--  BUTTON  -->
-    <string name="button_next">NEXT</string>
-    <string name="button_started">GET STARTED</string>
+    <string name="button_next" translatable="false">NEXT</string>
+    <string name="button_started" translatable="false">GET STARTED</string>
     <string name="button_login">LOGIN</string>
     <string name="button_register">REGISTER</string>
     <string name="button_upload">UPLOAD</string>

@@ -4,10 +4,8 @@ package com.example.ulikbatik.ui.dashboard
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
-import android.view.WindowManager
+import android.provider.Settings
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import com.google.android.material.navigation.NavigationView
@@ -19,7 +17,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.local.UserPreferences
-import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityDashboardBinding
@@ -136,7 +133,7 @@ class DashboardActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_darkmode, R.id.nav_my_account, R.id.nav_language, R.id.nav_logout
+                R.id.nav_my_account, R.id.nav_language, R.id.nav_logout
             ), drawerLayout
         )
 
@@ -150,6 +147,17 @@ class DashboardActivity : AppCompatActivity() {
                     logout()
                     true
                 }
+
+                R.id.nav_language -> {
+                    changeLanguage()
+                    true
+                }
+
+                R.id.nav_my_account -> {
+                    goToAccount()
+                    true
+                }
+
                 else -> false
             }
         }
@@ -161,6 +169,11 @@ class DashboardActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    private fun goToAccount(){
+        val intent = Intent(this@DashboardActivity, ProfileActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -177,6 +190,10 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    private fun changeLanguage() {
+        startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
     }
 
     private fun showLoading(isLoading: Boolean) {
