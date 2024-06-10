@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import com.google.android.material.navigation.NavigationView
@@ -56,43 +55,61 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     }
 
-    private fun setViewModel() {
-        dashboardViewModel.apply{
+    override fun onResume() {
+        super.onResume()
+        dashboardViewModel.apply {
             isLoading.observe(this@DashboardActivity) {
                 showLoading(it)
             }
-
-            allPost.observe(this@DashboardActivity){
-                if (it != null){
+            allPost.observe(this@DashboardActivity) {
+                if (it != null) {
                     setView(it)
                 }
             }
         }
     }
 
-    private fun setAction(){
-        binding.apply{
-            contentDashboard.scanBtn.setOnClickListener{
+    private fun setViewModel() {
+        dashboardViewModel.apply {
+            isLoading.observe(this@DashboardActivity) {
+                showLoading(it)
+            }
+
+            allPost.observe(this@DashboardActivity) {
+                if (it != null) {
+                    setView(it)
+                }
+            }
+        }
+    }
+
+    private fun setAction() {
+        binding.apply {
+            contentDashboard.scanBtn.setOnClickListener {
                 val intent = Intent(this@DashboardActivity, ScanActivity::class.java)
                 startActivity(intent)
             }
 
-            contentDashboard.catalogBtn.setOnClickListener{
+            contentDashboard.catalogBtn.setOnClickListener {
                 val intent = Intent(this@DashboardActivity, CatalogActivity::class.java)
                 startActivity(intent)
             }
 
-            contentDashboard.likesBtn.setOnClickListener{
+            contentDashboard.likesBtn.setOnClickListener {
                 val intent = Intent(this@DashboardActivity, LikesActivity::class.java)
                 startActivity(intent)
             }
 
-            contentDashboard.profileBtn.setOnClickListener{
-                val intent = Intent(this@DashboardActivity, ProfileActivity::class.java)
-                startActivity(intent)
+            contentDashboard.profileBtn.setOnClickListener {
+                val idUser = dashboardViewModel.userIdData
+                if (idUser != null) {
+                    val intent = Intent(this@DashboardActivity, ProfileActivity::class.java)
+                    intent.putExtra(ProfileActivity.EXTRA_ID_USER, idUser)
+                    startActivity(intent)
+                }
             }
 
-            contentDashboard.dashboardFab.setOnClickListener{
+            contentDashboard.dashboardFab.setOnClickListener {
                 val intent = Intent(this@DashboardActivity, UploadActivity::class.java)
                 startActivity(intent)
             }
@@ -101,7 +118,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     private fun setView(res: GeneralResponse<List<PostModel>>) {
 
-        if(res.data != null) {
+        if (res.data != null) {
             binding.apply {
                 contentDashboard.rvPost.layoutManager =
                     LinearLayoutManager(this@DashboardActivity)
@@ -109,10 +126,10 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
         }
 
-        var pref = UserPreferences.getInstance(this.dataStore)
+        val pref = UserPreferences.getInstance(this.dataStore)
 
         lifecycleScope.launch {
-            pref.getUsername().collect{ username ->
+            pref.getUsername().collect { username ->
                 binding.contentDashboard.usernameTv.text = username
             }
         }

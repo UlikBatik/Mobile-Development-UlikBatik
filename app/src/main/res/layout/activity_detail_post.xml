@@ -98,7 +98,7 @@
                 android:justificationMode="inter_word"
                 android:text="@string/onboarding_discover_description"
                 android:textSize="11sp"
-               app:layout_constraintTop_toBottomOf="@id/tag_name"
+                app:layout_constraintTop_toBottomOf="@id/tag_name"
                 tools:targetApi="o" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
@@ -110,25 +110,38 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
         android:backgroundTint="@color/primaryYellow"
         android:src="@drawable/ic_likes_unfill" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/detail_delete_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="#F84545"
+        android:src="@drawable/ic_delete"
+        android:visibility="gone"
+        app:tint="@color/white"
+        tools:visibility="visible" />
+
     <View
         android:id="@+id/loadingView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="@color/white"/>
+        android:background="@color/white"
+        android:visibility="gone" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
         android:layout_gravity="center"
+        android:indeterminate="true"
         tools:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

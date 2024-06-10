@@ -4,24 +4,24 @@ import com.google.gson.annotations.SerializedName
 
 data class UserModel(
 
-	@field:SerializedName("PASSWORD")
-	val pASSWORD: String? = null,
+    @field:SerializedName("PASSWORD")
+    val pASSWORD: String,
 
-	@field:SerializedName("UPDATEDAT")
-	val uPDATEDAT: String? = null,
+    @field:SerializedName("UPDATEDAT")
+    val uPDATEDAT: String,
 
-	@field:SerializedName("USERID")
-	val uSERID: String? = null,
+    @field:SerializedName("USERID")
+    val uSERID: String,
 
-	@field:SerializedName("USERNAME")
-	val uSERNAME: String? = null,
+    @field:SerializedName("USERNAME")
+    val uSERNAME: String,
 
-	@field:SerializedName("CREATEDAT")
-	val cREATEDAT: String? = null,
+    @field:SerializedName("CREATEDAT")
+    val cREATEDAT: String,
 
-	@field:SerializedName("PROFILEIMG")
-	val pROFILEIMG: Any? = null,
+    @field:SerializedName("PROFILEIMG")
+    val pROFILEIMG: String,
 
-	@field:SerializedName("EMAIL")
-	val eMAIL: String? = null
+    @field:SerializedName("EMAIL")
+    val eMAIL: String
 )

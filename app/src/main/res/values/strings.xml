@@ -55,7 +55,7 @@
     <string name="scan_title">Scan your Batik</string>
 
     <!--  PROFILE  -->
-    <string name="profile_likes_sum">12K</string>
+    <string name="profile_likes_sum">0</string>
     <string name="profile_likes">Likes</string>
     <string name="profile_posts">Post</string>
     <string name="profile_date">10 May</string>
@@ -116,5 +116,6 @@
     <string name="no_likes">You haven\'t liked any posts</string>
     <string name="history">History</string>
     <string name="image_failed_to_detected">image failed to detected</string>
+    <string name="username_should_not_empty">username should not empty</string>
 
 </resources>
