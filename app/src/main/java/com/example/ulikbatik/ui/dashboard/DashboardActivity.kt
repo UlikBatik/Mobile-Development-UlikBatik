@@ -15,9 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.local.UserPreferences
-import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityDashboardBinding
@@ -52,20 +52,11 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        dashboardViewModel.apply {
-            isLoading.observe(this@DashboardActivity) {
-                showLoading(it)
-            }
-            allPost.observe(this@DashboardActivity) {
-                if (it != null) {
-                    setView(it)
-                }
-            }
-        }
+        setViewModel()
+        setDrawer()
     }
 
     private fun setViewModel() {
-
         dashboardViewModel.apply {
 
             preferences = pref
@@ -74,9 +65,9 @@ class DashboardActivity : AppCompatActivity() {
                 showLoading(it)
             }
 
-            allPost.observe(this@DashboardActivity) {
+            dashboardViewModel.getPosts().observe(this@DashboardActivity) {
                 if (it != null) {
-                    if(it.status){
+                    if (it.status) {
                         setView(it)
                     } else {
                         handlePostError(it.message.toInt())
@@ -86,7 +77,7 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun handlePostError(error: Int){
+    private fun handlePostError(error: Int) {
         when (error) {
             400 -> showToast(getString(R.string.error_invalid_input))
             401 -> showToast(getString(R.string.error_unauthorized_401))
@@ -101,7 +92,7 @@ class DashboardActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            contentDashboard.catalogBtn.setOnClickListener{
+            contentDashboard.catalogBtn.setOnClickListener {
                 val intent = Intent(this@DashboardActivity, CatalogActivity::class.java)
                 startActivity(intent)
             }
@@ -128,7 +119,6 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun setView(res: GeneralResponse<List<PostModel>>) {
-
         if (res.data != null) {
             binding.apply {
                 contentDashboard.rvPost.layoutManager =
@@ -138,10 +128,30 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
-            preferences.getUser().collect{
+            preferences.getUser().collect {
                 if (it != null) {
-                    binding.contentDashboard.usernameTv.text = it.uSERNAME
+                    binding.apply {
+                        contentDashboard.usernameTv.text = it.uSERNAME
+                        Glide.with(root)
+                            .load(it.pROFILEIMG)
+                            .placeholder(R.drawable.ic_profile)
+                            .into(contentDashboard.profileBtn)
+                    }
                 }
+            }
+        }
+        binding.apply {
+            contentDashboard.nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+                if (scrollY == oldScrollY || scrollY == 0) {
+                    contentDashboard.scrollUpFab.hide()
+                } else {
+                    contentDashboard.scrollUpFab.show()
+                }
+            }
+
+            contentDashboard.scrollUpFab.setOnClickListener {
+                setViewModel()
+                contentDashboard.nestedScrollView.smoothScrollTo(0, 0)
             }
         }
     }
@@ -164,17 +174,17 @@ class DashboardActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_logout -> {
                     logout()
-                    true
+                   false
                 }
 
                 R.id.nav_language -> {
                     changeLanguage()
-                    true
+                  false
                 }
 
                 R.id.nav_my_account -> {
                     goToAccount()
-                    true
+                   false
                 }
 
                 else -> false
@@ -190,7 +200,8 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToAccount(){
+    private fun goToAccount() {
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
         val intent = Intent(this@DashboardActivity, ProfileActivity::class.java)
         startActivity(intent)
     }
@@ -200,7 +211,7 @@ class DashboardActivity : AppCompatActivity() {
         return true
     }
 
-    private fun logout(){
+    private fun logout() {
         lifecycleScope.launch {
             delay(3000)
             preferences.logOut()

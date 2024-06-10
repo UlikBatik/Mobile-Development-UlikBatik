@@ -19,8 +19,8 @@ class PostViewModelFactory(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when (modelClass) {
-            DashboardViewModel::class.java -> return DashboardViewModel(repository, pref) as T
-            DetailPostViewModel::class.java -> return DetailPostViewModel(repository, pref) as T
+            DashboardViewModel::class.java -> return DashboardViewModel(repository, pref, userId) as T
+            DetailPostViewModel::class.java -> return DetailPostViewModel(repository, pref,userId) as T
             UploadViewModel::class.java -> return UploadViewModel(repository, userId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
