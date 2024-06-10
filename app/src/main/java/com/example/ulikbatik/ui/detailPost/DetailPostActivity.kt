@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
 import com.example.ulikbatik.databinding.ActivityDetailPostBinding
@@ -19,6 +20,7 @@ import com.example.ulikbatik.ui.profile.ProfileActivity
 class DetailPostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailPostBinding
+    private lateinit var preferences: UserPreferences
     private val detailPostViewModel: DetailPostViewModel by viewModels {
         PostViewModelFactory.getInstance(applicationContext)
     }
@@ -35,7 +37,12 @@ class DetailPostActivity : AppCompatActivity() {
         }
 
         setToolbar()
+        setViewModel()
         setView()
+    }
+
+    private fun setViewModel() {
+        preferences = detailPostViewModel.pref
     }
 
     private fun setView() {
@@ -49,20 +56,21 @@ class DetailPostActivity : AppCompatActivity() {
             }
 
             getPost(postId).observe(this@DetailPostActivity) { res ->
-                res.data?.let { data ->
-                    binding.apply {
-                        Glide.with(this@DetailPostActivity)
-                            .load(data.postImg)
-                            .placeholder(R.drawable.img_placeholder)
-                            .into(image)
+                if (res.status){
+                    res.data?.let { data ->
+                        binding.apply {
+                            Glide.with(this@DetailPostActivity)
+                                .load(data.postImg)
+                                .placeholder(R.drawable.img_placeholder)
+                                .into(image)
 
-                        detailUsername.text = data.user.uSERNAME
-                        detailDescription.text = data.caption
+                            detailUsername.text = data.user.uSERNAME
+                            detailDescription.text = data.caption
 
-                        Glide.with(this@DetailPostActivity)
-                            .load(data.batik.bATIKIMG)
-                            .placeholder(R.drawable.img_placeholder)
-                            .into(tagName.imgBatik)
+                            Glide.with(this@DetailPostActivity)
+                                .load(data.batik.bATIKIMG)
+                                .placeholder(R.drawable.img_placeholder)
+                                .into(tagName.imgBatik)
 
                         Glide.with(this@DetailPostActivity)
                             .load(data.user.pROFILEIMG)
@@ -72,12 +80,11 @@ class DetailPostActivity : AppCompatActivity() {
                         tagName.batikName.text = data.batik.bATIKNAME
                         tagName.batikLoc.text = data.batik.bATIKLOCT
 
-                        tagName.itemTag.setOnClickListener {
-                            val intent =
-                                Intent(this@DetailPostActivity, DetailCatalogActivity::class.java)
-                            intent.putExtra(DetailCatalogActivity.EXTRA_IDBATIK, res.data.batikId)
-                            startActivity(intent)
-                        }
+                            tagName.itemTag.setOnClickListener {
+                                val intent = Intent(this@DetailPostActivity, DetailCatalogActivity::class.java)
+                                intent.putExtra(DetailCatalogActivity.EXTRA_IDBATIK, res.data.batikId)
+                                startActivity(intent)
+                            }
 
                         detailImageProfile.setOnClickListener {
                             val intent =
@@ -141,6 +148,43 @@ class DetailPostActivity : AppCompatActivity() {
         binding.detailDeleteFab.visibility = if (userId == userIdPost) View.VISIBLE else View.GONE
     }
 
+                            lifecycleScope.launch {
+                                preferences.getUser().collect { user ->
+                                    user?.let { safeUser ->
+                                        safeUser.uSERID?.let { userIdNotNull ->
+                                            detailPostViewModel.getLikes(userIdNotNull, data.postId).observe(this@DetailPostActivity) { likes ->
+                                                detailPostViewModel.isLiked.observe(this@DetailPostActivity) { isLiked ->
+                                                    detailLikesFab.setImageResource(if (isLiked) R.drawable.ic_likes_fill else R.drawable.ic_likes_unfill)
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    detailLikesFab.setOnClickListener {
+                                        user?.uSERID?.let { userIdNotNull ->
+                                            detailPostViewModel.likePost(userIdNotNull, data.postId).observe(this@DetailPostActivity) { response ->
+                                                Toast.makeText(this@DetailPostActivity, response.message, Toast.LENGTH_SHORT).show()
+                                                detailPostViewModel.toggleLikeStatus()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    handlePostError(res.message.toInt())
+                }
+            }
+        }
+    }
+    private fun handlePostError(error: Int){
+        when (error) {
+            400 -> showToast(getString(R.string.error_invalid_input))
+            401 -> showToast(getString(R.string.error_unauthorized_401))
+            500 -> showToast(getString(R.string.error_server_500))
+        }
+    }
 
     private fun setToolbar() {
         setSupportActionBar(binding.toolbar)

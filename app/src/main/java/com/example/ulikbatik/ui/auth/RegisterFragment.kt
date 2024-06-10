@@ -44,7 +44,7 @@ class RegisterFragment : Fragment() {
 
                 if(validateData(username, email, password, confirmPassword)){
                     authViewModel.register(username,email, password, confirmPassword).observe(requireActivity()){
-                        if (it.status) {
+                        if (it.status && it.data != null) {
                             ValidatorAuthHelper.showToast(requireContext(), it.message)
                             val loginFragment = LoginFragment().apply {
                                 arguments = Bundle().apply {
@@ -57,11 +57,7 @@ class RegisterFragment : Fragment() {
                                 addToBackStack(null)
                             }.commit()
                         } else {
-                            when (it.message) {
-                                "400" -> {
-                                    ValidatorAuthHelper.showToast(requireContext(), requireContext().getString(R.string.error_invalid_input))
-                                }
-                            }
+                            handlePostError(it.message.toInt())
                         }
                     }
                 }
@@ -134,6 +130,14 @@ class RegisterFragment : Fragment() {
         }
 
         return isValid
+    }
+
+    private fun handlePostError(error: Int){
+        when (error) {
+            400 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_invalid_input))
+            401 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_unauthorized_401))
+            500 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_server_500))
+        }
     }
 
     private fun onBack() {

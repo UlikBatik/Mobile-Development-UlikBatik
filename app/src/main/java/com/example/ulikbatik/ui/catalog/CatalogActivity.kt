@@ -1,6 +1,7 @@
 package com.example.ulikbatik.ui.catalog
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,8 @@ import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityCatalogBinding
 import com.example.ulikbatik.ui.factory.CatalogViewModelFactory
+import com.google.android.material.search.SearchBar
+import com.google.android.material.search.SearchView
 
 class CatalogActivity : AppCompatActivity() {
 
@@ -19,6 +22,9 @@ class CatalogActivity : AppCompatActivity() {
     private val catalogViewModel: CatalogViewModel by viewModels {
         CatalogViewModelFactory.getInstance(applicationContext)
     }
+
+    private lateinit var searchBar: SearchBar
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +37,12 @@ class CatalogActivity : AppCompatActivity() {
             insets
         }
 
+        searchBar = binding.searchBar
+        searchView = binding.searchView
+
         setView()
         setAction()
+        setupSearch()
     }
 
     private fun setAction() {
@@ -69,4 +79,40 @@ class CatalogActivity : AppCompatActivity() {
             if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
     }
 
+    private fun setupSearch() {
+        searchView.setupWithSearchBar(searchBar)
+        searchView.editText.setOnEditorActionListener { textView, actionId, event ->
+                val query = searchView.editText.text.toString()
+                searchBar.setText(query)
+                if (query.isNotEmpty()) {
+                    searchBatik(query)
+                } else {
+                    setView()
+                }
+                searchView.hide()
+                true
+            }
+    }
+
+    private fun searchBatik(query: String) {
+        catalogViewModel.searchCatalog(query).observe(this) { res ->
+            if (res.status){
+                setData(res)
+            } else {
+                handlePostError(res.message.toInt())
+            }
+        }
+    }
+
+    private fun handlePostError(error: Int){
+        when (error) {
+            400 -> showToast(getString(R.string.error_invalid_input))
+            401 -> showToast(getString(R.string.error_unauthorized_401))
+            500 -> showToast(getString(R.string.error_server_500))
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 }

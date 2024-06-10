@@ -18,4 +18,8 @@ class CatalogViewModel(
         return catalogRepository.detailCatalog(idBatik)
     }
 
+    fun searchCatalog(query: String): LiveData<GeneralResponse<List<BatikModel>>> {
+        return catalogRepository.searchCatalog(query)
+    }
+
 }

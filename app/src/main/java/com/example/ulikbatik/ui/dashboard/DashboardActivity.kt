@@ -4,8 +4,8 @@ package com.example.ulikbatik.ui.dashboard
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
-import android.view.WindowManager
+import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import com.google.android.material.navigation.NavigationView
@@ -21,17 +21,20 @@ import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityDashboardBinding
+import com.example.ulikbatik.ui.auth.AuthActivity
 import com.example.ulikbatik.ui.catalog.CatalogActivity
 import com.example.ulikbatik.ui.factory.PostViewModelFactory
 import com.example.ulikbatik.ui.likes.LikesActivity
 import com.example.ulikbatik.ui.profile.ProfileActivity
 import com.example.ulikbatik.ui.scan.ScanActivity
 import com.example.ulikbatik.ui.upload.UploadActivity
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class DashboardActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDashboardBinding
+    private lateinit var preferences: UserPreferences
     private val dashboardViewModel: DashboardViewModel by viewModels {
         PostViewModelFactory.getInstance(applicationContext)
     }
@@ -42,17 +45,9 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        @Suppress("DEPRECATION")
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-
         setDrawer()
         setViewModel()
         setAction()
-
     }
 
     override fun onResume() {
@@ -70,16 +65,32 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun setViewModel() {
+
         dashboardViewModel.apply {
+
+            preferences = pref
+
             isLoading.observe(this@DashboardActivity) {
                 showLoading(it)
             }
 
             allPost.observe(this@DashboardActivity) {
                 if (it != null) {
-                    setView(it)
+                    if(it.status){
+                        setView(it)
+                    } else {
+                        handlePostError(it.message.toInt())
+                    }
                 }
             }
+        }
+    }
+
+    private fun handlePostError(error: Int){
+        when (error) {
+            400 -> showToast(getString(R.string.error_invalid_input))
+            401 -> showToast(getString(R.string.error_unauthorized_401))
+            500 -> showToast(getString(R.string.error_server_500))
         }
     }
 
@@ -90,7 +101,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 startActivity(intent)
             }
 
-            contentDashboard.catalogBtn.setOnClickListener {
+            contentDashboard.catalogBtn.setOnClickListener{
                 val intent = Intent(this@DashboardActivity, CatalogActivity::class.java)
                 startActivity(intent)
             }
@@ -126,25 +137,48 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
         }
 
-        val pref = UserPreferences.getInstance(this.dataStore)
-
         lifecycleScope.launch {
-            pref.getUsername().collect { username ->
-                binding.contentDashboard.usernameTv.text = username
+            preferences.getUser().collect{
+                if (it != null) {
+                    binding.contentDashboard.usernameTv.text = it.uSERNAME
+                }
             }
         }
     }
 
     private fun setDrawer() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
+        val navigationView: NavigationView = binding.navView
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_darkmode, R.id.nav_my_account, R.id.nav_language, R.id.nav_logout
+                R.id.nav_my_account, R.id.nav_language, R.id.nav_logout
             ), drawerLayout
         )
 
         binding.contentDashboard.menuBtn.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_logout -> {
+                    logout()
+                    true
+                }
+
+                R.id.nav_language -> {
+                    changeLanguage()
+                    true
+                }
+
+                R.id.nav_my_account -> {
+                    goToAccount()
+                    true
+                }
+
+                else -> false
+            }
         }
 
         onBackPressedDispatcher.addCallback(this) {
@@ -156,18 +190,29 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
+    private fun goToAccount(){
+        val intent = Intent(this@DashboardActivity, ProfileActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.dashboard, menu)
         return true
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_language -> {
-                return true
-            }
+    private fun logout(){
+        lifecycleScope.launch {
+            delay(3000)
+            preferences.logOut()
+
+            val intent = Intent(this@DashboardActivity, AuthActivity::class.java)
+            startActivity(intent)
+            finish()
         }
-        return true
+    }
+
+    private fun changeLanguage() {
+        startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -175,5 +220,7 @@ class DashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
     }
 
-
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 }

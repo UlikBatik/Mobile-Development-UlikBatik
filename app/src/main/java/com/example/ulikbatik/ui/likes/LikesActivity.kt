@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 class LikesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLikesBinding
-
+    private lateinit var preferences: UserPreferences
     private val likesViewModel: LikesViewModel by viewModels {
         LikesViewModelFactory.getInstance(applicationContext)
     }
@@ -38,36 +38,38 @@ class LikesActivity : AppCompatActivity() {
             insets
         }
 
-        likesViewModel.isLoading.observe(this){
-            showLoading(it)
-        }
+        setViewModel()
+        setLikes()
+    }
 
-        val pref = UserPreferences.getInstance(this.dataStore)
-        lifecycleScope.launch{
-            pref.getUserId().collect{userId ->
-                if (userId != null) {
-                    likesViewModel.getLikes(userId).observe(this@LikesActivity){
-                        if (it != null){
-                            setView(it)
-                            binding.noLikesTv.visibility = if (it.data.isNullOrEmpty()) android.view.View.VISIBLE else android.view.View.GONE
-                        }
-                    }
-                }
+    private fun setViewModel() {
+       likesViewModel.apply {
+           preferences = pref
+
+            isLoading.observe(this@LikesActivity){
+                showLoading(it)
             }
-        }
 
+       }
     }
 
     override fun onResume() {
         super.onResume()
-        val pref = UserPreferences.getInstance(this.dataStore)
-        lifecycleScope.launch{
-            pref.getUserId().collect{userId ->
-                if (userId != null) {
+         setLikes()
+    }
 
-                    likesViewModel.getLikes(userId).observe(this@LikesActivity){
-                        if (it != null){
-                            setView(it)
+    private fun setLikes(){
+        lifecycleScope.launch{
+            preferences.getUser().collect{user ->
+                if (user != null) {
+                    if (user.uSERID != null) {
+                        likesViewModel.getLikes(user.uSERID).observe(this@LikesActivity){
+                            if (it.status){
+                                setView(it)
+                                binding.noLikesTv.visibility = if (it.data.isNullOrEmpty()) android.view.View.VISIBLE else android.view.View.GONE
+                            } else {
+                                handlePostError(it.message.toInt())
+                            }
                         }
                     }
                 }
@@ -86,6 +88,18 @@ class LikesActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener {
             finish()
         }
+    }
+
+    private fun handlePostError(error: Int){
+        when (error) {
+            400 -> showToast(getString(R.string.error_invalid_input))
+            401 -> showToast(getString(R.string.error_unauthorized_401))
+            500 -> showToast(getString(R.string.error_server_500))
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading(isLoading: Boolean) {

@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.example.ulikbatik.R
+import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.databinding.FragmentLoginBinding
 import com.example.ulikbatik.ui.dashboard.DashboardActivity
 import com.example.ulikbatik.ui.factory.AuthViewModelFactory
@@ -32,38 +34,32 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupView()
+        onBack()
+    }
+
+
+    private fun setupView() {
         val email = arguments?.getString("email")
         val password = arguments?.getString("password")
 
         binding.emailEdit.setText(email)
         binding.passwordEdit.setText(password)
 
-        setupView()
-        onBack()
-    }
-
-    private fun setupView() {
-
-
         binding.apply {
             loginBtn.setOnClickListener {
-                val email = emailEdit.text.toString()
-                val password = passwordEdit.text.toString()
+                val emailT = emailEdit.text.toString()
+                val passwordT = passwordEdit.text.toString()
 
-                if (validateData(email, password)) {
-                    authViewModel.login(email, password).observe(requireActivity()) {
+                if (validateData(emailT, passwordT)) {
+                    authViewModel.login(emailT, passwordT).observe(requireActivity()) {
                         if (it.status) {
                             ValidatorAuthHelper.showToast(requireContext(), it.message)
 
                             startActivity(Intent(requireActivity(), DashboardActivity::class.java))
                             requireActivity().finish()
                         } else  {
-                            when(it.message){
-                                "400" -> {
-                                    ValidatorAuthHelper.showToast(requireContext(),
-                                        requireContext().getString(R.string.error_invalid_data))
-                                }
-                            }
+                            handlePostError(it.message.toInt())
                         }
                     }
                 }
@@ -122,6 +118,14 @@ class LoginFragment : Fragment() {
                     requireActivity().finish()
                 }
             })
+    }
+
+    private fun handlePostError(error: Int){
+        when (error) {
+            400 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_invalid_input))
+            401 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_unauthorized_401))
+            500 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_server_500))
+        }
     }
 
     companion object {

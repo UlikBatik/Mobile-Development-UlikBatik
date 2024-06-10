@@ -25,8 +25,10 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
+
 
 
     @POST("login")
@@ -82,6 +84,11 @@ interface ApiService {
         @Path("userId") userid: String
     ): Call<GeneralResponse<List<LikesModel>>>
 
+    @GET("batiks/search")
+    fun searchBatik(
+        @Query("q") query: String
+    ): Call<GeneralResponse<List<BatikModel>>>
+
     @GET("user/{userId}")
     fun getUserProfile(
         @Path("userId") userid: String
@@ -94,7 +101,6 @@ interface ApiService {
     fun getPost(
         @Path("postID") postId: String
     ): Call<GeneralResponse<PostModel>>
-
 
     @DELETE("post/{postId}")
     fun deletePost(

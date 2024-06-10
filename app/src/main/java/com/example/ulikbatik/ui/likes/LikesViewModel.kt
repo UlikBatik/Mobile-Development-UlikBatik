@@ -5,12 +5,15 @@ import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.data.repository.LikesRepository
 import androidx.lifecycle.ViewModel
+import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.data.model.LikesModel
 
 class LikesViewModel(
-    private val likesRepository: LikesRepository
+    private val likesRepository: LikesRepository,
+    preferences: UserPreferences
 ) : ViewModel() {
 
+    var pref = preferences
     val isLoading = likesRepository.isLoading
 
     fun getLikes(userid: String): LiveData<GeneralResponse<List<LikesModel>>> {

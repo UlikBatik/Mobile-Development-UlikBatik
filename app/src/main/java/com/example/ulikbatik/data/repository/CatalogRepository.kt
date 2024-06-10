@@ -53,6 +53,43 @@ class CatalogRepository(
         return responseJson
     }
 
+    fun searchCatalog(query: String): LiveData<GeneralResponse<List<BatikModel>>> {
+        _isLoading.value = true
+        val responseJson = MutableLiveData<GeneralResponse<List<BatikModel>>>()
+        val client = apiService.searchBatik(query)
+        client.enqueue(
+            object : Callback<GeneralResponse<List<BatikModel>>> {
+                override fun onResponse(
+                    call: Call<GeneralResponse<List<BatikModel>>>,
+                    response: Response<GeneralResponse<List<BatikModel>>>
+                ) {
+                    _isLoading.value = false
+                    if (response.isSuccessful) {
+                        responseJson.value = response.body()
+                    } else {
+                        responseJson.value = GeneralResponse(
+                            message = response.code().toString(),
+                            status = false
+                        )
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GeneralResponse<List<BatikModel>>>,
+                    t: Throwable
+                ) {
+                    _isLoading.value = false
+                    responseJson.value = GeneralResponse(
+                        message = "500",
+                        status = false
+                    )
+                }
+
+            }
+        )
+        return responseJson
+    }
+
 
     fun detailCatalog(idBatik: String): LiveData<GeneralResponse<BatikModel>> {
         _isLoading.value = true
