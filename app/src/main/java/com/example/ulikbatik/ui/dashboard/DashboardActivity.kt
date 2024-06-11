@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.data.model.PostModel
+import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityDashboardBinding
 import com.example.ulikbatik.ui.auth.AuthActivity
@@ -32,13 +33,16 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class DashboardActivity : AppCompatActivity() {
+
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDashboardBinding
+
     private lateinit var preferences: UserPreferences
+    private var userModel: UserModel? = null
+
     private val dashboardViewModel: DashboardViewModel by viewModels {
         PostViewModelFactory.getInstance(applicationContext)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,12 +64,13 @@ class DashboardActivity : AppCompatActivity() {
         dashboardViewModel.apply {
 
             preferences = pref
+            userModel = user
 
             isLoading.observe(this@DashboardActivity) {
                 showLoading(it)
             }
 
-            dashboardViewModel.getPosts().observe(this@DashboardActivity) {
+            getPosts().observe(this@DashboardActivity) {
                 if (it != null) {
                     if (it.status) {
                         setView(it)
@@ -103,7 +108,7 @@ class DashboardActivity : AppCompatActivity() {
             }
 
             contentDashboard.profileBtn.setOnClickListener {
-                val idUser = dashboardViewModel.userIdData
+                val idUser = dashboardViewModel.user?.uSERID
                 if (idUser != null) {
                     val intent = Intent(this@DashboardActivity, ProfileActivity::class.java)
                     intent.putExtra(ProfileActivity.EXTRA_ID_USER, idUser)
@@ -119,6 +124,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun setView(res: GeneralResponse<List<PostModel>>) {
+
         if (res.data != null) {
             binding.apply {
                 contentDashboard.rvPost.layoutManager =
@@ -128,18 +134,17 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
-            preferences.getUser().collect {
-                if (it != null) {
-                    binding.apply {
-                        contentDashboard.usernameTv.text = it.uSERNAME
-                        Glide.with(root)
-                            .load(it.pROFILEIMG)
-                            .placeholder(R.drawable.ic_profile)
-                            .into(contentDashboard.profileBtn)
-                    }
+            preferences.getUser().collect{
+                binding.apply {
+                    contentDashboard.usernameTv.text = it?.uSERNAME
+                    Glide.with(root)
+                        .load(it?.pROFILEIMG)
+                        .placeholder(R.drawable.ic_profile)
+                        .into(contentDashboard.profileBtn)
                 }
             }
         }
+
         binding.apply {
             contentDashboard.nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
                 if (scrollY == oldScrollY || scrollY == 0) {
@@ -155,6 +160,7 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun setDrawer() {
         val drawerLayout: DrawerLayout = binding.drawerLayout

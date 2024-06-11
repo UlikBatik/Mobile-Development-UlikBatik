@@ -8,15 +8,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.local.UserPreferences
-import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.databinding.ActivityAuthBinding
 import com.example.ulikbatik.ui.dashboard.DashboardActivity
 import com.example.ulikbatik.ui.factory.AuthViewModelFactory
-import com.example.ulikbatik.ui.likes.LikesViewModel
-import com.example.ulikbatik.ui.likes.LikesViewModelFactory
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 

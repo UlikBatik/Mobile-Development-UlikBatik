@@ -34,7 +34,6 @@ class AuthRepository(
                         runBlocking {
                             response.body()?.data?.let { pref.saveUser(it) }
                             pref.saveTokenUser(response.body()?.token.toString())
-                            pref.saveUserId(response.body()?.data?.uSERID.toString())
                         }
                     }else{
                         resultLiveData.value =

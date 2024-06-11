@@ -2,10 +2,12 @@ package com.example.ulikbatik.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.data.remote.config.ApiService
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.data.remote.response.ProfileUserResponse
+import kotlinx.coroutines.runBlocking
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -13,7 +15,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class UserRepository(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val pref : UserPreferences
 ) {
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -72,6 +75,9 @@ class UserRepository(
                     _isLoading.value = false
                     if (response.isSuccessful) {
                         responseJson.value = response.body()
+                        runBlocking {
+                            response.body()?.data?.let { pref.saveUser(it) }
+                        }
                     } else {
                         responseJson.value = GeneralResponse(
                             message = response.code().toString(),
@@ -97,10 +103,11 @@ class UserRepository(
         @Volatile
         private var instance: UserRepository? = null
         fun getInstance(
-            apiService: ApiService
+            apiService: ApiService,
+            userPreferences: UserPreferences
         ): UserRepository =
             instance ?: synchronized(this) {
-                instance ?: UserRepository(apiService)
+                instance ?: UserRepository(apiService, userPreferences)
             }.also { instance = it }
     }
 }

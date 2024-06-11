@@ -92,7 +92,7 @@ class UploadActivity : AppCompatActivity() {
             isLoading.observe(this@UploadActivity) { isLoading ->
                 binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             }
-            userIdValue = userIdData
+            userIdValue = user?.uSERID
         }
     }
 

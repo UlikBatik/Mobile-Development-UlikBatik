@@ -12,17 +12,23 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
+import com.example.ulikbatik.data.local.UserPreferences
+import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.databinding.ActivityEditProfileBinding
 import com.example.ulikbatik.ui.factory.ProfileViewModelFactory
 import com.yalantis.ucrop.UCrop
+import kotlinx.coroutines.launch
 import java.io.File
 
 class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var currentImageUri: Uri
+    private var userModel : UserModel? = null
+    private lateinit var userPreferences : UserPreferences
     private val profileViewModel: ProfileViewModel by viewModels {
         ProfileViewModelFactory.getInstance(applicationContext)
     }
@@ -39,8 +45,16 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
 
+        setupViewModel()
         setupView()
         setupAction()
+    }
+
+    private fun setupViewModel() {
+        profileViewModel.apply {
+            userModel = user
+            userPreferences = pref
+        }
     }
 
 
@@ -67,22 +81,27 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        profileViewModel.isLoading.observe(this) {
-            showLoading(it)
+        profileViewModel.isLoading.observe(this) { isLoading ->
+            showLoading(isLoading)
         }
 
-        val prevUsername = intent.getStringExtra(EXTRA_PROFILE_USERNAME)
-        val prevImage = intent.getStringExtra(EXTRA_PROFILE_IMAGE)
-        if (prevUsername != null && prevImage != null) {
-            currentImageUri = Uri.parse(prevImage)
-            binding.apply {
-                editUsername.setText(prevUsername)
-                Glide.with(root)
-                    .load(prevImage)
-                    .into(imageView)
+        userModel?.let { user ->
+            val prevUsername = user.uSERNAME
+            val prevImage = user.pROFILEIMG
+
+            prevUsername.let { username ->
+                binding.editUsername.setText(username)
+            }
+
+            prevImage.let { imageUri ->
+                currentImageUri = Uri.parse(imageUri)
+                Glide.with(this)
+                    .load(imageUri)
+                    .into(binding.imageView)
             }
         }
     }
+
 
     private fun setupAction() {
         binding.apply {
@@ -102,21 +121,21 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun saveProfile() {
         val newUsername = binding.editUsername.text.toString()
+
         if (newUsername.isEmpty()) {
             showToast(getString(R.string.username_should_not_empty))
             return
-        } else {
-            val idUser = profileViewModel.userIdData
-            if (idUser != null) {
-                profileViewModel.saveProfileUser(currentImageUri, newUsername, idUser, this)
-                    .observe(this) { res ->
-                        if (res.status) {
-                            finish()
-                        } else {
-                            showToast(getString(R.string.error_server_500))
-                        }
+        }
+
+        userModel?.uSERID?.let { idUser ->
+            profileViewModel.saveProfileUser(currentImageUri, newUsername, idUser, this)
+                .observe(this) { res ->
+                    if (res.status) {
+                        finish()
+                    } else {
+                        showToast(getString(R.string.error_server_500))
                     }
-            }
+                }
         }
     }
 
@@ -150,8 +169,4 @@ class EditProfileActivity : AppCompatActivity() {
             if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
     }
 
-    companion object {
-        const val EXTRA_PROFILE_USERNAME = "extra_profile_username"
-        const val EXTRA_PROFILE_IMAGE = "extra_profile_image"
-    }
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
+import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.data.remote.response.PostItem
 import com.example.ulikbatik.data.remote.response.ProfileUserResponse
 import com.example.ulikbatik.databinding.ActivityProfileBinding
@@ -23,7 +24,7 @@ import com.example.ulikbatik.ui.profile.adapter.ListAdapter
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
-    private var idUser: String? = null
+    private var userModel: UserModel? = null
     private val profileViewModel: ProfileViewModel by viewModels {
         ProfileViewModelFactory.getInstance(applicationContext)
     }
@@ -38,28 +39,34 @@ class ProfileActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+ 
+        setViewModel()
+        checkId()
+    }
 
-        idUser = profileViewModel.userIdData
-        val idOwnContent = intent.getStringExtra(EXTRA_ID_USER)
-        val idGuestContent = intent.getStringExtra(EXTRA_ID_GUEST)
-        if (idUser == idGuestContent || idUser == idOwnContent) {
-            val id = idUser
-            binding.buttonEditProfile.visibility = View.VISIBLE
-            if (id != null) {
-                setView(id)
-            }
-        } else {
-            binding.buttonEditProfile.visibility = View.INVISIBLE
-            if (idGuestContent != null) {
-                setView(idGuestContent)
-            }
+    private fun setViewModel() {
+        profileViewModel.apply {
+            userModel = user
         }
-
     }
 
     override fun onResume() {
         super.onResume()
-        idUser?.let { setView(it) }
+        checkId()
+    }
+
+    private fun checkId() {
+        val idOwnContent = intent.getStringExtra(EXTRA_ID_USER)
+        val idGuestContent = intent.getStringExtra(EXTRA_ID_GUEST)
+        val idUser = userModel?.uSERID
+
+        if (idUser == idGuestContent || idUser == idOwnContent) {
+            binding.buttonEditProfile.visibility = View.VISIBLE
+            idUser?.let { setView(it) }
+        } else {
+            binding.buttonEditProfile.visibility = View.INVISIBLE
+            idGuestContent?.let { setView(it) }
+        }
     }
 
     private fun setView(idUser: String) {
@@ -115,8 +122,6 @@ class ProfileActivity : AppCompatActivity() {
 
             buttonEditProfile.setOnClickListener {
                 val intent = Intent(this@ProfileActivity, EditProfileActivity::class.java)
-                intent.putExtra(EditProfileActivity.EXTRA_PROFILE_IMAGE, data.pROFILEIMG)
-                intent.putExtra(EditProfileActivity.EXTRA_PROFILE_USERNAME, data.uSERNAME)
                 startActivity(intent)
             }
         }

@@ -3,6 +3,7 @@ package com.example.ulikbatik.di
 import android.content.Context
 import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.data.local.dataStore
+import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.data.remote.config.ApiConfig
 import com.example.ulikbatik.data.repository.AuthRepository
 import com.example.ulikbatik.data.repository.CatalogRepository
@@ -52,18 +53,17 @@ object Injection {
         val pref = UserPreferences.getInstance(context.dataStore)
         val user = runBlocking { pref.getUserToken().first() }
         val apiService = ApiConfig.getApiInstance(user)
-        return UserRepository.getInstance(apiService)
-    }
-
-
-    fun provideUserId(context: Context): String? {
-        val pref = UserPreferences.getInstance(context.dataStore)
-        val userId = runBlocking { pref.getUserId().first() }
-        return userId
+        return UserRepository.getInstance(apiService, pref)
     }
 
     fun providePreferences(context: Context): UserPreferences {
         val pref = UserPreferences.getInstance(context.dataStore)
         return pref
+    }
+
+    fun provideUserModel(context: Context): UserModel? {
+        val pref = UserPreferences.getInstance(context.dataStore)
+        val userModel = runBlocking { pref.getUser().first() }
+        return userModel
     }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.map
 import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.data.model.LikesModel
 import com.example.ulikbatik.data.model.PostModel
+import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.data.remote.response.LikesResponse
 import com.example.ulikbatik.data.repository.PostRepository
@@ -14,12 +15,12 @@ import com.example.ulikbatik.data.repository.PostRepository
 class DetailPostViewModel(
     private val postRepository: PostRepository,
     preferences: UserPreferences,
-    idUser: String?
+    userModel: UserModel?
 ) : ViewModel() {
 
     var pref = preferences
+    var user = userModel
     val isLoading = postRepository.isLoading
-    val idUserData = idUser
 
     private val _isLiked = MutableLiveData<Boolean>()
     val isLiked: LiveData<Boolean> get() = _isLiked

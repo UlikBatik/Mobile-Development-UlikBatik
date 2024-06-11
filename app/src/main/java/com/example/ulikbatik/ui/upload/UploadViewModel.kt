@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.data.remote.response.PostResponse
 import com.example.ulikbatik.data.repository.PostRepository
@@ -16,11 +17,11 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 class UploadViewModel(
     private val postRepository: PostRepository,
-    userId: String?
+    userModel: UserModel?
 ) : ViewModel() {
 
     val isLoading = postRepository.isLoading
-    val userIdData = userId
+    val user = userModel
 
 
     fun uploadPost(

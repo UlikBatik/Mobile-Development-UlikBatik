@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.data.remote.response.ProfileUserResponse
@@ -18,11 +19,12 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 class ProfileViewModel(
     private val userRepository: UserRepository,
-    userId: String?
+    userModel: UserModel?,
+    preferences : UserPreferences
 ) : ViewModel() {
 
-
-    val userIdData = userId
+    val user = userModel
+    val pref = preferences
     val isLoading = userRepository.isLoading
 
     fun getUserData(id: String): LiveData<GeneralResponse<ProfileUserResponse>> {

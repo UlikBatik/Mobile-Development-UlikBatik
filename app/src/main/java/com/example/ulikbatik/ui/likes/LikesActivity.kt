@@ -1,7 +1,6 @@
 package com.example.ulikbatik.ui.likes
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -12,17 +11,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.local.UserPreferences
-import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.data.model.LikesModel
-import com.example.ulikbatik.data.model.PostModel
+import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityLikesBinding
-import com.example.ulikbatik.ui.dashboard.DashboardAdapter
+import com.example.ulikbatik.ui.factory.LikesViewModelFactory
 import kotlinx.coroutines.launch
 
 class LikesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLikesBinding
-    private lateinit var preferences: UserPreferences
+    private var userModel: UserModel? = null
     private val likesViewModel: LikesViewModel by viewModels {
         LikesViewModelFactory.getInstance(applicationContext)
     }
@@ -44,7 +42,7 @@ class LikesActivity : AppCompatActivity() {
 
     private fun setViewModel() {
        likesViewModel.apply {
-           preferences = pref
+           userModel = user
 
             isLoading.observe(this@LikesActivity){
                 showLoading(it)
@@ -58,20 +56,14 @@ class LikesActivity : AppCompatActivity() {
          setLikes()
     }
 
-    private fun setLikes(){
-        lifecycleScope.launch{
-            preferences.getUser().collect{user ->
-                if (user != null) {
-                    if (user.uSERID != null) {
-                        likesViewModel.getLikes(user.uSERID).observe(this@LikesActivity){
-                            if (it.status){
-                                setView(it)
-                                binding.noLikesTv.visibility = if (it.data.isNullOrEmpty()) android.view.View.VISIBLE else android.view.View.GONE
-                            } else {
-                                handlePostError(it.message.toInt())
-                            }
-                        }
-                    }
+    private fun setLikes() {
+        userModel?.uSERID?.let { userId ->
+            likesViewModel.getLikes(userId).observe(this@LikesActivity) { response ->
+                if (response.status) {
+                    setView(response)
+                    binding.noLikesTv.visibility = if (response.data.isNullOrEmpty()) android.view.View.VISIBLE else android.view.View.GONE
+                } else {
+                    handlePostError(response.message.toInt())
                 }
             }
         }
