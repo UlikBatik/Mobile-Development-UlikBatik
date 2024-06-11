@@ -29,6 +29,7 @@ import com.example.ulikbatik.ui.likes.LikesActivity
 import com.example.ulikbatik.ui.profile.ProfileActivity
 import com.example.ulikbatik.ui.scan.ScanActivity
 import com.example.ulikbatik.ui.upload.UploadActivity
+import com.example.ulikbatik.utils.helper.DialogBuilder
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -87,6 +88,7 @@ class DashboardActivity : AppCompatActivity() {
             400 -> showToast(getString(R.string.error_invalid_input))
             401 -> showToast(getString(R.string.error_unauthorized_401))
             500 -> showToast(getString(R.string.error_server_500))
+            503 -> showToast(getString(R.string.error_server_500))
         }
     }
 
@@ -134,7 +136,7 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
-            preferences.getUser().collect{
+            preferences.getUser().collect {
                 binding.apply {
                     contentDashboard.usernameTv.text = it?.uSERNAME
                     Glide.with(root)
@@ -180,17 +182,17 @@ class DashboardActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_logout -> {
                     logout()
-                   false
+                    false
                 }
 
                 R.id.nav_language -> {
                     changeLanguage()
-                  false
+                    false
                 }
 
                 R.id.nav_my_account -> {
                     goToAccount()
-                   false
+                    false
                 }
 
                 else -> false
@@ -207,9 +209,13 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun goToAccount() {
-        binding.drawerLayout.closeDrawer(GravityCompat.START)
-        val intent = Intent(this@DashboardActivity, ProfileActivity::class.java)
-        startActivity(intent)
+        val idUser = dashboardViewModel.user?.uSERID
+        if (idUser != null) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            val intent = Intent(this@DashboardActivity, ProfileActivity::class.java)
+            intent.putExtra(ProfileActivity.EXTRA_ID_USER, idUser)
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -218,13 +224,22 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        lifecycleScope.launch {
-            delay(3000)
-            preferences.logOut()
+        DialogBuilder.askDialog(
+            this@DashboardActivity,
+            getString(R.string.logout),
+            getString(R.string.logout_from_your_account)
+        ) { userChoice ->
 
-            val intent = Intent(this@DashboardActivity, AuthActivity::class.java)
-            startActivity(intent)
-            finish()
+            if (userChoice) {
+                lifecycleScope.launch {
+                    delay(3000)
+                    preferences.logOut()
+
+                    val intent = Intent(this@DashboardActivity, AuthActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
         }
     }
 

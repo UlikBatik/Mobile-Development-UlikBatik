@@ -9,22 +9,20 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
-import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.databinding.ActivityDetailPostBinding
 import com.example.ulikbatik.ui.catalog.DetailCatalogActivity
 import com.example.ulikbatik.ui.factory.PostViewModelFactory
 import com.example.ulikbatik.ui.profile.ProfileActivity
-import kotlinx.coroutines.launch
+import com.example.ulikbatik.utils.helper.DialogBuilder
 
 class DetailPostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailPostBinding
-    private var userModel : UserModel? = null
+    private var userModel: UserModel? = null
     private val detailPostViewModel: DetailPostViewModel by viewModels {
         PostViewModelFactory.getInstance(applicationContext)
     }
@@ -151,10 +149,12 @@ class DetailPostActivity : AppCompatActivity() {
 
     private fun setupLikeButtonClick(userId: String, postId: String) {
         binding.detailLikesFab.setOnClickListener {
-            detailPostViewModel.likePost(userId, postId).observe(this@DetailPostActivity) { response ->
-                Toast.makeText(this@DetailPostActivity, response.message, Toast.LENGTH_SHORT).show()
-                detailPostViewModel.toggleLikeStatus()
-            }
+            detailPostViewModel.likePost(userId, postId)
+                .observe(this@DetailPostActivity) { response ->
+                    Toast.makeText(this@DetailPostActivity, response.message, Toast.LENGTH_SHORT)
+                        .show()
+                    detailPostViewModel.toggleLikeStatus()
+                }
         }
     }
 
@@ -162,12 +162,21 @@ class DetailPostActivity : AppCompatActivity() {
         if (userId != null) {
             showDeleteButton(userId, data.user.uSERID)
             binding.detailDeleteFab.setOnClickListener {
-                detailPostViewModel.deletePost(data.postId).observe(this@DetailPostActivity) { res ->
-                    if (res.status) {
-                        showToast(res.message)
-                        finish()
-                    } else {
-                        handlePostError(res.message.toInt())
+                DialogBuilder.askDialog(
+                    this,
+                    getString(R.string.delete_post),
+                    getString(R.string.question_delete_post)
+                ) { userChoice ->
+                    if (userChoice) {
+                        detailPostViewModel.deletePost(data.postId)
+                            .observe(this@DetailPostActivity) { res ->
+                                if (res.status) {
+                                    showToast(res.message)
+                                    finish()
+                                } else {
+                                    handlePostError(res.message.toInt())
+                                }
+                            }
                     }
                 }
             }
@@ -179,6 +188,7 @@ class DetailPostActivity : AppCompatActivity() {
             400 -> showToast(getString(R.string.error_invalid_input))
             401 -> showToast(getString(R.string.error_unauthorized_401))
             500 -> showToast(getString(R.string.error_server_500))
+            503 -> showToast(getString(R.string.error_server_500))
         }
     }
 

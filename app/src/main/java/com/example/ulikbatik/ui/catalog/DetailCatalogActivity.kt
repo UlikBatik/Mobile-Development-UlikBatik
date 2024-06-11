@@ -78,6 +78,7 @@ class DetailCatalogActivity : AppCompatActivity() {
             400 -> showToast(getString(R.string.error_invalid_input))
             401 -> showToast(getString(R.string.error_unauthorized_401))
             500 -> showToast(getString(R.string.error_server_500))
+            503 -> showToast(getString(R.string.error_server_500))
         }
     }
 

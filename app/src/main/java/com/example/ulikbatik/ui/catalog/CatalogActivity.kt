@@ -13,6 +13,7 @@ import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityCatalogBinding
 import com.example.ulikbatik.ui.factory.CatalogViewModelFactory
+import com.example.ulikbatik.utils.helper.ValidatorAuthHelper
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
 
@@ -109,6 +110,7 @@ class CatalogActivity : AppCompatActivity() {
             400 -> showToast(getString(R.string.error_invalid_input))
             401 -> showToast(getString(R.string.error_unauthorized_401))
             500 -> showToast(getString(R.string.error_server_500))
+            503 -> showToast(getString(R.string.error_server_500))
         }
     }
 

@@ -118,28 +118,17 @@ class UploadActivity : AppCompatActivity() {
                 showScanResult(res.result)
                 batikId = res.result.bATIKID
             } else {
-                when (res.message.toInt()) {
-                    200 -> {
-                        showToast(getString(R.string.image_failed_to_detected))
-                    }
-
-                    400 -> {
-                        showToast(getString(R.string.error_invalid_input))
-                    }
-
-                    401 -> {
-                        showToast(getString(R.string.error_unauthorized_401))
-                    }
-
-                    500 -> {
-                        showToast(getString(R.string.error_server_500))
-                    }
-
-                    503 -> {
-                        showToast(getString(R.string.error_server_500))
-                    }
-                }
+                handlePostError(res.message.toInt())
             }
+        }
+    }
+
+    private fun handlePostError(error: Int) {
+        when (error) {
+            400 -> showToast(getString(R.string.error_invalid_input))
+            401 -> showToast(getString(R.string.error_unauthorized_401))
+            500 -> showToast(getString(R.string.error_server_500))
+            503 -> showToast(getString(R.string.error_server_500))
         }
     }
 
@@ -173,23 +162,7 @@ class UploadActivity : AppCompatActivity() {
                         if (res.status && res.data != null) {
                             finish()
                         } else {
-                            when (res.message.toInt()) {
-                                400 -> {
-                                    showToast(getString(R.string.error_invalid_input))
-                                }
-
-                                401 -> {
-                                    showToast(getString(R.string.error_unauthorized_401))
-                                }
-
-                                500 -> {
-                                    showToast(getString(R.string.error_server_500))
-                                }
-
-                                503 -> {
-                                    showToast(getString(R.string.error_server_500))
-                                }
-                            }
+                            handlePostError(res.message.toInt())
                         }
                     }
 

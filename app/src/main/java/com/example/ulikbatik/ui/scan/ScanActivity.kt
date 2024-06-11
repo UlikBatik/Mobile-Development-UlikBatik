@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.OrientationEventListener
 import android.view.Surface
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
@@ -104,6 +105,7 @@ class ScanActivity : AppCompatActivity() {
                         bottomSheetBehavior.peekHeight = height
                         bottomSheetBehavior.isHideable = false
                         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+
                         binding.apply {
                             bottomSheetPersistent.apply {
                                 batikName.text = res.result.bATIKNAME
@@ -112,23 +114,7 @@ class ScanActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        when (res.message.toInt()) {
-                            200 -> {
-                                showToast("image failed to detected")
-                            }
-
-                            400 -> {
-                                showToast(getString(R.string.error_invalid_input))
-                            }
-
-                            401 -> {
-                                showToast(getString(R.string.error_unauthorized_401))
-                            }
-
-                            500 -> {
-                                showToast(getString(R.string.error_server_500))
-                            }
-                        }
+                       handlePostError(res.message.toInt())
                     }
                 }
                 showImage(it)
@@ -138,6 +124,15 @@ class ScanActivity : AppCompatActivity() {
             cropError?.let {
                 showToast("Crop error: ${it.localizedMessage}")
             }
+        }
+    }
+
+    private fun handlePostError(error: Int) {
+        when (error) {
+            400 -> showToast(getString(R.string.error_invalid_input))
+            401 -> showToast(getString(R.string.error_unauthorized_401))
+            500 -> showToast(getString(R.string.error_server_500))
+            503 -> showToast(getString(R.string.error_server_500))
         }
     }
 
@@ -153,12 +148,12 @@ class ScanActivity : AppCompatActivity() {
                 tookPhoto()
             }
             bottomSheetPersistent.resetBtn.setOnClickListener {
-                camPreview.visibility = android.view.View.VISIBLE
-                camBtn.visibility = android.view.View.VISIBLE
-                galleryBtn.visibility = android.view.View.VISIBLE
+                camPreview.visibility = View.VISIBLE
+                camBtn.visibility = View.VISIBLE
+                galleryBtn.visibility = View.VISIBLE
 
-                bottomSheetPersistent.resetBtn.visibility = android.view.View.INVISIBLE
-                imageIv.visibility = android.view.View.INVISIBLE
+                bottomSheetPersistent.resetBtn.visibility = View.INVISIBLE
+                imageIv.visibility = View.INVISIBLE
                 currentImageUri = null
                 imageIv.setImageURI(null)
                 bottomSheetBehavior =
@@ -270,12 +265,12 @@ class ScanActivity : AppCompatActivity() {
 
     private fun showImage(uri: Uri) {
         binding.apply {
-            camPreview.visibility = android.view.View.INVISIBLE
-            camBtn.visibility = android.view.View.INVISIBLE
-            galleryBtn.visibility = android.view.View.INVISIBLE
+            camPreview.visibility = View.INVISIBLE
+            camBtn.visibility = View.INVISIBLE
+            galleryBtn.visibility = View.INVISIBLE
 
-            bottomSheetPersistent.resetBtn.visibility = android.view.View.VISIBLE
-            imageIv.visibility = android.view.View.VISIBLE
+            bottomSheetPersistent.resetBtn.visibility = View.VISIBLE
+            imageIv.visibility = View.VISIBLE
             imageIv.setImageURI(uri)
         }
     }
@@ -286,7 +281,7 @@ class ScanActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility =
-            if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
+            if (isLoading) View.VISIBLE else View.GONE
     }
 
 

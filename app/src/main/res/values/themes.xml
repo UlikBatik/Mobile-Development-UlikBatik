@@ -3,7 +3,23 @@
     <style name="Base.Theme.UlikBatik" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="android:statusBarColor">@color/black</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
     </style>
+
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorSecondary">@color/primaryBrown</item>
+        <item name="colorSurface">@color/primaryBrown</item>
+        <item name="colorOnSurface">@color/primaryBrown</item>
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button</item>
+        <item name="boxBackgroundColor">@color/white</item>
+    </style>
+
 
     <style name="Theme.UlikBatik" parent="Base.Theme.UlikBatik" />
 

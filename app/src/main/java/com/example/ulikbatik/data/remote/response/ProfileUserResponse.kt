@@ -1,5 +1,6 @@
 package com.example.ulikbatik.data.remote.response
 
+import com.example.ulikbatik.data.model.BatikModel
 import com.google.gson.annotations.SerializedName
 
 data class ProfileUserResponse(
@@ -56,5 +57,8 @@ data class PostItem(
     val cAPTION: String,
 
     @field:SerializedName("LIKES")
-    val lIKES: Int? = null
+    val lIKES: Int? = null,
+
+    @field:SerializedName("batik")
+    val batik: BatikModel
 )

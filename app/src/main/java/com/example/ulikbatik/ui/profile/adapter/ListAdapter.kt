@@ -36,7 +36,7 @@ class ListAdapter(private val posts: List<PostItem>) :
                     .load(post.pOSTIMG)
                     .placeholder(R.drawable.img_placeholder)
                     .into(imagePost)
-                tvBatikName.text = post.bATIKID
+                tvBatikName.text = post.batik.bATIKNAME
                 tvTotalLikesPost.text = post.lIKES.toString()
                 val dateFormatted = DateLocaleHelper.formatDateString(post.cREATEDAT)
                 tvDatePost.text = dateFormatted ?: post.cREATEDAT

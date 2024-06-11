@@ -39,7 +39,7 @@ class ProfileActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
- 
+
         setViewModel()
         checkId()
     }
@@ -89,20 +89,21 @@ class ProfileActivity : AppCompatActivity() {
                     showPostsAction(res.data)
                 }
             } else {
-                when (res.message.toInt()) {
-                    401 -> {
-                        showToast(getString(R.string.error_unauthorized_401))
-                    }
-
-                    500 -> {
-                        showToast(getString(R.string.error_server_500))
-                    }
-                }
+                handlePostError(res.message.toInt())
             }
         }
 
         binding.backButton.setOnClickListener {
             finish()
+        }
+    }
+
+    private fun handlePostError(error: Int) {
+        when (error) {
+            400 -> showToast(getString(R.string.error_invalid_input))
+            401 -> showToast(getString(R.string.error_unauthorized_401))
+            500 -> showToast(getString(R.string.error_server_500))
+            503 -> showToast(getString(R.string.error_server_500))
         }
     }
 

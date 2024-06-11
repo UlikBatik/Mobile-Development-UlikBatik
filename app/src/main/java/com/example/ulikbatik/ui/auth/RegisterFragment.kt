@@ -137,6 +137,7 @@ class RegisterFragment : Fragment() {
             400 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_invalid_input))
             401 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_unauthorized_401))
             500 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_server_500))
+            503 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_server_500))
         }
     }
 

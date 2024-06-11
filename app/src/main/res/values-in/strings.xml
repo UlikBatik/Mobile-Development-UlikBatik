@@ -105,5 +105,15 @@
     <string name="no_likes">Anda belum menyukai postingan apa pun</string>
     <string name="history">Riwayat</string>
     <string name="image_failed_to_detected">gambar gagal terdeteksi</string>
+    <string name="username_should_not_empty">Nama pengguna tidak boleh kosong</string>
+
+    <!--    Dialog -->
+    <string name="ok">oke</string>
+    <string name="cancel">batal</string>
+    <string name="question_delete_post">Apakah Anda yakin ingin menghapus kiriman ini?</string>
+    <string name="delete_post">Hapus Kiriman</string>
+    <string name="logout_from_your_account">Keluar dari akun Anda?</string>
+    <string name="logout">Keluar</string>
+
 
 </resources>
