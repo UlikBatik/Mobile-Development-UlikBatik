@@ -70,6 +70,13 @@ interface ApiService {
         @Part IMAGE: MultipartBody.Part,
         @Part("USERNAME") username: RequestBody,
     ): Call<GeneralResponse<UserModel>>
+    @PUT("user/{userId}")
+    @Multipart
+    fun updateUsername(
+        @Path("userId") userid: String,
+        @Part("USERNAME") username: RequestBody,
+    ): Call<GeneralResponse<UserModel>>
+
 
     @GET("batiks")
     fun getBatik(): Call<GeneralResponse<List<BatikModel>>>

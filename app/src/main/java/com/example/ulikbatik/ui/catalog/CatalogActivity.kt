@@ -13,7 +13,6 @@ import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityCatalogBinding
 import com.example.ulikbatik.ui.factory.CatalogViewModelFactory
-import com.example.ulikbatik.utils.helper.ValidatorAuthHelper
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
 
@@ -69,6 +68,10 @@ class CatalogActivity : AppCompatActivity() {
     private fun setData(resData: GeneralResponse<List<BatikModel>>) {
         if (resData.data != null) {
             binding.apply {
+
+                noResultTv.visibility =
+                    if (resData.data.isEmpty()) android.view.View.VISIBLE else android.view.View.INVISIBLE
+
                 rvCatalog.layoutManager = GridLayoutManager(this@CatalogActivity, 3)
                 rvCatalog.adapter = CatalogAdapter(resData.data)
             }
@@ -82,22 +85,22 @@ class CatalogActivity : AppCompatActivity() {
 
     private fun setupSearch() {
         searchView.setupWithSearchBar(searchBar)
-        searchView.editText.setOnEditorActionListener { textView, actionId, event ->
-                val query = searchView.editText.text.toString()
-                searchBar.setText(query)
-                if (query.isNotEmpty()) {
-                    searchBatik(query)
-                } else {
-                    setView()
-                }
-                searchView.hide()
-                true
+        searchView.editText.setOnEditorActionListener { _, _, _ ->
+            val query = searchView.editText.text.toString()
+            searchBar.setText(query)
+            if (query.isNotEmpty()) {
+                searchBatik(query)
+            } else {
+                setView()
             }
+            searchView.hide()
+            true
+        }
     }
 
     private fun searchBatik(query: String) {
         catalogViewModel.searchCatalog(query).observe(this) { res ->
-            if (res.status){
+            if (res.status) {
                 setData(res)
             } else {
                 handlePostError(res.message.toInt())
@@ -105,7 +108,7 @@ class CatalogActivity : AppCompatActivity() {
         }
     }
 
-    private fun handlePostError(error: Int){
+    private fun handlePostError(error: Int) {
         when (error) {
             400 -> showToast(getString(R.string.error_invalid_input))
             401 -> showToast(getString(R.string.error_unauthorized_401))

@@ -120,6 +120,7 @@
 
     <!--    Dialog -->
     <string name="ok">ok</string>
+    <string name="confirm">confirm</string>
     <string name="cancel">cancel</string>
     <string name="question_delete_post">Are you sure you want to delete this post?</string>
     <string name="delete_post">Delete Post</string>
@@ -127,7 +128,14 @@
     <string name="logout">Logout</string>
     <string name="productName" translatable="false">Product name</string>
     <string name="price" translatable="false">Rp.100.000,0</string>
+
+    <!--   text view -->
     <string name="product_title">Products related to this post</string>
     <string name="product_title_catalog">Products related to this batik</string>
+    <string name="no_posts">You haven\'t posting yet</string>
+    <string name="no_result_search">There is no result</string>
+    <string name="title_dialog">Title Dialog</string>
+    <string name="deskripsi_dialog">Deskripsi dialog</string>
+
 
 </resources>

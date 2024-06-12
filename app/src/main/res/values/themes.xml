@@ -13,6 +13,12 @@
         <item name="colorSecondary">@color/primaryBrown</item>
         <item name="colorSurface">@color/primaryBrown</item>
         <item name="colorOnSurface">@color/primaryBrown</item>
+
+        <item name="colorPrimaryVariant">#326273</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#E39774</item>
+        <item name="colorOnSecondary">#EEEEEE</item>
+
         <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
         <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
         <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>

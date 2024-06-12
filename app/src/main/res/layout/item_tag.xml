@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/batikName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/batik_name"
         android:fontFamily="@font/poppins_bold"
@@ -29,7 +29,7 @@
 
     <TextView
         android:id="@+id/batikLoc"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/batik_loc"
         android:fontFamily="@font/poppins"

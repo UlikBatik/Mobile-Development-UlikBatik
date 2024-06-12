@@ -10,17 +10,22 @@ import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.data.remote.response.LikesResponse
+import com.example.ulikbatik.data.remote.response.ResultResponse
+import com.example.ulikbatik.data.remote.response.ScrapperResponse
 import com.example.ulikbatik.data.repository.PostRepository
+import com.example.ulikbatik.data.repository.ScrapRepository
 
 class DetailPostViewModel(
     private val postRepository: PostRepository,
     preferences: UserPreferences,
-    userModel: UserModel?
+    userModel: UserModel?,
+    private val scrapRepository: ScrapRepository
 ) : ViewModel() {
 
     var pref = preferences
     var user = userModel
     val isLoading = postRepository.isLoading
+    val isLoadingProduct = scrapRepository.isLoading
 
     private val _isLiked = MutableLiveData<Boolean>()
     val isLiked: LiveData<Boolean> get() = _isLiked
@@ -47,5 +52,9 @@ class DetailPostViewModel(
 
     fun deletePost(idPost: String): LiveData<GeneralResponse<PostModel>> {
         return postRepository.deletePost(idPost)
+    }
+
+    fun getScrapData(batikName: String): LiveData<ResultResponse<List<ScrapperResponse>>> {
+        return scrapRepository.getScrapperData(batikName)
     }
 }

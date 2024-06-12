@@ -59,7 +59,7 @@
 
             <TextView
                 android:id="@+id/detail_username"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/poppins"
@@ -67,6 +67,29 @@
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@id/detail_image_profile"
                 app:layout_constraintStart_toEndOf="@id/detail_image_profile"
+                app:layout_constraintTop_toTopOf="@id/detail_image_profile" />
+
+            <TextView
+                android:id="@+id/tv_total_likes_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:padding="6dp"
+                android:text="@string/profile_likes_sum"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/button_likes"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/button_likes"
+                app:layout_constraintTop_toTopOf="@id/button_likes" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_likes"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="7dp"
+                android:background="@drawable/ic_likes_fill"
+                app:layout_constraintBottom_toBottomOf="@id/detail_image_profile"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/detail_image_profile" />
 
             <View
@@ -109,20 +132,22 @@
                 android:justificationMode="inter_word"
                 android:text="@string/product_title"
                 android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@id/detail_description"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_description"
                 tools:targetApi="o" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_scrapping"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                tools:itemCount="20"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_scrapping"
+                app:layout_constraintStart_toStartOf="@id/product_title"
                 app:layout_constraintTop_toBottomOf="@id/product_title"
-                app:layout_constraintStart_toStartOf="@id/product_title"/>
+                tools:itemCount="20"
+                tools:listitem="@layout/item_scrapping" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

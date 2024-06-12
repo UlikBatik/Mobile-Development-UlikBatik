@@ -9,15 +9,16 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.databinding.ActivityDetailPostBinding
 import com.example.ulikbatik.ui.catalog.DetailCatalogActivity
+import com.example.ulikbatik.ui.customView.CustomDialog
 import com.example.ulikbatik.ui.factory.PostViewModelFactory
 import com.example.ulikbatik.ui.profile.ProfileActivity
-import com.example.ulikbatik.utils.helper.DialogBuilder
 
 class DetailPostActivity : AppCompatActivity() {
 
@@ -61,6 +62,9 @@ class DetailPostActivity : AppCompatActivity() {
         detailPostViewModel.isLoading.observe(this@DetailPostActivity) {
             showLoading(it)
         }
+        detailPostViewModel.isLoadingProduct.observe(this@DetailPostActivity) {
+            showLoading(it)
+        }
     }
 
     private fun fetchPost(postId: String, userId: String?) {
@@ -69,12 +73,33 @@ class DetailPostActivity : AppCompatActivity() {
                 res.data?.let { data ->
                     displayPostDetails(data)
                     setupUserInteractions(data, userId)
+                    showScrapRelatedProduct(data)
                 }
             } else {
                 handlePostError(res.message.toInt())
             }
         }
     }
+
+    private fun showScrapRelatedProduct(data: PostModel) {
+        detailPostViewModel.getScrapData(data.batik.bATIKNAME)
+            .observe(this@DetailPostActivity) { res ->
+                if (res.status && res.result != null) {
+                    binding.apply {
+                        rcScrapping.layoutManager = LinearLayoutManager(
+                            this@DetailPostActivity,
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
+                        rcScrapping.adapter = DetailPostAdapter(res.result)
+
+                    }
+                } else {
+                    handlePostError(res.message.toInt())
+                }
+            }
+    }
+
 
     private fun displayPostDetails(data: PostModel) {
         binding.apply {
@@ -85,6 +110,7 @@ class DetailPostActivity : AppCompatActivity() {
 
             detailUsername.text = data.user.uSERNAME
             detailDescription.text = data.caption
+            tvTotalLikesPost.text = data.likes.toString()
 
             Glide.with(this@DetailPostActivity)
                 .load(data.batik.bATIKIMG)
@@ -162,11 +188,11 @@ class DetailPostActivity : AppCompatActivity() {
         if (userId != null) {
             showDeleteButton(userId, data.user.uSERID)
             binding.detailDeleteFab.setOnClickListener {
-                DialogBuilder.askDialog(
-                    this,
-                    getString(R.string.delete_post),
-                    getString(R.string.question_delete_post)
-                ) { userChoice ->
+
+                val title = getString(R.string.delete_post)
+                val message = getString(R.string.question_delete_post)
+                val customDialog = CustomDialog(this)
+                customDialog.showDialog(title, message) { userChoice ->
                     if (userChoice) {
                         detailPostViewModel.deletePost(data.postId)
                             .observe(this@DetailPostActivity) { res ->

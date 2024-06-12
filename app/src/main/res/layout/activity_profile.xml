@@ -100,8 +100,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_gradient"
             android:text="@string/profile_edit"
-            android:visibility="gone"
             android:textColor="@color/white"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/email_profile"
             app:layout_constraintStart_toStartOf="@id/email_profile"
             app:layout_constraintTop_toBottomOf="@id/email_profile"
@@ -175,12 +175,34 @@
             android:layout_height="0dp"
             android:layout_margin="10dp"
             android:contentDescription="@string/rv_post_description"
+            android:isScrollContainer="false"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/divider_postings"
             app:spanCount="2"
-            android:isScrollContainer="false"
             tools:itemCount="20"
             tools:listitem="@layout/item_post_profile_grid" />
 
+        <TextView
+            android:id="@+id/noPostTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:text="@string/no_posts"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_postings" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

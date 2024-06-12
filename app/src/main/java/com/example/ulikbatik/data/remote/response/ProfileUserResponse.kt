@@ -18,7 +18,7 @@ data class ProfileUserResponse(
     val uSERNAME: String,
 
     @field:SerializedName("PROFILEIMG")
-    val pROFILEIMG: String,
+    val pROFILEIMG: String? = null,
 
     @field:SerializedName("EMAIL")
     val eMAIL: String
@@ -45,7 +45,7 @@ data class PostItem(
     val uSERID: String,
 
     @field:SerializedName("POSTIMG")
-    val pOSTIMG: String,
+    val pOSTIMG: String? = null,
 
     @field:SerializedName("CREATEDAT")
     val cREATEDAT: String,

@@ -17,12 +17,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/avatars"/>
 
         <TextView
+            android:id="@+id/productName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/productName"
@@ -37,6 +39,7 @@
             tools:ignore="RtlSymmetry" />
 
         <TextView
+            android:id="@+id/price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/price"

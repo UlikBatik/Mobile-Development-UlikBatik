@@ -64,7 +64,6 @@ class RegisterFragment : Fragment() {
                             }
                         }
                 }
-
             }
             loginBtn.setOnClickListener {
                 parentFragmentManager.beginTransaction().apply {

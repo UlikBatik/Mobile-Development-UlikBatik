@@ -58,7 +58,7 @@ class UserRepository(
     }
 
 
-    fun saveImage(
+    fun saveIncludeImage(
         image: MultipartBody.Part,
         username: RequestBody,
         userId: String
@@ -66,6 +66,45 @@ class UserRepository(
         _isLoading.value = true
         val responseJson = MutableLiveData<GeneralResponse<UserModel>>()
         val client = apiService.updateProfile(userId, image, username)
+        client.enqueue(
+            object : Callback<GeneralResponse<UserModel>> {
+                override fun onResponse(
+                    call: Call<GeneralResponse<UserModel>>,
+                    response: Response<GeneralResponse<UserModel>>
+                ) {
+                    _isLoading.value = false
+                    if (response.isSuccessful) {
+                        responseJson.value = response.body()
+                        runBlocking {
+                            response.body()?.data?.let { pref.saveUser(it) }
+                        }
+                    } else {
+                        responseJson.value = GeneralResponse(
+                            message = response.code().toString(),
+                            status = false
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<GeneralResponse<UserModel>>, t: Throwable) {
+                    _isLoading.value = false
+                    responseJson.value = GeneralResponse(
+                        message = "500",
+                        status = false
+                    )
+                }
+            }
+        )
+        return responseJson
+    }
+
+    fun saveOnlyUsername(
+        username: RequestBody,
+        userId: String
+    ): LiveData<GeneralResponse<UserModel>> {
+        _isLoading.value = true
+        val responseJson = MutableLiveData<GeneralResponse<UserModel>>()
+        val client = apiService.updateUsername(userId, username)
         client.enqueue(
             object : Callback<GeneralResponse<UserModel>> {
                 override fun onResponse(

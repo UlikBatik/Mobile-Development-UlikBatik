@@ -94,11 +94,11 @@
                 android:id="@+id/label_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/description"
-                android:fontFamily="@font/poppins_bold"
-                android:textSize="20sp"
                 android:layout_marginTop="12dp"
-                app:layout_constraintTop_toBottomOf="@id/detail_divider_top"/>
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/description"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/detail_divider_top" />
 
             <TextView
                 android:id="@+id/tv_detail_batik"
@@ -116,11 +116,11 @@
                 android:id="@+id/label_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/history"
-                android:fontFamily="@font/poppins_bold"
-                android:textSize="20sp"
                 android:layout_marginTop="12dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_batik"/>
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/history"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_batik" />
 
             <TextView
                 android:id="@+id/tv_history_batik"
@@ -138,25 +138,28 @@
                 android:id="@+id/product_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/poppins_bold"
                 android:justificationMode="inter_word"
                 android:text="@string/product_title_catalog"
                 android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@id/tv_history_batik"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_history_batik"
                 tools:targetApi="o" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_scrapping"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                tools:itemCount="20"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_scrapping"
+                app:layout_constraintStart_toStartOf="@id/product_title"
                 app:layout_constraintTop_toBottomOf="@id/product_title"
-                app:layout_constraintStart_toStartOf="@id/product_title"/>
+                tools:itemCount="20"
+                tools:listitem="@layout/item_scrapping" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -164,14 +167,20 @@
         android:id="@+id/loadingView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="@color/white"/>
+        android:background="@color/white"
+        android:visibility="gone" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
         android:layout_gravity="center"
-        tools:visibility="gone" />
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

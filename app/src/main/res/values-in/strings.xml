@@ -109,12 +109,16 @@
 
     <!--    Dialog -->
     <string name="ok">oke</string>
+    <string name="confirm">ok</string>
     <string name="cancel">batal</string>
     <string name="question_delete_post">Apakah Anda yakin ingin menghapus kiriman ini?</string>
     <string name="delete_post">Hapus Kiriman</string>
     <string name="logout_from_your_account">Keluar dari akun Anda?</string>
     <string name="logout">Keluar</string>
+
+    <!--   text view -->
     <string name="product_title">Produk berdasarkan post ini</string>
     <string name="product_title_catalog">Products berdasarkan batik ini</string>
-
+    <string name="no_posts">Belum ada unggahan</string>
+    <string name="no_result_search">Hasil tidak ditemukan</string>
 </resources>

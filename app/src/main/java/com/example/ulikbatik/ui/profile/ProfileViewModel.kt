@@ -20,7 +20,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 class ProfileViewModel(
     private val userRepository: UserRepository,
     userModel: UserModel?,
-    preferences : UserPreferences
+    preferences: UserPreferences
 ) : ViewModel() {
 
     val user = userModel
@@ -31,12 +31,21 @@ class ProfileViewModel(
         return userRepository.getProfileUser(id)
     }
 
-    fun saveProfileUser(image: Uri, newUsername: String, userId: String, context: Context): LiveData<GeneralResponse<UserModel>> {
-        val fileImage = CameraHelper.uriToFile(image, context).reduceFileImage()
-        val imageBodyPart = fileImage.asRequestBody("image/jpeg".toMediaTypeOrNull())
-        val imageMultipart: MultipartBody.Part =
-            MultipartBody.Part.createFormData("IMAGE", fileImage.name, imageBodyPart)
+    fun saveProfileUser(
+        image: Uri?,
+        newUsername: String,
+        userId: String,
+        context: Context
+    ): LiveData<GeneralResponse<UserModel>> {
+        if (image != null) {
+            val fileImage = CameraHelper.uriToFile(image, context).reduceFileImage()
+            val imageBodyPart = fileImage.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart: MultipartBody.Part =
+                MultipartBody.Part.createFormData("IMAGE", fileImage.name, imageBodyPart)
+            val usernamePart = newUsername.toRequestBody("text/plain".toMediaTypeOrNull())
+            return userRepository.saveIncludeImage(imageMultipart, usernamePart, userId)
+        }
         val usernamePart = newUsername.toRequestBody("text/plain".toMediaTypeOrNull())
-        return userRepository.saveImage(imageMultipart, usernamePart, userId)
+        return userRepository.saveOnlyUsername( usernamePart, userId)
     }
 }

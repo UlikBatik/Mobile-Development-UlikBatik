@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
@@ -24,9 +25,9 @@ import java.io.File
 class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditProfileBinding
-    private lateinit var currentImageUri: Uri
-    private var userModel : UserModel? = null
-    private lateinit var userPreferences : UserPreferences
+    private var currentImageUri: Uri? = null
+    private var userModel: UserModel? = null
+    private lateinit var userPreferences: UserPreferences
     private val profileViewModel: ProfileViewModel by viewModels {
         ProfileViewModelFactory.getInstance(applicationContext)
     }
@@ -67,10 +68,7 @@ class EditProfileActivity : AppCompatActivity() {
             }
 
         } else if (resultCode == UCrop.RESULT_ERROR) {
-            val cropError = UCrop.getError(data!!)
-            cropError?.let {
-                showToast("Crop error: ${it.localizedMessage}")
-            }
+            showToast(getString(R.string.error_server_500))
         }
     }
 
@@ -82,25 +80,22 @@ class EditProfileActivity : AppCompatActivity() {
         profileViewModel.isLoading.observe(this) { isLoading ->
             showLoading(isLoading)
         }
-        if (userModel?.pROFILEIMG != null) {
-            userModel?.let { user ->
-                val prevUsername = user.uSERNAME
-                val prevImage = user.pROFILEIMG
 
-                prevUsername.let { username ->
-                    binding.editUsername.setText(username)
-                }
+        userModel?.let { user ->
+            val prevUsername = user.uSERNAME
 
-                prevImage.let { imageUri ->
-                    currentImageUri = Uri.parse(imageUri)
-                    Glide.with(this)
-                        .load(imageUri)
-                        .into(binding.imageView)
-                }
+            prevUsername.let { username ->
+                binding.editUsername.setText(username)
+            }
+
+            if (user.pROFILEIMG != null) {
+                Glide.with(binding.root)
+                    .load(user.pROFILEIMG)
+                    .placeholder(R.drawable.ic_profile_fill)
+                    .into(binding.imageView)
             }
         }
     }
-
 
     private fun setupAction() {
         binding.apply {
@@ -119,22 +114,36 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun saveProfile() {
-        val newUsername = binding.editUsername.text.toString()
 
+        val newUsername = binding.editUsername.text.toString()
         if (newUsername.isEmpty()) {
             showToast(getString(R.string.username_should_not_empty))
             return
         }
 
         userModel?.uSERID?.let { idUser ->
-            profileViewModel.saveProfileUser(currentImageUri, newUsername, idUser, this)
-                .observe(this) { res ->
+            profileViewModel.saveProfileUser(
+                currentImageUri,
+                newUsername,
+                idUser,
+                this@EditProfileActivity
+            )
+                .observe(this@EditProfileActivity) { res ->
                     if (res.status) {
                         finish()
                     } else {
-                        showToast(getString(R.string.error_server_500))
+                        handlePostError(res.message.toInt())
                     }
                 }
+        }
+    }
+
+    private fun handlePostError(error: Int) {
+        when (error) {
+            400 -> showToast(getString(R.string.error_invalid_input))
+            401 -> showToast(getString(R.string.error_unauthorized_401))
+            500 -> showToast(getString(R.string.error_server_500))
+            503 -> showToast(getString(R.string.error_server_500))
         }
     }
 
@@ -165,7 +174,7 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility =
-            if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
+            if (isLoading) View.VISIBLE else View.GONE
     }
 
 }

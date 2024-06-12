@@ -1,16 +1,21 @@
 package com.example.ulikbatik.ui.detailPost
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ulikbatik.data.model.PostModel
+import com.bumptech.glide.Glide
+import com.example.ulikbatik.R
+import com.example.ulikbatik.data.remote.response.ScrapperResponse
 import com.example.ulikbatik.databinding.ItemScrappingBinding
 
-class DetailPostAdapter (private val posts: List<PostModel>) :
+class DetailPostAdapter(private val posts: List<ScrapperResponse>) :
     RecyclerView.Adapter<DetailPostAdapter.ItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val binding = ItemScrappingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemScrappingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding)
     }
 
@@ -24,9 +29,20 @@ class DetailPostAdapter (private val posts: List<PostModel>) :
 
     class ItemViewHolder(private val binding: ItemScrappingBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: PostModel) {
+        fun bind(item: ScrapperResponse) {
+            binding.apply {
+                Glide.with(root)
+                    .load(item.image)
+                    .placeholder(R.drawable.img_placeholder)
+                    .into(imageView)
 
-
+                productName.text = item.title
+                price.text = item.price
+                itemScrapping.setOnClickListener {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.link))
+                    root.context.startActivity(intent)
+                }
+            }
         }
     }
 }

@@ -24,12 +24,12 @@ import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityDashboardBinding
 import com.example.ulikbatik.ui.auth.AuthActivity
 import com.example.ulikbatik.ui.catalog.CatalogActivity
+import com.example.ulikbatik.ui.customView.CustomDialog
 import com.example.ulikbatik.ui.factory.PostViewModelFactory
 import com.example.ulikbatik.ui.likes.LikesActivity
 import com.example.ulikbatik.ui.profile.ProfileActivity
 import com.example.ulikbatik.ui.scan.ScanActivity
 import com.example.ulikbatik.ui.upload.UploadActivity
-import com.example.ulikbatik.utils.helper.DialogBuilder
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -224,21 +224,20 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        DialogBuilder.askDialog(
-            this@DashboardActivity,
-            getString(R.string.logout),
-            getString(R.string.logout_from_your_account)
-        ) { userChoice ->
 
-            if (userChoice) {
+        val title = getString(R.string.logout)
+        val message = getString(R.string.logout_from_your_account)
+        val customDialog = CustomDialog(this)
+        customDialog.showDialog(title, message){userChoice ->
+            if(userChoice){
                 lifecycleScope.launch {
-                    delay(3000)
-                    preferences.logOut()
+                delay(3000)
+                preferences.logOut()
 
-                    val intent = Intent(this@DashboardActivity, AuthActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
+                val intent = Intent(this@DashboardActivity, AuthActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
             }
         }
     }

@@ -47,6 +47,9 @@ class ProfileActivity : AppCompatActivity() {
     private fun setViewModel() {
         profileViewModel.apply {
             userModel = user
+            isLoading.observe(this@ProfileActivity) {
+                showLoading(it)
+            }
         }
     }
 
@@ -82,6 +85,8 @@ class ProfileActivity : AppCompatActivity() {
                         emailProfile.text = dataProfile.eMAIL
                         tvLikes.text = dataProfile.count?.likes.toString()
                         tvPosts.text = dataProfile.count?.post.toString()
+                        noPostTv.visibility =
+                            if (dataProfile.count?.post == 0) View.VISIBLE else View.INVISIBLE
                     }
                     showGridLayoutManager(true, res.data.post)
                     buttonGrid.setIconTintResource(R.color.primaryYellow)
@@ -145,6 +150,11 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility =
+            if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {
