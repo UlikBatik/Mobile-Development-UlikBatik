@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.data.remote.config.ApiService
 import com.example.ulikbatik.data.remote.response.GeneralResponse
-import com.example.ulikbatik.data.remote.response.ScanResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

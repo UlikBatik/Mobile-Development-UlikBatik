@@ -13,6 +13,7 @@ class AuthViewModel(
 ) : ViewModel() {
 
     var pref = preferences
+    val isLoading = authRepository.isLoading
 
     fun login(email: String, password: String): LiveData<LoginResponse> {
         return authRepository.login(email, password)

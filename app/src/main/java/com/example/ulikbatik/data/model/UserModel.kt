@@ -20,7 +20,7 @@ data class UserModel(
     val cREATEDAT: String,
 
     @field:SerializedName("PROFILEIMG")
-    val pROFILEIMG: String,
+    val pROFILEIMG: String? = null,
 
     @field:SerializedName("EMAIL")
     val eMAIL: String

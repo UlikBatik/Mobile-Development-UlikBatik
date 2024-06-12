@@ -10,6 +10,7 @@ import com.example.ulikbatik.data.repository.CatalogRepository
 import com.example.ulikbatik.data.repository.LikesRepository
 import com.example.ulikbatik.data.repository.PostRepository
 import com.example.ulikbatik.data.repository.ScanRepository
+import com.example.ulikbatik.data.repository.ScrapRepository
 import com.example.ulikbatik.data.repository.UserRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -65,5 +66,12 @@ object Injection {
         val pref = UserPreferences.getInstance(context.dataStore)
         val userModel = runBlocking { pref.getUser().first() }
         return userModel
+    }
+
+    fun provideScrapRepository(context: Context): ScrapRepository {
+        val pref = UserPreferences.getInstance(context.dataStore)
+        val user = runBlocking { pref.getUserToken().first() }
+        val apiService = ApiConfig.getApiInstance(user)
+        return ScrapRepository.getInstance(apiService)
     }
 }

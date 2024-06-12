@@ -2,30 +2,30 @@ package com.example.ulikbatik.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.data.remote.config.ApiService
 import com.example.ulikbatik.data.remote.response.ResultResponse
-import okhttp3.MultipartBody
+import com.example.ulikbatik.data.remote.response.ScrapperResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ScanRepository(
-    private val apiService: ApiService
+class ScrapRepository(
+   private val apiService: ApiService
 ) {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun scanImage(attachment: MultipartBody.Part): LiveData<ResultResponse<BatikModel>> {
+    fun getScrapperData(query:String): LiveData<ResultResponse<List<ScrapperResponse>>> {
         _isLoading.value = true
-        val responseJson = MutableLiveData<ResultResponse<BatikModel>>()
-        val client = apiService.predict(attachment)
+        val responseJson = MutableLiveData<ResultResponse<List<ScrapperResponse>>>()
+        val queryBatik = "Batik $query"
+        val client = apiService.searchContent(queryBatik)
         client.enqueue(
-            object : Callback<ResultResponse<BatikModel>> {
+            object: Callback<ResultResponse<List<ScrapperResponse>>> {
                 override fun onResponse(
-                    call: Call<ResultResponse<BatikModel>>,
-                    response: Response<ResultResponse<BatikModel>>
+                    call: Call<ResultResponse<List<ScrapperResponse>>>,
+                    response: Response<ResultResponse<List<ScrapperResponse>>>
                 ) {
                     _isLoading.value = false
                     if (response.isSuccessful) {
@@ -38,7 +38,11 @@ class ScanRepository(
                     }
                 }
 
-                override fun onFailure(call: Call<ResultResponse<BatikModel>>, t: Throwable) {
+                override fun onFailure(
+                    call: Call<ResultResponse<List<ScrapperResponse>>>,
+                    t: Throwable
+                ) {
+                    _isLoading.value = false
                     responseJson.value = ResultResponse(
                         message = "500",
                         status = false
@@ -49,15 +53,14 @@ class ScanRepository(
         return responseJson
     }
 
-
     companion object {
         @Volatile
-        private var instance: ScanRepository? = null
+        private var instance: ScrapRepository? = null
         fun getInstance(
             apiService: ApiService
-        ): ScanRepository =
+        ): ScrapRepository =
             instance ?: synchronized(this) {
-                instance ?: ScanRepository(apiService)
+                instance ?: ScrapRepository(apiService)
             }.also { instance = it }
     }
 }

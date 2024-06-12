@@ -13,7 +13,8 @@ import com.example.ulikbatik.data.remote.response.LoginResponse
 import com.example.ulikbatik.data.remote.response.PostResponse
 import com.example.ulikbatik.data.remote.response.ProfileUserResponse
 import com.example.ulikbatik.data.remote.response.RegisterResponse
-import com.example.ulikbatik.data.remote.response.ScanResponse
+import com.example.ulikbatik.data.remote.response.ResultResponse
+import com.example.ulikbatik.data.remote.response.ScrapperResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -28,7 +29,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-
 
 
     @POST("login")
@@ -54,7 +54,7 @@ interface ApiService {
     @Multipart
     fun predict(
         @Part attachment: MultipartBody.Part
-    ): Call<ScanResponse>
+    ): Call<ResultResponse<BatikModel>>
 
     @POST("like/{userId}")
     fun likePost(
@@ -101,6 +101,11 @@ interface ApiService {
     fun getPost(
         @Path("postID") postId: String
     ): Call<GeneralResponse<PostModel>>
+
+    @GET("search/{query}")
+    fun searchContent(
+        @Path("query") query: String
+    ): Call<ResultResponse<List<ScrapperResponse>>>
 
     @DELETE("post/{postId}")
     fun deletePost(

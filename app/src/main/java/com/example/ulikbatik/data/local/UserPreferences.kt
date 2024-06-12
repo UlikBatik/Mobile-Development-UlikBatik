@@ -55,7 +55,7 @@ class UserPreferences private constructor(
     fun getUser(): Flow<UserModel?> {
         return dataStore.data.map { preferences ->
             val json = preferences[USER_KEY]
-            Gson().fromJson<UserModel>(json, UserModel::class.java)
+            Gson().fromJson(json, UserModel::class.java)
         }
     }
 

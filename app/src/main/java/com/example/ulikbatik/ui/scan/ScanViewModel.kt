@@ -4,7 +4,8 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.ulikbatik.data.remote.response.ScanResponse
+import com.example.ulikbatik.data.model.BatikModel
+import com.example.ulikbatik.data.remote.response.ResultResponse
 import com.example.ulikbatik.data.repository.ScanRepository
 import com.example.ulikbatik.utils.helper.CameraHelper
 import com.example.ulikbatik.utils.helper.CameraHelper.reduceFileImage
@@ -18,7 +19,7 @@ class ScanViewModel(
 
     val isLoading = scanRepository.isLoading
 
-    fun scanImage(attach: Uri, context: Context): LiveData<ScanResponse> {
+    fun scanImage(attach: Uri, context: Context): LiveData<ResultResponse<BatikModel>> {
         val fileImage = CameraHelper.uriToFile(attach, context).reduceFileImage()
         val imageBodyPart = fileImage.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val imageMultipart: MultipartBody.Part =

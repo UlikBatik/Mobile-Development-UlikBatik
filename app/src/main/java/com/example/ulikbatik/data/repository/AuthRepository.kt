@@ -18,8 +18,11 @@ class AuthRepository(
     private val apiService: ApiService,
     private val pref: UserPreferences
 ) {
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
     fun login(email: String, password: String): LiveData<LoginResponse> {
+        _isLoading.value = true
         val resultLiveData = MutableLiveData<LoginResponse>()
         val reqBody = LoginBodyRequest(email = email, password = password)
         val client = apiService.login(reqBody)
@@ -29,6 +32,7 @@ class AuthRepository(
                     call: Call<LoginResponse>,
                     response: Response<LoginResponse>
                 ) {
+                    _isLoading.value = false
                     if (response.isSuccessful) {
                         resultLiveData.value = response.body()
                         runBlocking {
@@ -42,6 +46,7 @@ class AuthRepository(
                 }
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    _isLoading.value = false
                     resultLiveData.value =
                         LoginResponse(message = "500",
                             status = false)
@@ -51,12 +56,14 @@ class AuthRepository(
     }
 
     fun register(username: String, email: String, password: String, confirmPassword: String): LiveData<RegisterResponse> {
+        _isLoading.value = true
         val resultLiveData = MutableLiveData<RegisterResponse>()
         val reqBody = RegisterBodyRequest(username = username, email = email, password = password, confirmPassword = confirmPassword)
         val client = apiService.register(reqBody)
         client.enqueue(
             object : Callback<RegisterResponse> {
             override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     resultLiveData.value = response.body()
                 } else {
@@ -65,6 +72,7 @@ class AuthRepository(
             }
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                _isLoading.value = false
                 resultLiveData.value = RegisterResponse(message = "500",
                     status = false)
             }

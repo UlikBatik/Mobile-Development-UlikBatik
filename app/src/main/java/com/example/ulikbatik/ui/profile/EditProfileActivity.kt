@@ -12,7 +12,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.local.UserPreferences
@@ -20,7 +19,6 @@ import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.databinding.ActivityEditProfileBinding
 import com.example.ulikbatik.ui.factory.ProfileViewModelFactory
 import com.yalantis.ucrop.UCrop
-import kotlinx.coroutines.launch
 import java.io.File
 
 class EditProfileActivity : AppCompatActivity() {
@@ -84,20 +82,21 @@ class EditProfileActivity : AppCompatActivity() {
         profileViewModel.isLoading.observe(this) { isLoading ->
             showLoading(isLoading)
         }
+        if (userModel?.pROFILEIMG != null) {
+            userModel?.let { user ->
+                val prevUsername = user.uSERNAME
+                val prevImage = user.pROFILEIMG
 
-        userModel?.let { user ->
-            val prevUsername = user.uSERNAME
-            val prevImage = user.pROFILEIMG
+                prevUsername.let { username ->
+                    binding.editUsername.setText(username)
+                }
 
-            prevUsername.let { username ->
-                binding.editUsername.setText(username)
-            }
-
-            prevImage.let { imageUri ->
-                currentImageUri = Uri.parse(imageUri)
-                Glide.with(this)
-                    .load(imageUri)
-                    .into(binding.imageView)
+                prevImage.let { imageUri ->
+                    currentImageUri = Uri.parse(imageUri)
+                    Glide.with(this)
+                        .load(imageUri)
+                        .into(binding.imageView)
+                }
             }
         }
     }

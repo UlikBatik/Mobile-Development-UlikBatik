@@ -6,11 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.example.ulikbatik.R
-import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.databinding.FragmentLoginBinding
 import com.example.ulikbatik.ui.dashboard.DashboardActivity
 import com.example.ulikbatik.ui.factory.AuthViewModelFactory
@@ -40,6 +38,10 @@ class LoginFragment : Fragment() {
 
 
     private fun setupView() {
+        authViewModel.isLoading.observe(requireActivity()){
+            showLoading(it)
+        }
+
         val email = arguments?.getString("email")
         val password = arguments?.getString("password")
 
@@ -127,6 +129,11 @@ class LoginFragment : Fragment() {
             500 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_server_500))
             503 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_server_500))
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility =
+            if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {
