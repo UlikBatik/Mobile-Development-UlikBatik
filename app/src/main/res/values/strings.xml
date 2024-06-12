@@ -125,5 +125,9 @@
     <string name="delete_post">Delete Post</string>
     <string name="logout_from_your_account">Logout from your account?</string>
     <string name="logout">Logout</string>
+    <string name="productName" translatable="false">Product name</string>
+    <string name="price" translatable="false">Rp.100.000,0</string>
+    <string name="product_title">Products related to this post</string>
+    <string name="product_title_catalog">Products related to this batik</string>
 
 </resources>

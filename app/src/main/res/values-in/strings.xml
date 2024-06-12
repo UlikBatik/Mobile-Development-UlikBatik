@@ -114,6 +114,7 @@
     <string name="delete_post">Hapus Kiriman</string>
     <string name="logout_from_your_account">Keluar dari akun Anda?</string>
     <string name="logout">Keluar</string>
-
+    <string name="product_title">Produk berdasarkan post ini</string>
+    <string name="product_title_catalog">Products berdasarkan batik ini</string>
 
 </resources>
