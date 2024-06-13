@@ -39,6 +39,7 @@ class ScanRepository(
                 }
 
                 override fun onFailure(call: Call<ResultResponse<BatikModel>>, t: Throwable) {
+                    _isLoading.value = false
                     responseJson.value = ResultResponse(
                         message = "500",
                         status = false

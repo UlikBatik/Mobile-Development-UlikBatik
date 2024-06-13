@@ -27,7 +27,7 @@ class ProfileViewModel(
     val pref = preferences
     val isLoading = userRepository.isLoading
 
-    fun getUserData(id: String): LiveData<GeneralResponse<ProfileUserResponse>> {
+    fun getUserData(id: String): LiveData<ProfileUserResponse> {
         return userRepository.getProfileUser(id)
     }
 

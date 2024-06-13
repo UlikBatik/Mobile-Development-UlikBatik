@@ -95,6 +95,7 @@
         android:background="@drawable/edit_text_grey_field"
         android:hint="@string/username"
         android:importantForAutofill="no"
+        android:maxLength="24"
         android:inputType="text"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"

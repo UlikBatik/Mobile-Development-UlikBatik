@@ -38,7 +38,7 @@ class LoginFragment : Fragment() {
 
 
     private fun setupView() {
-        authViewModel.isLoading.observe(requireActivity()){
+        authViewModel.isLoading.observe(requireActivity()) {
             showLoading(it)
         }
 
@@ -56,11 +56,9 @@ class LoginFragment : Fragment() {
                 if (validateData(emailT, passwordT)) {
                     authViewModel.login(emailT, passwordT).observe(requireActivity()) {
                         if (it.status) {
-                            ValidatorAuthHelper.showToast(requireContext(), it.message)
-
                             startActivity(Intent(requireActivity(), DashboardActivity::class.java))
                             requireActivity().finish()
-                        } else  {
+                        } else {
                             handlePostError(it.message.toInt())
                         }
                     }
@@ -85,10 +83,12 @@ class LoginFragment : Fragment() {
                     emailTextInputLayout.error = getString(R.string.email_error_empty)
                     isValid = false
                 }
+
                 !ValidatorAuthHelper.validateEmail(email) -> {
                     emailTextInputLayout.error = getString(R.string.error_invalid_input)
                     isValid = false
                 }
+
                 else -> {
                     emailTextInputLayout.error = null
                 }
@@ -99,10 +99,12 @@ class LoginFragment : Fragment() {
                     passwordTextInputLayout.error = getString(R.string.password_error_empty)
                     isValid = false
                 }
+
                 !ValidatorAuthHelper.validatePassword(password) -> {
                     passwordTextInputLayout.error = getString(R.string.error_invalid_input)
                     isValid = false
                 }
+
                 else -> {
                     passwordTextInputLayout.error = null
                 }
@@ -122,12 +124,27 @@ class LoginFragment : Fragment() {
             })
     }
 
-    private fun handlePostError(error: Int){
+    private fun handlePostError(error: Int) {
         when (error) {
-            400 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_invalid_input))
-            401 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_unauthorized_401))
-            500 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_server_500))
-            503 -> ValidatorAuthHelper.showToast(requireContext(),getString(R.string.error_server_500))
+            400 -> ValidatorAuthHelper.showToast(
+                requireContext(),
+                getString(R.string.error_invalid_input)
+            )
+
+            401 -> ValidatorAuthHelper.showToast(
+                requireContext(),
+                getString(R.string.error_unauthorized_401)
+            )
+
+            500 -> ValidatorAuthHelper.showToast(
+                requireContext(),
+                getString(R.string.error_server_500)
+            )
+
+            503 -> ValidatorAuthHelper.showToast(
+                requireContext(),
+                getString(R.string.error_server_500)
+            )
         }
     }
 

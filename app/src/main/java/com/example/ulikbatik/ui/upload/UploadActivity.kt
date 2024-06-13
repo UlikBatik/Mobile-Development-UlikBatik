@@ -231,7 +231,7 @@ class UploadActivity : AppCompatActivity() {
     private fun startUCropActivity(uri: Uri) {
         runBlocking {
             val destinationUri = Uri.fromFile(File(cacheDir, "cropped_image"))
-            UCrop.of(uri, destinationUri).withAspectRatio(9F, 16F).start(this@UploadActivity)
+            UCrop.of(uri, destinationUri).withAspectRatio(9F, 12F).start(this@UploadActivity)
         }
     }
 

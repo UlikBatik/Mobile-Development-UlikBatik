@@ -42,6 +42,7 @@
         android:contentDescription="@string/back_button_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/searchBar"
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView

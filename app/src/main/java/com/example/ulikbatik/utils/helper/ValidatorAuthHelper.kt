@@ -10,7 +10,7 @@ object ValidatorAuthHelper {
         Toast.makeText(
             context,
             msg,
-            Toast.LENGTH_LONG).show()
+            Toast.LENGTH_SHORT).show()
     }
 
     fun validateEmail(email: String): Boolean{

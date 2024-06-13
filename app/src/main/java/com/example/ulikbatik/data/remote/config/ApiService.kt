@@ -99,7 +99,7 @@ interface ApiService {
     @GET("user/{userId}")
     fun getUserProfile(
         @Path("userId") userid: String
-    ): Call<GeneralResponse<ProfileUserResponse>>
+    ): Call<ProfileUserResponse>
 
     @GET("posts")
     fun getAllPosts(): Call<GeneralResponse<List<PostModel>>>
