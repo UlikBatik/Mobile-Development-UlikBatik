@@ -19,24 +19,30 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageField"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imageFieldCard"
         android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_height="350dp"
         android:layout_marginTop="60dp"
-        android:contentDescription="@string/img_field_description"
-        android:scaleType="center"
-        android:src="@drawable/img_field"
         app:layout_constraintBottom_toTopOf="@id/descriptionEdit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/backButton"
-        app:shapeAppearanceOverlay="@style/RoundedCorner10dp" />
+        app:cardCornerRadius="10dp">
+
+        <ImageView
+            android:id="@+id/imageField"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/img_field_description"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_field" />
+    </androidx.cardview.widget.CardView>
 
     <EditText
         android:id="@+id/descriptionEdit"
         android:layout_width="250dp"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="150dp"
         android:background="@drawable/edit_text_grey_field"
@@ -51,7 +57,7 @@
         app:layout_constraintBottom_toTopOf="@id/uploadBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageField" />
+        app:layout_constraintTop_toBottomOf="@id/imageFieldCard" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/uploadBtn"
