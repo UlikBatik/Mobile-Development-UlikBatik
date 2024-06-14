@@ -21,38 +21,36 @@ class UserRepository(
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
-    fun getProfileUser(userId: String): LiveData<GeneralResponse<ProfileUserResponse>> {
+    fun getProfileUser(userId: String): LiveData<ProfileUserResponse> {
         _isLoading.value = true
-        val responseJson = MutableLiveData<GeneralResponse<ProfileUserResponse>>()
+        val responseJson = MutableLiveData<ProfileUserResponse>()
         val client = apiService.getUserProfile(userId)
         client.enqueue(
-            object : Callback<GeneralResponse<ProfileUserResponse>> {
-                override fun onResponse(
-                    call: Call<GeneralResponse<ProfileUserResponse>>,
-                    response: Response<GeneralResponse<ProfileUserResponse>>
-                ) {
-                    _isLoading.value = false
-                    if (response.isSuccessful) {
-                        responseJson.value = response.body()
-                    } else {
-                        responseJson.value = GeneralResponse(
-                            message = response.code().toString(),
-                            status = false
-                        )
-                    }
-                }
+         object:Callback<ProfileUserResponse>{
+             override fun onResponse(
+                 call: Call<ProfileUserResponse>,
+                 response: Response<ProfileUserResponse>
+             ) {
+                 _isLoading.value = false
+                 if (response.isSuccessful) {
+                     responseJson.value = response.body()
+                 } else {
+                     responseJson.value = ProfileUserResponse(
+                         message = response.code().toString(),
+                         status = false
+                     )
+                 }
+             }
 
-                override fun onFailure(
-                    call: Call<GeneralResponse<ProfileUserResponse>>,
-                    t: Throwable
-                ) {
-                    _isLoading.value = false
-                    responseJson.value = GeneralResponse(
-                        message = "500",
-                        status = false
-                    )
-                }
-            }
+             override fun onFailure(call: Call<ProfileUserResponse>, t: Throwable) {
+                 _isLoading.value = false
+                 responseJson.value = ProfileUserResponse(
+                     message = "500",
+                     status = false
+                 )
+             }
+
+         }
         )
         return responseJson
     }

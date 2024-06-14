@@ -88,6 +88,19 @@
             app:layout_constraintEnd_toStartOf="@id/camBtn"
             app:layout_constraintStart_toStartOf="@id/cam_cardview" />
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/resetBtn400"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/button_gradient"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_restart"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cam_cardview" />
+
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

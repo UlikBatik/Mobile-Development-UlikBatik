@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.model.UserModel
+import com.example.ulikbatik.data.remote.response.DataProfile
 import com.example.ulikbatik.data.remote.response.PostItem
-import com.example.ulikbatik.data.remote.response.ProfileUserResponse
 import com.example.ulikbatik.databinding.ActivityProfileBinding
 import com.example.ulikbatik.ui.factory.ProfileViewModelFactory
 import com.example.ulikbatik.ui.profile.adapter.GridAdapter
@@ -83,11 +83,12 @@ class ProfileActivity : AppCompatActivity() {
                             .into(imageProfile)
                         usernameProfile.text = dataProfile.uSERNAME
                         emailProfile.text = dataProfile.eMAIL
-                        tvLikes.text = dataProfile.count?.likes.toString()
                         tvPosts.text = dataProfile.count?.post.toString()
                         noPostTv.visibility =
                             if (dataProfile.count?.post == 0) View.VISIBLE else View.INVISIBLE
                     }
+                    tvLikes.text =
+                        if (res.likesReceived != null) res.likesReceived.toString() else "0"
                     showGridLayoutManager(true, res.data.post)
                     buttonGrid.setIconTintResource(R.color.primaryYellow)
                     buttonList.setIconTintResource(R.color.grey)
@@ -112,7 +113,7 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun showPostsAction(data: ProfileUserResponse) {
+    private fun showPostsAction(data: DataProfile) {
         binding.apply {
             buttonGrid.setOnClickListener {
                 showGridLayoutManager(true, data.post)

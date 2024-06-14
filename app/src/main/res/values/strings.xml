@@ -119,9 +119,9 @@
     <string name="username_should_not_empty">username should not empty</string>
 
     <!--    Dialog -->
-    <string name="ok">ok</string>
-    <string name="confirm">confirm</string>
-    <string name="cancel">cancel</string>
+    <string name="ok">OK</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
     <string name="question_delete_post">Are you sure you want to delete this post?</string>
     <string name="delete_post">Delete Post</string>
     <string name="logout_from_your_account">Logout from your account?</string>
@@ -136,6 +136,7 @@
     <string name="no_result_search">There is no result</string>
     <string name="title_dialog">Title Dialog</string>
     <string name="deskripsi_dialog">Deskripsi dialog</string>
+    <string name="you_re_image_can_t_detected_as_batik">You\'re image can\'t detected as Batik</string>
 
 
 </resources>

@@ -114,7 +114,7 @@ class ScanActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                       handlePostError(res.message.toInt())
+                        handlePostError(res.message.toInt())
                     }
                 }
                 showImage(it)
@@ -129,7 +129,22 @@ class ScanActivity : AppCompatActivity() {
 
     private fun handlePostError(error: Int) {
         when (error) {
-            400 -> showToast(getString(R.string.error_invalid_input))
+            400 -> {
+                binding.apply {
+                    resetBtn400.visibility = View.VISIBLE
+                    showToast(getString(R.string.you_re_image_can_t_detected_as_batik))
+                    resetBtn400.setOnClickListener {
+                        camPreview.visibility = View.VISIBLE
+                        camBtn.visibility = View.VISIBLE
+                        galleryBtn.visibility = View.VISIBLE
+                        resetBtn400.visibility = View.INVISIBLE
+
+                        currentImageUri = null
+                        imageIv.setImageURI(null)
+                    }
+                }
+            }
+
             401 -> showToast(getString(R.string.error_unauthorized_401))
             500 -> showToast(getString(R.string.error_server_500))
             503 -> showToast(getString(R.string.error_server_500))
@@ -200,7 +215,7 @@ class ScanActivity : AppCompatActivity() {
     private fun startUCropActivity(uri: Uri) {
         val destinationUri = Uri.fromFile(File(cacheDir, "cropped_image"))
         UCrop.of(uri, destinationUri)
-            .withAspectRatio(9F, 16F)
+            .withAspectRatio(9F, 12F)
             .start(this)
     }
 

@@ -121,4 +121,7 @@
     <string name="product_title_catalog">Products berdasarkan batik ini</string>
     <string name="no_posts">Belum ada unggahan</string>
     <string name="no_result_search">Hasil tidak ditemukan</string>
+    <string name="you_re_image_can_t_detected_as_batik">Gambar tidak terdeteksi sebagai Batik</string>
+    <string name="title_dialog">Title Dialog</string>
+    <string name="deskripsi_dialog">Deskripsi dialog</string>
 </resources>

@@ -5,6 +5,21 @@ import com.google.gson.annotations.SerializedName
 
 data class ProfileUserResponse(
 
+    @field:SerializedName("data")
+    val data: DataProfile? = null,
+
+    @field:SerializedName("likesReceived")
+    val likesReceived: Int? = null,
+
+    @field:SerializedName("message")
+    val message: String,
+
+    @field:SerializedName("status")
+    val status: Boolean
+)
+
+data class DataProfile(
+
     @field:SerializedName("_count")
     val count: Count? = null,
 
