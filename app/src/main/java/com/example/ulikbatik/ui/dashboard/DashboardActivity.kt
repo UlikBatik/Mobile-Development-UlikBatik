@@ -3,24 +3,20 @@ package com.example.ulikbatik.ui.dashboard
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.provider.Settings
-import android.widget.Toast
+import android.view.Menu
 import androidx.activity.addCallback
 import androidx.activity.viewModels
-import com.google.android.material.navigation.NavigationView
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.local.UserPreferences
-import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.model.UserModel
-import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.databinding.ActivityDashboardBinding
 import com.example.ulikbatik.ui.auth.AuthActivity
 import com.example.ulikbatik.ui.catalog.CatalogActivity
@@ -30,8 +26,10 @@ import com.example.ulikbatik.ui.likes.LikesActivity
 import com.example.ulikbatik.ui.profile.ProfileActivity
 import com.example.ulikbatik.ui.scan.ScanActivity
 import com.example.ulikbatik.ui.upload.UploadActivity
+import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -50,15 +48,21 @@ class DashboardActivity : AppCompatActivity() {
 
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setDrawer()
+
+        binding.contentDashboard.rvPost.layoutManager =
+            LinearLayoutManager(this)
+
         setViewModel()
+        setDrawer()
         setAction()
+        setView()
     }
 
     override fun onResume() {
         super.onResume()
         setViewModel()
         setDrawer()
+        setView()
     }
 
     private fun setViewModel() {
@@ -70,25 +74,6 @@ class DashboardActivity : AppCompatActivity() {
             isLoading.observe(this@DashboardActivity) {
                 showLoading(it)
             }
-
-            getPosts().observe(this@DashboardActivity) {
-                if (it != null) {
-                    if (it.status) {
-                        setView(it)
-                    } else {
-                        handlePostError(it.message.toInt())
-                    }
-                }
-            }
-        }
-    }
-
-    private fun handlePostError(error: Int) {
-        when (error) {
-            400 -> showToast(getString(R.string.error_invalid_input))
-            401 -> showToast(getString(R.string.error_unauthorized_401))
-            500 -> showToast(getString(R.string.error_server_500))
-            503 -> showToast(getString(R.string.error_server_500))
         }
     }
 
@@ -125,14 +110,16 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun setView(res: GeneralResponse<List<PostModel>>) {
-
-        if (res.data != null) {
-            binding.apply {
-                contentDashboard.rvPost.layoutManager =
-                    LinearLayoutManager(this@DashboardActivity)
-                contentDashboard.rvPost.adapter = DashboardAdapter(res.data)
+    private fun setView() {
+        val adapter = DashboardAdapter()
+        binding.contentDashboard.rvPost.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
             }
+        )
+
+        dashboardViewModel.getPosts().observe(this@DashboardActivity) { dataPaging ->
+            adapter.submitData(lifecycle, dataPaging)
         }
 
         lifecycleScope.launch {
@@ -157,7 +144,6 @@ class DashboardActivity : AppCompatActivity() {
             }
 
             contentDashboard.scrollUpFab.setOnClickListener {
-                setViewModel()
                 contentDashboard.nestedScrollView.smoothScrollTo(0, 0)
             }
         }
@@ -228,16 +214,16 @@ class DashboardActivity : AppCompatActivity() {
         val title = getString(R.string.logout)
         val message = getString(R.string.logout_from_your_account)
         val customDialog = CustomDialog(this)
-        customDialog.showDialog(title, message){userChoice ->
-            if(userChoice){
+        customDialog.showDialog(title, message) { userChoice ->
+            if (userChoice) {
                 lifecycleScope.launch {
-                delay(3000)
-                preferences.logOut()
+                    delay(3000)
+                    preferences.logOut()
 
-                val intent = Intent(this@DashboardActivity, AuthActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
+                    val intent = Intent(this@DashboardActivity, AuthActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
     }
@@ -251,7 +237,4 @@ class DashboardActivity : AppCompatActivity() {
             if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
 }

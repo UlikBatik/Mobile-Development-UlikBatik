@@ -11,6 +11,7 @@ import com.example.ulikbatik.data.remote.response.LikesBodyRequest
 import com.example.ulikbatik.data.remote.response.LikesResponse
 import com.example.ulikbatik.data.remote.response.LoginResponse
 import com.example.ulikbatik.data.remote.response.PostResponse
+import com.example.ulikbatik.data.remote.response.GetAllPostResponse
 import com.example.ulikbatik.data.remote.response.ProfileUserResponse
 import com.example.ulikbatik.data.remote.response.RegisterResponse
 import com.example.ulikbatik.data.remote.response.ResultResponse
@@ -70,13 +71,13 @@ interface ApiService {
         @Part IMAGE: MultipartBody.Part,
         @Part("USERNAME") username: RequestBody,
     ): Call<GeneralResponse<UserModel>>
+
     @PUT("user/{userId}")
     @Multipart
     fun updateUsername(
         @Path("userId") userid: String,
         @Part("USERNAME") username: RequestBody,
     ): Call<GeneralResponse<UserModel>>
-
 
     @GET("batiks")
     fun getBatik(): Call<GeneralResponse<List<BatikModel>>>
@@ -102,7 +103,9 @@ interface ApiService {
     ): Call<ProfileUserResponse>
 
     @GET("posts")
-    fun getAllPosts(): Call<GeneralResponse<List<PostModel>>>
+    suspend fun getAllPosts(
+        @Query("page") page: Int
+    ): GetAllPostResponse
 
     @GET("post/{postID}")
     fun getPost(

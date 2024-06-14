@@ -3,6 +3,11 @@ package com.example.ulikbatik.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
+import com.example.ulikbatik.data.remote.PostPagingSource
 import com.example.ulikbatik.data.model.LikesModel
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.remote.config.ApiService
@@ -22,33 +27,16 @@ class PostRepository(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun getAllPost(): LiveData<GeneralResponse<List<PostModel>>> {
-        _isLoading.value = true
-        val resultLiveData = MutableLiveData<GeneralResponse<List<PostModel>>>()
-        val client = apiService.getAllPosts()
-        client.enqueue(
-            object : Callback<GeneralResponse<List<PostModel>>> {
-                override fun onResponse(
-                    call: Call<GeneralResponse<List<PostModel>>>,
-                    response: Response<GeneralResponse<List<PostModel>>>
-                ) {
-                    _isLoading.value = false
-                    if (response.isSuccessful) {
-                        resultLiveData.value = response.body()
-                    } else {
-                        resultLiveData.value =
-                            GeneralResponse(message = response.code().toString(), status = false)
-                    }
-                }
-
-                override fun onFailure(call: Call<GeneralResponse<List<PostModel>>>, t: Throwable) {
-                    _isLoading.value = false
-                    resultLiveData.value =
-                        GeneralResponse(message = "500",
-                            status = false)
-                }
-            })
-        return resultLiveData
+    fun getAllPost(): LiveData<PagingData<PostModel>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                PostPagingSource(apiService)
+            }
+        ).liveData
     }
 
     fun getPost(postId: String): LiveData<GeneralResponse<PostModel>> {
@@ -97,15 +85,19 @@ class PostRepository(
                         resultLiveData.value = response.body()
                     } else {
                         resultLiveData.value =
-                            LikesResponse( message = response.code().toString(),
-                                status = false)
+                            LikesResponse(
+                                message = response.code().toString(),
+                                status = false
+                            )
                     }
                 }
 
                 override fun onFailure(call: Call<LikesResponse>, t: Throwable) {
                     resultLiveData.value =
-                        LikesResponse(message = "500",
-                            status = false)
+                        LikesResponse(
+                            message = "500",
+                            status = false
+                        )
                 }
             })
         return resultLiveData
