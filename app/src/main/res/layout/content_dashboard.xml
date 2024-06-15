@@ -1,176 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/menuBtn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/ic_menu"
-                android:contentDescription="@string/btn_dashboard"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <TextView
-                android:id="@+id/appname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/gfs_didot"
-                android:letterSpacing="0.1"
-                android:text="@string/app_name2"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-    <ScrollView
-        android:id="@+id/nestedScrollView"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/menuBtn"
-        app:layout_constraintTop_toBottomOf="@id/menuBtn">
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/layout_toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:isScrollContainer="true">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profileBtn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/ic_profile"
-                android:contentDescription="@string/btn_dashboard"
-                app:layout_constraintBottom_toBottomOf="@id/usernameTv"
-                app:layout_constraintEnd_toEndOf="@id/divider"
-                app:layout_constraintTop_toTopOf="@id/helloTv" />
-
-            <TextView
-                android:id="@+id/helloTv"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="@string/drawer_hello"
-                android:textSize="25sp"
-                app:layout_constraintBottom_toTopOf="@id/usernameTv"
-                app:layout_constraintStart_toStartOf="@id/divider"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/usernameTv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="20dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/poppins"
-                android:text="@string/username"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@id/profileBtn"
-                app:layout_constraintStart_toStartOf="@id/divider"
-                app:layout_constraintTop_toBottomOf="@id/helloTv" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileBtn"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/ic_profile"
+                    android:contentDescription="@string/btn_dashboard"
+                    app:layout_constraintBottom_toBottomOf="@id/usernameTv"
+                    app:layout_constraintEnd_toEndOf="@id/divider"
+                    app:layout_constraintTop_toTopOf="@id/helloTv" />
 
+                <TextView
+                    android:id="@+id/helloTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="?attr/actionBarSize"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/drawer_hello"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toTopOf="@id/usernameTv"
+                    app:layout_constraintStart_toStartOf="@id/divider"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/scanBtn"
-                android:layout_width="100dp"
-                android:layout_height="130dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/button_menu_scan"
-                android:drawableTop="@drawable/ic_scan"
-                android:fontFamily="@font/poppins_bold"
-                android:gravity="bottom"
-                android:paddingTop="20dp"
-                android:paddingBottom="10dp"
-                android:text="@string/dashboard_scan"
-                android:textAlignment="textEnd"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toStartOf="@id/catalogBtn"
-                app:layout_constraintStart_toStartOf="@id/divider"
-                app:layout_constraintTop_toBottomOf="@id/usernameTv"
-                tools:ignore="RtlCompat" />
+                <TextView
+                    android:id="@+id/usernameTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins"
+                    android:text="@string/username"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@id/profileBtn"
+                    app:layout_constraintStart_toStartOf="@id/divider"
+                    app:layout_constraintTop_toBottomOf="@id/helloTv" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/catalogBtn"
-                android:layout_width="100dp"
-                android:layout_height="130dp"
-                android:layout_marginHorizontal="5dp"
-                android:background="@drawable/button_menu_general"
-                android:fontFamily="@font/poppins_bold"
-                android:gravity="bottom"
-                android:paddingBottom="10dp"
-                android:text="@string/dashboard_catalog"
-                android:textAlignment="textEnd"
-                android:textColor="@color/primaryBrown"
-                android:textSize="10sp"
-                app:layout_constraintEnd_toStartOf="@id/likesBtn"
-                app:layout_constraintStart_toEndOf="@id/scanBtn"
-                app:layout_constraintTop_toTopOf="@id/scanBtn"
-                tools:ignore="RtlCompat,SmallSp" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/scanBtn"
+                    android:layout_width="100dp"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button_menu_scan"
+                    android:drawableTop="@drawable/ic_scan"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="bottom"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/dashboard_scan"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toStartOf="@id/catalogBtn"
+                    app:layout_constraintStart_toStartOf="@id/divider"
+                    app:layout_constraintTop_toBottomOf="@id/usernameTv"
+                    tools:ignore="RtlCompat" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/likesBtn"
-                android:layout_width="100dp"
-                android:layout_height="130dp"
-                android:background="@drawable/button_menu_general"
-                android:fontFamily="@font/poppins_bold"
-                android:gravity="bottom"
-                android:paddingBottom="10dp"
-                android:text="@string/dashboard_likes"
-                android:textAlignment="textEnd"
-                android:textColor="@color/primaryBrown"
-                android:textSize="11sp"
-                app:layout_constraintEnd_toEndOf="@id/divider"
-                app:layout_constraintStart_toEndOf="@id/catalogBtn"
-                app:layout_constraintTop_toTopOf="@id/catalogBtn"
-                tools:ignore="RtlCompat" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/catalogBtn"
+                    android:layout_width="100dp"
+                    android:layout_height="130dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:background="@drawable/button_menu_general"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="bottom"
+                    android:paddingBottom="10dp"
+                    android:text="@string/dashboard_catalog"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/primaryBrown"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toStartOf="@id/likesBtn"
+                    app:layout_constraintStart_toEndOf="@id/scanBtn"
+                    app:layout_constraintTop_toTopOf="@id/scanBtn"
+                    tools:ignore="RtlCompat,SmallSp" />
 
-            <View
-                android:id="@+id/divider"
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/likesBtn"
+                    android:layout_width="100dp"
+                    android:layout_height="130dp"
+                    android:background="@drawable/button_menu_general"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="bottom"
+                    android:paddingBottom="10dp"
+                    android:text="@string/dashboard_likes"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/primaryBrown"
+                    android:textSize="11sp"
+                    app:layout_constraintEnd_toEndOf="@id/divider"
+                    app:layout_constraintStart_toEndOf="@id/catalogBtn"
+                    app:layout_constraintTop_toTopOf="@id/catalogBtn"
+                    tools:ignore="RtlCompat" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/catalogBtn" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="30dp"
-                android:background="@color/grey"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/catalogBtn" />
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/ic_menu">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPost"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:contentDescription="@string/rv_post_description"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider"
-                tools:listitem="@layout/item_post" />
+                <TextView
+                    android:id="@+id/appname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gfs_didot"
+                    android:letterSpacing="0.1"
+                    android:text="@string/app_name2"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </androidx.appcompat.widget.Toolbar>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    </ScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/rv_post_description"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        tools:listitem="@layout/item_post" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/scrollUpFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="70dp"
         android:backgroundTint="@color/primaryYellow"
         android:fontFamily="@font/poppins"
         android:text="@string/scroll_up_button"
@@ -186,6 +181,7 @@
         android:id="@+id/dashboardFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:layout_margin="40dp"
         android:backgroundTint="@color/primaryYellow"
         android:contentDescription="@string/btn_dashboard"
@@ -197,6 +193,7 @@
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:indeterminate="true"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -204,4 +201,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

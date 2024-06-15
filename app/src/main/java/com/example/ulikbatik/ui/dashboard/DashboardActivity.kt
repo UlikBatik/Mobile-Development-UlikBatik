@@ -4,7 +4,6 @@ package com.example.ulikbatik.ui.dashboard
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.view.Menu
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +28,7 @@ import com.example.ulikbatik.ui.upload.UploadActivity
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 
 class DashboardActivity : AppCompatActivity() {
@@ -67,7 +67,6 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun setViewModel() {
         dashboardViewModel.apply {
-
             preferences = pref
             userModel = user
 
@@ -107,6 +106,11 @@ class DashboardActivity : AppCompatActivity() {
                 val intent = Intent(this@DashboardActivity, UploadActivity::class.java)
                 startActivity(intent)
             }
+            contentDashboard.scrollUpFab.setOnClickListener {
+                contentDashboard.rvPost.scrollToPosition(0)
+                contentDashboard.appBar.setExpanded(true, true)
+                setView()
+            }
         }
     }
 
@@ -134,23 +138,28 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
 
-        binding.apply {
-            contentDashboard.nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-                if (scrollY == oldScrollY || scrollY == 0) {
-                    contentDashboard.scrollUpFab.hide()
-                } else {
-                    contentDashboard.scrollUpFab.show()
+        binding.contentDashboard.apply {
+            binding.contentDashboard.appBar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+                if (verticalOffset == 0) {
+                    scrollUpFab.hide()
+                } else if (abs(verticalOffset) >= appBarLayout.totalScrollRange) {
+                    scrollUpFab.show()
                 }
-            }
-
-            contentDashboard.scrollUpFab.setOnClickListener {
-                contentDashboard.nestedScrollView.smoothScrollTo(0, 0)
             }
         }
     }
 
-
     private fun setDrawer() {
+        setSupportActionBar(binding.contentDashboard.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+
+        binding.apply {
+            contentDashboard.toolbar.setNavigationOnClickListener {
+                drawerLayout.openDrawer(GravityCompat.START)
+            }
+        }
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navigationView: NavigationView = binding.navView
 
@@ -160,9 +169,6 @@ class DashboardActivity : AppCompatActivity() {
             ), drawerLayout
         )
 
-        binding.contentDashboard.menuBtn.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
-        }
 
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -204,10 +210,6 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.dashboard, menu)
-        return true
-    }
 
     private fun logout() {
 

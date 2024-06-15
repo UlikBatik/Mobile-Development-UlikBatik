@@ -137,6 +137,6 @@
     <string name="title_dialog">Title Dialog</string>
     <string name="deskripsi_dialog">Deskripsi dialog</string>
     <string name="you_re_image_can_t_detected_as_batik">You\'re image can\'t detected as Batik</string>
-
+    <string name="retry">Retry</string>
 
 </resources>

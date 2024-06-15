@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemPost"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -50,6 +50,5 @@
         app:layout_constraintStart_toEndOf="@id/imageIcon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image_post"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
