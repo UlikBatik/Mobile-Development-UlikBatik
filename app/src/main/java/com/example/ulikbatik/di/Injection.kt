@@ -30,11 +30,11 @@ object Injection {
     }
 
     fun provideLikesRepository(context: Context): LikesRepository {
-            val pref = UserPreferences.getInstance(context.dataStore)
-            val user = runBlocking { pref.getUserToken().first() }
-            val apiService = ApiConfig.getApiInstance(user)
-            return LikesRepository.getInstance(apiService)
-        }
+        val pref = UserPreferences.getInstance(context.dataStore)
+        val user = runBlocking { pref.getUserToken().first() }
+        val apiService = ApiConfig.getApiInstance(user)
+        return LikesRepository.getInstance(apiService)
+    }
 
     fun provideScanRepository(context: Context): ScanRepository {
         val pref = UserPreferences.getInstance(context.dataStore)

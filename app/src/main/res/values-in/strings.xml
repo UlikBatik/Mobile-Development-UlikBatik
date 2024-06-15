@@ -124,4 +124,5 @@
     <string name="you_re_image_can_t_detected_as_batik">Gambar tidak terdeteksi sebagai Batik</string>
     <string name="title_dialog">Title Dialog</string>
     <string name="deskripsi_dialog">Deskripsi dialog</string>
+    <string name="retry">Coba Lagi</string>
 </resources>

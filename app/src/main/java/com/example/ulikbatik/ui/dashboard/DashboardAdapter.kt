@@ -3,6 +3,8 @@ package com.example.ulikbatik.ui.dashboard
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
@@ -10,8 +12,8 @@ import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.databinding.ItemPostBinding
 import com.example.ulikbatik.ui.detailPost.DetailPostActivity
 
-class DashboardAdapter(private val posts: List<PostModel>) :
-    RecyclerView.Adapter<DashboardAdapter.PostViewHolder>() {
+class DashboardAdapter :
+    PagingDataAdapter<PostModel, DashboardAdapter.PostViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,11 +21,10 @@ class DashboardAdapter(private val posts: List<PostModel>) :
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bind(posts[position])
-    }
-
-    override fun getItemCount(): Int {
-        return posts.size
+        val posts = getItem(position)
+        if (posts != null) {
+            holder.bind(posts)
+        }
     }
 
     class PostViewHolder(private val binding: ItemPostBinding) :
@@ -47,6 +48,24 @@ class DashboardAdapter(private val posts: List<PostModel>) :
                     intent.putExtra(DetailPostActivity.EXTRA_ID_POST, post.postId)
                     binding.root.context.startActivity(intent)
                 }
+            }
+        }
+    }
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<PostModel>() {
+            override fun areItemsTheSame(
+                oldItem: PostModel,
+                newItem: PostModel
+            ): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(
+                oldItem: PostModel,
+                newItem: PostModel
+            ): Boolean {
+                return oldItem.postId == newItem.postId
             }
         }
     }
