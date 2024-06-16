@@ -4,8 +4,10 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -21,13 +23,18 @@ import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.databinding.ActivityUploadBinding
+import com.example.ulikbatik.ml.ModelMnet
 import com.example.ulikbatik.ui.factory.PostViewModelFactory
 import com.example.ulikbatik.ui.factory.ScanViewModelFactory
 import com.example.ulikbatik.ui.scan.ScanViewModel
 import com.example.ulikbatik.ui.upload.CameraActivity.Companion.CAMERAX_RESULT
+import com.example.ulikbatik.utils.helper.CameraHelper
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.runBlocking
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.File
+import java.nio.ByteBuffer
 
 class UploadActivity : AppCompatActivity() {
 
@@ -113,15 +120,58 @@ class UploadActivity : AppCompatActivity() {
     }
 
     private fun scanImage(image: Uri) {
-        scanViewModel.scanImage(image, this).observe(this) { res ->
-            if (res.status && res.result != null) {
-                showScanResult(res.result)
-                batikId = res.result.bATIKID
+        val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(image))
+        val bitmapGrayScale = CameraHelper.convertToGrayscale(bitmap)
+        val resizedImage = CameraHelper.resizeBitmap(bitmapGrayScale, 224, 224)
+        val byteBuffer = CameraHelper.bitmapToByteBuffer(resizedImage)
+        classifyGenerator(byteBuffer)
+    }
+
+    private fun classifyGenerator(byteBuffer: ByteBuffer) {
+        val model = ModelMnet.newInstance(this)
+
+        val inputFeature0 =
+            TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+        inputFeature0.loadBuffer(byteBuffer)
+
+        val outputs = model.process(inputFeature0)
+        val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+
+        model.close()
+
+        handleOutput(outputFeature0)
+    }
+
+    private fun handleOutput(outputFeature0: TensorBuffer) {
+
+        val probabilities = outputFeature0.floatArray
+
+        val maxIndex = probabilities.indices.maxByOrNull { probabilities[it] } ?: -1
+        val maxProbability = probabilities[maxIndex]
+
+        val labels = arrayOf("BTX00",
+            "BTX01", "BTX02", "BTX03", "BTX04", "BTX05",
+            "BTX06", "BTX07", "BTX08", "BTX09", "BTX10",
+            "BTX11", "BTX12", "BTX13", "BTX14", "BTX15",
+            "BTX16", "BTX17", "BTX18", "BTX19", "BTX20",
+            "BTX21", "BTX22"
+        )
+
+        val predictedLabel =
+            if (maxIndex < labels.size) labels[maxIndex] else "Unknown"
+
+        scanViewModel.getBatikTag(predictedLabel).observe(this@UploadActivity) { res ->
+            if (res.status && res.data != null) {
+                showScanResult(res.data)
             } else {
                 handlePostError(res.message.toInt())
             }
         }
+
+
+        Log.d("COBA","$predictedLabel $maxProbability")
     }
+
 
     private fun handlePostError(error: Int) {
         when (error) {
@@ -231,7 +281,7 @@ class UploadActivity : AppCompatActivity() {
     private fun startUCropActivity(uri: Uri) {
         runBlocking {
             val destinationUri = Uri.fromFile(File(cacheDir, "cropped_image"))
-            UCrop.of(uri, destinationUri).withAspectRatio(9F, 12F).start(this@UploadActivity)
+            UCrop.of(uri, destinationUri).withAspectRatio(3F, 3F).start(this@UploadActivity)
         }
     }
 
