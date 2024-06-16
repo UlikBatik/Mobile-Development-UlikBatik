@@ -10,6 +10,7 @@ import androidx.paging.liveData
 import com.example.ulikbatik.data.remote.PostPagingSource
 import com.example.ulikbatik.data.model.LikesModel
 import com.example.ulikbatik.data.model.PostModel
+import com.example.ulikbatik.data.model.UserModel
 import com.example.ulikbatik.data.remote.config.ApiService
 import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.data.remote.response.PostResponse
@@ -22,7 +23,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PostRepository(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val userModel: UserModel
 ) {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -204,10 +206,44 @@ class PostRepository(
         return resultLiveData
     }
 
+    fun getFyp(): LiveData<GeneralResponse<List<PostModel>>> {
+        _isLoading.value = true
+        val resultLiveData = MutableLiveData<GeneralResponse<List<PostModel>>>()
+        val userId = userModel.uSERID
+        val client = apiService.getFyp(userId)
+        client.enqueue(
+            object : Callback<GeneralResponse<List<PostModel>>> {
+                override fun onResponse(
+                    call: Call<GeneralResponse<List<PostModel>>>,
+                    response: Response<GeneralResponse<List<PostModel>>>
+                ) {
+                    _isLoading.value = false
+                    if (response.isSuccessful) {
+                        resultLiveData.value = response.body()
+                    } else {
+                        resultLiveData.value = GeneralResponse(
+                            message = response.code().toString(),
+                            status = false
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<GeneralResponse<List<PostModel>>>, t: Throwable) {
+                    _isLoading.value = false
+                    resultLiveData.value = GeneralResponse(
+                        message = "500",
+                        status = false
+                    )
+                }
+            }
+        )
+        return resultLiveData
+    }
 
     companion object {
         fun getInstance(
-            apiService: ApiService
-        ) = PostRepository(apiService)
+            apiService: ApiService,
+            userModel: UserModel
+        ) = PostRepository(apiService, userModel)
     }
 }

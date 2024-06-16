@@ -8,6 +8,7 @@ import androidx.paging.cachedIn
 import com.example.ulikbatik.data.local.UserPreferences
 import com.example.ulikbatik.data.model.PostModel
 import com.example.ulikbatik.data.model.UserModel
+import com.example.ulikbatik.data.remote.response.GeneralResponse
 import com.example.ulikbatik.data.repository.PostRepository
 
 class DashboardViewModel(
@@ -23,6 +24,10 @@ class DashboardViewModel(
 
     fun getPosts(): LiveData<PagingData<PostModel>> {
         return postRepository.getAllPost().cachedIn(viewModelScope)
+    }
+
+    fun getFyp(): LiveData<GeneralResponse<List<PostModel>>>{
+        return postRepository.getFyp()
     }
 
 }

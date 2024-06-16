@@ -139,5 +139,6 @@
     <string name="you_re_image_can_t_detected_as_batik">You\'re image can\'t detected as Batik</string>
     <string name="retry">Retry</string>
     <string name="upload_your_batik">Upload your Batik</string>
+    <string name="fyp">You might like this</string>
 
 </resources>

@@ -25,8 +25,9 @@ object Injection {
     fun providePostRepository(context: Context): PostRepository {
         val pref = UserPreferences.getInstance(context.dataStore)
         val user = runBlocking { pref.getUserToken().first() }
+        val userModel = runBlocking { pref.getUser().first() }
         val apiService = ApiConfig.getApiInstance(user)
-        return PostRepository.getInstance(apiService)
+        return PostRepository.getInstance(apiService, userModel!!)
     }
 
     fun provideLikesRepository(context: Context): LikesRepository {

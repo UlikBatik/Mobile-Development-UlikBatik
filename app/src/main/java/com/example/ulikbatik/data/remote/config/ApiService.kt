@@ -31,7 +31,6 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-
     @POST("login")
     fun login(
         @Body loginBodyRequest: LoginBodyRequest
@@ -121,4 +120,9 @@ interface ApiService {
     fun deletePost(
         @Path("postId") postId: String
     ): Call<GeneralResponse<PostModel>>
+
+    @GET("fyp/{userId}")
+    fun getFyp(
+        @Path("userId") userId: String
+    ): Call<GeneralResponse<List<PostModel>>>
 }

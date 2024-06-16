@@ -92,7 +92,6 @@ class DetailPostActivity : AppCompatActivity() {
                             false
                         )
                         rcScrapping.adapter = DetailPostAdapter(res.result)
-
                     }
                 } else {
                     handlePostError(res.message.toInt())

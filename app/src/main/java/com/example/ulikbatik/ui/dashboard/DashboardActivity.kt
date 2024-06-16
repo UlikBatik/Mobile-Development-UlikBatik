@@ -20,6 +20,7 @@ import com.example.ulikbatik.databinding.ActivityDashboardBinding
 import com.example.ulikbatik.ui.auth.AuthActivity
 import com.example.ulikbatik.ui.catalog.CatalogActivity
 import com.example.ulikbatik.ui.customView.CustomDialog
+import com.example.ulikbatik.ui.detailPost.RecomendationAdapter
 import com.example.ulikbatik.ui.factory.PostViewModelFactory
 import com.example.ulikbatik.ui.likes.LikesActivity
 import com.example.ulikbatik.ui.profile.ProfileActivity
@@ -124,6 +125,28 @@ class DashboardActivity : AppCompatActivity() {
 
         dashboardViewModel.getPosts().observe(this@DashboardActivity) { dataPaging ->
             adapter.submitData(lifecycle, dataPaging)
+        }
+
+        dashboardViewModel.getFyp().observe(this){ res ->
+            if(res.status){
+                binding.contentDashboard.rvRecommend.visibility = android.view.View.VISIBLE
+                binding.contentDashboard.fypTitle.visibility = android.view.View.VISIBLE
+                binding.contentDashboard.divider2.visibility = android.view.View.VISIBLE
+                if(res.data != null){
+                    binding.contentDashboard.apply {
+                        rvRecommend.layoutManager= LinearLayoutManager(
+                            this@DashboardActivity,
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
+                        rvRecommend.adapter = RecomendationAdapter(res.data)
+                    }
+                }
+            }else {
+                binding.contentDashboard.rvRecommend.visibility = android.view.View.GONE
+                binding.contentDashboard.fypTitle.visibility = android.view.View.GONE
+                binding.contentDashboard.divider2.visibility = android.view.View.GONE
+            }
         }
 
         lifecycleScope.launch {
