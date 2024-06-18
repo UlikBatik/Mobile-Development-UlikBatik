@@ -35,6 +35,11 @@ class RegisterFragment : Fragment() {
 
     private fun setupView() {
         binding.apply {
+            ValidatorAuthHelper.onChangeClear(usernameEdit,usernameTextInputLayout)
+            ValidatorAuthHelper.onChangeClear(emailEdit,emailTextInputLayout)
+            ValidatorAuthHelper.onChangeClear(passwordEdit,passwordTextInputLayout)
+            ValidatorAuthHelper.onChangeClear(confirmPasswordEdit,confirmPasswordTextInputLayout)
+
             authViewModel.isLoading.observe(requireActivity()) {
                 showLoading(it)
             }

@@ -23,6 +23,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.example.ulikbatik.R
 import com.example.ulikbatik.data.model.BatikModel
 import com.example.ulikbatik.databinding.ActivityScanBinding
@@ -111,6 +112,10 @@ class ScanActivity : AppCompatActivity() {
                                 batikName.text = res.result.bATIKNAME
                                 batikDesc.text = res.result.bATIKDESC
                                 batikLoc.text = res.result.bATIKLOCT
+                                Glide.with(root)
+                                    .load(res.result.bATIKIMG)
+                                    .placeholder(R.drawable.img_placeholder)
+                                    .into(imageBatik)
                             }
                         }
                     } else {

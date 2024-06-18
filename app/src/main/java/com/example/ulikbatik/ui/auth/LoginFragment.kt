@@ -49,6 +49,9 @@ class LoginFragment : Fragment() {
         binding.passwordEdit.setText(password)
 
         binding.apply {
+            ValidatorAuthHelper.onChangeClear(emailEdit, emailTextInputLayout)
+            ValidatorAuthHelper.onChangeClear(passwordEdit, passwordTextInputLayout)
+
             loginBtn.setOnClickListener {
                 val emailT = emailEdit.text.toString()
                 val passwordT = passwordEdit.text.toString()
