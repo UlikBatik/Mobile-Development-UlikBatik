@@ -133,6 +133,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:text="@string/fyp"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="@id/divider"
                     app:layout_constraintTop_toBottomOf="@id/divider"/>
 
@@ -143,6 +144,7 @@
                     android:orientation="horizontal"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginBottom="10dp"
+                    android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_recommendation"
                     app:layout_constraintStart_toStartOf="@id/divider"
@@ -156,6 +158,7 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
                     android:background="@color/grey"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rvRecommend" />

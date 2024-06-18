@@ -50,8 +50,10 @@
             <ImageView
                 android:id="@+id/imageBatik"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="250dp"
                 android:scaleType="fitCenter"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="5dp"
                 android:src="@drawable/img_placeholder"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
