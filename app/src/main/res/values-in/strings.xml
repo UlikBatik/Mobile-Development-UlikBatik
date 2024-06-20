@@ -126,4 +126,6 @@
     <string name="deskripsi_dialog">Deskripsi dialog</string>
     <string name="retry">Coba Lagi</string>
     <string name="upload_your_batik">Unggah Batikmu</string>
+    <string name="fyp">Anda mungkin menyukai ini</string>
+    <string name="upload_successful">Unggahan Berhasil</string>
 </resources>

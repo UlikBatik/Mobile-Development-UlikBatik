@@ -74,6 +74,7 @@ class PostRepository(
     }
 
     fun likePost(userId: String, postId: String): LiveData<LikesResponse> {
+        _isLoading.value = true
         val resultLiveData = MutableLiveData<LikesResponse>()
         val request = LikesBodyRequest(postId = postId)
         val client = apiService.likePost(userId, request)
@@ -83,6 +84,7 @@ class PostRepository(
                     call: Call<LikesResponse>,
                     response: Response<LikesResponse>
                 ) {
+                    _isLoading.value = false
                     if (response.isSuccessful) {
                         resultLiveData.value = response.body()
                     } else {
@@ -95,6 +97,7 @@ class PostRepository(
                 }
 
                 override fun onFailure(call: Call<LikesResponse>, t: Throwable) {
+                    _isLoading.value = false
                     resultLiveData.value =
                         LikesResponse(
                             message = "500",
@@ -106,6 +109,7 @@ class PostRepository(
     }
 
     fun getLikes(userid: String): LiveData<GeneralResponse<List<LikesModel>>> {
+        _isLoading.value = true
         val resultLiveData = MutableLiveData<GeneralResponse<List<LikesModel>>>()
         val client = apiService.getLikes(userid)
 
@@ -114,6 +118,7 @@ class PostRepository(
                 call: Call<GeneralResponse<List<LikesModel>>>,
                 response: Response<GeneralResponse<List<LikesModel>>>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     resultLiveData.value = response.body()
                 } else {
@@ -125,6 +130,7 @@ class PostRepository(
             }
 
             override fun onFailure(call: Call<GeneralResponse<List<LikesModel>>>, t: Throwable) {
+                _isLoading.value = false
                 resultLiveData.value = GeneralResponse(
                     message = "500",
                     status = false

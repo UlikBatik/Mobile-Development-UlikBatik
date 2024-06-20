@@ -59,11 +59,8 @@ class DetailPostActivity : AppCompatActivity() {
     }
 
     private fun observeLoading() {
-        detailPostViewModel.isLoading.observe(this@DetailPostActivity) {
-            showLoading(it)
-        }
-        detailPostViewModel.isLoadingProduct.observe(this@DetailPostActivity) {
-            showLoading(it)
+        detailPostViewModel.isLoadingProduct.observe(this@DetailPostActivity) { isLoading ->
+            showLoading(isLoading)
         }
     }
 

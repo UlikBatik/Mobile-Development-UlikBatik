@@ -140,5 +140,6 @@
     <string name="retry">Retry</string>
     <string name="upload_your_batik">Upload your Batik</string>
     <string name="fyp">You might like this</string>
+    <string name="upload_successful">Upload Successful</string>
 
 </resources>

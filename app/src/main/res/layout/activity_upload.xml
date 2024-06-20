@@ -1,154 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/uploadContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".ui.upload.UploadActivity">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/backButton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="14dp"
-        android:background="@drawable/ic_back"
-        android:contentDescription="@string/back_button_description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <TextView
-        android:id="@+id/scanTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/upload_your_batik"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="@id/imageFieldCard"
-        app:layout_constraintStart_toStartOf="@id/imageFieldCard"
-        app:layout_constraintTop_toBottomOf="@id/backButton"
-        tools:ignore="RtlSymmetry" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/imageFieldCard"
-        android:layout_width="250dp"
-        android:layout_height="350dp"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@id/descriptionEdit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scanTitle">
-
-        <ImageView
-            android:id="@+id/imageField"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/img_field_description"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_field" />
-    </androidx.cardview.widget.CardView>
+            android:layout_height="wrap_content"
+            tools:context=".ui.upload.UploadActivity">
 
-    <EditText
-        android:id="@+id/descriptionEdit"
-        android:layout_width="250dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="150dp"
-        android:background="@drawable/edit_text_grey_field"
-        android:gravity="top|start"
-        android:hint="@string/description"
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine"
-        android:padding="15dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/blackTransparent"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@id/uploadBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageFieldCard" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/backButton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/ic_back"
+                android:contentDescription="@string/back_button_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/uploadBtn"
-        android:layout_width="180dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="35dp"
-        android:background="@drawable/button_gradient"
-        android:fontFamily="@font/poppins_bold"
-        android:letterSpacing="0.3"
-        android:text="@string/button_upload"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/descriptionEdit"
-        app:layout_constraintStart_toEndOf="@id/cameraBtn" />
+            <TextView
+                android:id="@+id/scanTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/upload_your_batik"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="@id/imageFieldCard"
+                app:layout_constraintStart_toStartOf="@id/imageFieldCard"
+                app:layout_constraintTop_toBottomOf="@id/backButton"
+                tools:ignore="RtlSymmetry" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imageFieldCard"
+                android:layout_width="250dp"
+                android:layout_height="350dp"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintBottom_toTopOf="@id/descriptionEdit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/scanTitle">
+
+                <ImageView
+                    android:id="@+id/imageField"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/img_field_description"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_field" />
+            </androidx.cardview.widget.CardView>
+
+            <EditText
+                android:id="@+id/descriptionEdit"
+                android:layout_width="250dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="150dp"
+                android:background="@drawable/edit_text_grey_field"
+                android:gravity="top|start"
+                android:hint="@string/description"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:padding="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackTransparent"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@id/uploadBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageFieldCard" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/uploadBtn"
+                android:layout_width="180dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="35dp"
+                android:background="@drawable/button_gradient"
+                android:fontFamily="@font/poppins_bold"
+                android:letterSpacing="0.3"
+                android:text="@string/button_upload"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/descriptionEdit"
+                app:layout_constraintStart_toEndOf="@id/cameraBtn" />
 
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/cameraBtn"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="35dp"
-        android:background="@drawable/button_cream"
-        android:contentDescription="@string/cam_description"
-        android:src="@drawable/ic_camera"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/uploadBtn"
-        app:layout_constraintStart_toEndOf="@id/galleryBtn" />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/cameraBtn"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="35dp"
+                android:background="@drawable/button_cream"
+                android:contentDescription="@string/cam_description"
+                android:src="@drawable/ic_camera"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/uploadBtn"
+                app:layout_constraintStart_toEndOf="@id/galleryBtn" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/galleryBtn"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="35dp"
-        android:background="@drawable/button_cream"
-        android:contentDescription="@string/gallery_description"
-        android:src="@drawable/ic_gallery"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/cameraBtn"
-        app:layout_constraintStart_toStartOf="@id/descriptionEdit" />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/galleryBtn"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="35dp"
+                android:background="@drawable/button_cream"
+                android:contentDescription="@string/gallery_description"
+                android:src="@drawable/ic_gallery"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/cameraBtn"
+                app:layout_constraintStart_toStartOf="@id/descriptionEdit" />
 
-    <include
-        android:id="@+id/batik_tag"
-        layout="@layout/item_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/descriptionEdit" />
+            <include
+                android:id="@+id/batik_tag"
+                layout="@layout/item_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/descriptionEdit" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progressBarScan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/uploadBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/batik_tag"
+                tools:visibility="visible" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:elevation="10dp"
+        android:visibility="gone" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progressBar"
+        android:id="@+id/progressBarUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
+        android:layout_gravity="center"
+        android:elevation="20dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progressBarScan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:indeterminate="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/uploadBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/batik_tag"
-        tools:visibility="visible" />
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+        tools:visibility="gone" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

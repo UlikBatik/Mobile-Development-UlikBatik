@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -39,7 +40,7 @@ class UploadActivity : AppCompatActivity() {
     private val uploadViewModel: UploadViewModel by viewModels {
         PostViewModelFactory.getInstance(applicationContext)
     }
-    private val scanViewModel: ScanViewModel by viewModels {
+    private val scanViewModel: ScanViewModel by  viewModels {
         ScanViewModelFactory.getInstance(applicationContext)
     }
 
@@ -90,7 +91,9 @@ class UploadActivity : AppCompatActivity() {
         }
         uploadViewModel.apply {
             isLoading.observe(this@UploadActivity) { isLoading ->
-                binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+                Log.d("TAG", "setViewModel: $isLoading")
+                binding.progressBarUpload.visibility = if (isLoading) View.VISIBLE else View.GONE
+                binding.loadingView.visibility = if (isLoading) View.VISIBLE else View.GONE
             }
             userIdValue = user?.uSERID
         }
@@ -160,6 +163,7 @@ class UploadActivity : AppCompatActivity() {
                         uri, caption, userId, batikId, this@UploadActivity
                     ).observe(this@UploadActivity) { res ->
                         if (res.status && res.data != null) {
+                            showToast(getString(R.string.upload_successful))
                             finish()
                         } else {
                             handlePostError(res.message.toInt())
