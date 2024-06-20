@@ -68,9 +68,8 @@ Android Studio IDE
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Apps Demo
-click the banner for demo video
-[![apps demo](https://youtu.be/8QiOnv1g_h0)
+Click here for demo video
+[apps demo](https://youtu.be/8QiOnv1g_h0)
 
 <!-- CONTACT -->
 ## Contact
