@@ -3,13 +3,16 @@
     <string name="app_name2">Ulik Batik</string>
 
     <!--  CONSTANTA  -->
-    <string name="username">username</string>
+    <string name="username" translatable="false">username</string>
+    <string name="username2" translatable="false">Username</string>
     <string name="password">password</string>
+    <string name="confirm_password">confirm password</string>
     <string name="email">e-mail</string>
     <string name="description">Description</string>
     <string name="batik_name">Batik Name</string>
     <string name="batik_loc">Batik Location</string>
     <string name="catalog">Catalog</string>
+    <string name="save">Save</string>
     <string name="searchbar_hint">Search</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam orci urna, molestie ut ullamcorper ac, tempor quis velit. Praesent ut purus quis neque varius vestibulum. Donec id imperdiet ante, gravida vehicula est. Donec aliquet varius congue. Sed hendrerit at quam vitae pulvinar. Vivamus varius, metus vel sagittis lacinia, nulla justo dictum magna, aliquet aliquam augue neque sit amet enim. Nam porttitor, sapien a tincidunt fringilla, mi ipsum ornare ex, interdum eleifend enim neque sed mauris. Vestibulum et laoreet libero.</string>
@@ -35,13 +38,14 @@
     <string name="register_page_login">Already have account?</string>
 
     <!--  DASHBOARD  -->
-    <string name="dashboard_scan">SCAN</string>
-    <string name="dashboard_catalog">CATALOG</string>
-    <string name="dashboard_likes">LIKES</string>
+    <string name="dashboard_scan" translatable="false">SCAN</string>
+    <string name="dashboard_catalog" translatable="false">CATALOG</string>
+    <string name="dashboard_likes" translatable="false">LIKES</string>
+    <string name="scroll_up_button">Scroll Up</string>
 
     <!--  DRAWER  -->
     <string name="drawer_hello">Hello !</string>
-    <string name="drawer_setting">SETTINGS</string>
+    <string name="drawer_setting" translatable="false">SETTINGS</string>
     <string name="drawer_dark_mode">Dark Mode</string>
     <string name="drawer_my_account">My Account</string>
     <string name="drawer_language">Language</string>
@@ -51,14 +55,17 @@
     <string name="scan_title">Scan your Batik</string>
 
     <!--  PROFILE  -->
-    <string name="profile_likes_sum">12K</string>
-    <string name="profile_likes">Likes</string>
-    <string name="profile_posts">Post</string>
+    <string name="profile_likes_sum">0</string>
+    <string name="profile_likes" translatable="false">Likes</string>
+    <string name="profile_posts" translatable="false">Post</string>
     <string name="profile_date">10 May</string>
+    <string name="profile_edit">Edit Profile</string>
+    <string name="profile_image">Profile Picture</string>
+    <string name="profile_edit_image">Change Image</string>
 
     <!--  BUTTON  -->
-    <string name="button_next">NEXT</string>
-    <string name="button_started">GET STARTED</string>
+    <string name="button_next" translatable="false">NEXT</string>
+    <string name="button_started" translatable="false">GET STARTED</string>
     <string name="button_login">LOGIN</string>
     <string name="button_register">REGISTER</string>
     <string name="button_upload">UPLOAD</string>
@@ -73,6 +80,7 @@
     <string name="grid_description">GRID_BTN</string>
     <string name="list_description">LIST_BTN</string>
     <string name="rv_post_description">RV_POST</string>
+    <string name="btn_dashboard">BTN_DASHBOARD</string>
 
 
     <!--  DRAWER BUILD IN  -->
@@ -86,4 +94,52 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+
+    <!--   Error Message -->
+    <string name="password_error_empty">Password should not empty</string>
+    <string name="email_error_empty">Email should not empty</string>
+    <string name="error_empty">This field should not empty</string>
+    <string name="error_invalid_input">Invalid Input</string>
+    <string name="error_invalid_data">Invalid Email or Password</string>
+    <string name="error_match">Password not match</string>
+    <string name="password_error_8">Password must be at least 8 characters</string>
+    <string name="error_unauthorized_401">Unauthorized</string>
+    <string name="error_server_500">Something went wrong. try again.</string>
+
+    <!--    toast info-->
+    <string name="no_media_selected">no media selected</string>
+    <string name="failed_to_use_camera">failed to use camera</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="failed_to_took_picture">failed to took picture</string>
+    <string name="permission_granted">permission granted</string>
+    <string name="nothing">Nothing to show</string>
+    <string name="no_likes">You haven\'t liked any posts</string>
+    <string name="history">History</string>
+    <string name="image_failed_to_detected">image failed to detected</string>
+    <string name="username_should_not_empty">username should not empty</string>
+
+    <!--    Dialog -->
+    <string name="ok">OK</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="question_delete_post">Are you sure you want to delete this post?</string>
+    <string name="delete_post">Delete Post</string>
+    <string name="logout_from_your_account">Logout from your account?</string>
+    <string name="logout">Logout</string>
+    <string name="productName" translatable="false">Product name</string>
+    <string name="price" translatable="false">Rp.100.000,0</string>
+
+    <!--   text view -->
+    <string name="product_title">Products related to this post</string>
+    <string name="product_title_catalog">Products related to this batik</string>
+    <string name="no_posts">You haven\'t posting yet</string>
+    <string name="no_result_search">There is no result</string>
+    <string name="title_dialog">Title Dialog</string>
+    <string name="deskripsi_dialog">Deskripsi dialog</string>
+    <string name="you_re_image_can_t_detected_as_batik">You\'re image can\'t detected as Batik</string>
+    <string name="retry">Retry</string>
+    <string name="upload_your_batik">Upload your Batik</string>
+    <string name="fyp">You might like this</string>
+    <string name="upload_successful">Upload Successful</string>
+
 </resources>

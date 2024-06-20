@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/standard_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/container_post"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp">
+
+            <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/batikName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/batik_name"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="@id/batikDesc"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
+
+            <TextView
+                android:id="@+id/batikLoc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/poppins"
+                android:text="@string/batik_loc"
+                android:textSize="15sp"
+                app:drawableStartCompat="@drawable/ic_location"
+                app:layout_constraintStart_toStartOf="@id/batikName"
+                app:layout_constraintTop_toBottomOf="@id/batikName" />
+
+            <ImageView
+                android:id="@+id/imageBatik"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="fitCenter"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="5dp"
+                android:src="@drawable/img_placeholder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/batikLoc" />
+
+            <TextView
+                android:id="@+id/label_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/description"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@id/batikName"
+                app:layout_constraintTop_toBottomOf="@id/imageBatik" />
+
+            <TextView
+                android:id="@+id/batikDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/container_batik_description"
+                android:fontFamily="@font/poppins"
+                android:padding="15dp"
+                android:text="@string/lorem"
+                app:layout_constraintEnd_toEndOf="@id/divider"
+                app:layout_constraintStart_toStartOf="@id/divider"
+                app:layout_constraintTop_toBottomOf="@id/label_description" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/makePostBtn"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_gradient"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/button_make_post"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/batikDesc" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/resetBtn"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_gradient"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_restart"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="@id/makePostBtn"
+                app:layout_constraintStart_toStartOf="@id/makePostBtn"
+                app:layout_constraintTop_toBottomOf="@id/makePostBtn" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

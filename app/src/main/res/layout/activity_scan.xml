@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.scan.ScanActivity">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/backButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/ic_back"
+            android:contentDescription="@string/back_button_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/scanTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/scan_title"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="@id/cam_cardview"
+            app:layout_constraintTop_toBottomOf="@id/backButton"
+            tools:ignore="RtlSymmetry" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cam_cardview"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="100dp"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scanTitle">
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/camPreview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/imageIv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/img_field_description"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_batik1"
+                android:visibility="gone" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/camBtn"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/button_gradient"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_camera_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cam_cardview" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/galleryBtn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/button_cream"
+            android:contentDescription="@string/gallery_description"
+            android:src="@drawable/ic_gallery"
+            app:layout_constraintBottom_toBottomOf="@id/camBtn"
+            app:layout_constraintEnd_toStartOf="@id/camBtn"
+            app:layout_constraintStart_toStartOf="@id/cam_cardview" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/resetBtn400"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/button_gradient"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_restart"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cam_cardview" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/camBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cam_cardview"
+            tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/bottom_sheet_persistent"
+        layout="@layout/item_bottom_sheet"
+        android:fitsSystemWindows="true" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

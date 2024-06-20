@@ -5,11 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.ulikbatik.R
+import com.example.ulikbatik.data.local.UserPreferences
+import com.example.ulikbatik.data.local.dataStore
 import com.example.ulikbatik.databinding.ActivityBoardingBinding
 import com.example.ulikbatik.ui.auth.AuthActivity
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.launch
 
 class BoardingActivity : AppCompatActivity() {
 
@@ -70,7 +74,13 @@ class BoardingActivity : AppCompatActivity() {
     }
 
     private fun finishOnboarding() {
-    startActivity(Intent(this, AuthActivity::class.java))
+        var pref = UserPreferences.getInstance(this.dataStore)
+
+        lifecycleScope.launch{
+            pref.setSession()
+        }
+        startActivity(Intent(this, AuthActivity::class.java))
+        finish()
     }
 
     private fun updateContent(position: Int) {

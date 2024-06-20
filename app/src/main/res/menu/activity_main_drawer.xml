@@ -7,10 +7,6 @@
         android:id="@+id/topMenu"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_darkmode"
-            android:icon="@drawable/ic_darkmode"
-            android:title="@string/drawer_dark_mode" />
-        <item
             android:id="@+id/nav_my_account"
             android:icon="@drawable/ic_account"
             android:title="@string/drawer_my_account" />
@@ -18,7 +14,7 @@
             android:id="@+id/nav_language"
             android:icon="@drawable/ic_language"
             android:title="@string/drawer_language" />
-    </group >
+    </group>
 
     <group
         android:id="@+id/botMenu"

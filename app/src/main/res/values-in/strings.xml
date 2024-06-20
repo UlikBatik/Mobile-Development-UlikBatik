@@ -1,0 +1,131 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">UlikBatik</string>
+    <string name="app_name2">Ulik Batik</string>
+
+    <!--  CONSTANTA  -->
+    <string name="password">kata sandi</string>
+    <string name="confirm_password">konfirmasi kata sandi</string>
+    <string name="email">e-mail</string>
+    <string name="description">Deskripsi</string>
+    <string name="batik_name">Nama Batik</string>
+    <string name="batik_loc">Lokasi Batik</string>
+    <string name="catalog">Katalog</string>
+    <string name="save">Simpan</string>
+    <string name="searchbar_hint">Cari</string>
+    <string name="hello_blank_fragment">Halo fragmen kosong</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam orci urna, molestie ut ullamcorper ac, tempor quis velit. Praesent ut purus quis neque varius vestibulum. Donec id imperdiet ante, gravida vehicula est. Donec aliquet varius congue. Sed hendrerit at quam vitae pulvinar. Vivamus varius, metus vel sagittis lacinia, nulla justo dictum magna, aliquet aliquam augue neque sit amet enim. Nam porttitor, sapien a tincidunt fringilla, mi ipsum ornare ex, interdum eleifend enim neque sed mauris. Vestibulum et laoreet libero.</string>
+    <string name="lorem_short" tools:ignore="TypographyEllipsis">Lorem ipsum dolor sit amet ...</string>
+
+    <!--  ONBOARDING STRING COMPONENT  -->
+    <string name="onboarding_welcome_title">Selamat Datang di Ulik Batik</string>
+    <string name="onboarding_welcome_description">Jelajahi kekayaan batik Indonesia saat Anda menjelajahi berbagai pola rumit</string>
+    <string name="onboarding_share_title">Bagikan Pengalaman Batik Anda</string>
+    <string name="onboarding_share_description">Bagikan pengalaman batik unik Anda dengan dunia dengan memposting foto diri Anda mengenakan kain-kain indah ini</string>
+    <string name="onboarding_discover_title">Temukan Pola Batik</string>
+    <string name="onboarding_discover_description">Identifikasi pola batik rumit di sekitar Anda dengan fitur pemindaian inovatif kami, membawa seni pengenalan batik ke ujung jari Anda</string>
+    <string name="onboarding_starting_title">Mulailah Petualangan Batik Anda</string>
+    <string name="onboarding_starting_description">Mulailah petualangan batik Anda di sini! Temukan, bagikan, dan kenali keindahan batik Indonesia seperti belum pernah sebelumnya</string>
+
+    <!--  LOGIN & REGISTER  -->
+    <string name="login">Masuk</string>
+    <string name="login_page_title">Selamat Datang Kembali</string>
+    <string name="login_page_description">Masuk ke akun Anda</string>
+    <string name="login_page_register">Tidak punya akun?</string>
+    <string name="register">Daftar</string>
+    <string name="register_page_description">Buat akun baru Anda</string>
+    <string name="register_page_login">Sudah punya akun?</string>
+
+    <!--  DASHBOARD  -->
+    <string name="scroll_up_button">Gulir ke Atas</string>
+
+    <!--  DRAWER  -->
+    <string name="drawer_hello">Halo !</string>
+    <string name="drawer_dark_mode">Mode Gelap</string>
+    <string name="drawer_my_account">Akun Saya</string>
+    <string name="drawer_language">Bahasa</string>
+    <string name="drawer_logout">Keluar</string>
+
+    <!--  SCAN  -->
+    <string name="scan_title">Pindai Batik Anda</string>
+
+    <!--  PROFILE  -->
+    <string name="profile_likes_sum">12K</string>
+    <string name="profile_date">10 Mei</string>
+    <string name="profile_edit">Edit Profil</string>
+    <string name="profile_image">Gambar Profil</string>
+    <string name="profile_edit_image">Ubah Gambar</string>
+
+    <!--  BUTTON  -->
+    <string name="button_login">MASUK</string>
+    <string name="button_register">DAFTAR</string>
+    <string name="button_upload">UNGGAH</string>
+    <string name="button_make_post">Buat Postingan</string>
+
+    <!--  CONTENT DESCRIPTION  -->
+    <string name="img_icon_description">IMG_ICON</string>
+    <string name="img_field_description">IMG_FIELD</string>
+    <string name="cam_description">CAM_BTN</string>
+    <string name="back_button_description">BACK_BTN</string>
+    <string name="gallery_description">GALLERY_BTN</string>
+    <string name="grid_description">GRID_BTN</string>
+    <string name="list_description">LIST_BTN</string>
+    <string name="rv_post_description">RV_POST</string>
+    <string name="btn_dashboard">BTN_DASHBOARD</string>
+
+    <!--  DRAWER BUILD IN  -->
+    <string name="title_activity_dashboard">Aktivitas Dashboard</string>
+    <string name="navigation_drawer_open">Buka laci navigasi</string>
+    <string name="navigation_drawer_close">Tutup laci navigasi</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Header navigasi</string>
+    <string name="action_settings">Pengaturan</string>
+    <string name="menu_home">Beranda</string>
+    <string name="menu_gallery">Galeri</string>
+    <string name="menu_slideshow">Tayangan Slide</string>
+
+    <!--   Error Message -->
+    <string name="password_error_empty">Kata sandi tidak boleh kosong</string>
+    <string name="email_error_empty">Email tidak boleh kosong</string>
+    <string name="error_empty">Field ini tidak boleh kosong</string>
+    <string name="error_invalid_input">Input tidak valid</string>
+    <string name="error_invalid_data">Email atau Kata Sandi tidak valid</string>
+    <string name="error_match">Kata sandi tidak cocok</string>
+    <string name="password_error_8">Kata sandi harus terdiri dari setidaknya 8 karakter</string>
+    <string name="error_unauthorized_401">Tidak Sah</string>
+    <string name="error_server_500">Terjadi kesalahan. coba lagi.</string>
+
+    <!--    toast info-->
+    <string name="no_media_selected">tidak ada media yang dipilih</string>
+    <string name="failed_to_use_camera">gagal menggunakan kamera</string>
+    <string name="permission_denied">Izin ditolak</string>
+    <string name="failed_to_took_picture">gagal mengambil gambar</string>
+    <string name="permission_granted">izin diberikan</string>
+    <string name="nothing">Tidak ada yang bisa ditampilkan</string>
+    <string name="no_likes">Anda belum menyukai postingan apa pun</string>
+    <string name="history">Riwayat</string>
+    <string name="image_failed_to_detected">gambar gagal terdeteksi</string>
+    <string name="username_should_not_empty">Nama pengguna tidak boleh kosong</string>
+
+    <!--    Dialog -->
+    <string name="ok">oke</string>
+    <string name="confirm">ok</string>
+    <string name="cancel">batal</string>
+    <string name="question_delete_post">Apakah Anda yakin ingin menghapus kiriman ini?</string>
+    <string name="delete_post">Hapus Kiriman</string>
+    <string name="logout_from_your_account">Keluar dari akun Anda?</string>
+    <string name="logout">Keluar</string>
+
+    <!--   text view -->
+    <string name="product_title">Produk berdasarkan post ini</string>
+    <string name="product_title_catalog">Products berdasarkan batik ini</string>
+    <string name="no_posts">Belum ada unggahan</string>
+    <string name="no_result_search">Hasil tidak ditemukan</string>
+    <string name="you_re_image_can_t_detected_as_batik">Gambar tidak terdeteksi sebagai Batik</string>
+    <string name="title_dialog">Title Dialog</string>
+    <string name="deskripsi_dialog">Deskripsi dialog</string>
+    <string name="retry">Coba Lagi</string>
+    <string name="upload_your_batik">Unggah Batikmu</string>
+    <string name="fyp">Anda mungkin menyukai ini</string>
+    <string name="upload_successful">Unggahan Berhasil</string>
+</resources>
