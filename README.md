@@ -32,7 +32,7 @@ For logs HTTP request and response data
  [Repo](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor)
 5. Paging 3
 an Android jetpack library that helps us to load and display pages of data from a larger dataset from local storage or over network
-[Source](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor)
+[Source](https://developer.android.com/topic/libraries/architecture/paging/v3-migration)
 6. uCrop
 a convenient open-source image cropping library for Android that includes basic image editing features like cropping, rotating, compressing, and scaling.
 [Repo](https://github.com/Yalantis/uCrop.git)
@@ -70,7 +70,7 @@ Android Studio IDE
 
 Apps Demo
 click the banner for demo video
-[![apps demo](link demo)
+[![apps demo](https://youtu.be/8QiOnv1g_h0)
 
 <!-- CONTACT -->
 ## Contact
